@@ -50,16 +50,18 @@ const styles = StyleSheet.create({
   categoryName: {
     textAlign: "center",
     fontSize: 25,
-    fontWeight: 'bold',
-    margin: 20,
+    fontWeight: "bold",
+    margin: 20
   },
   mainScreen: {
     backgroundColor: "#f5f5f9"
   }
-})
+});
 
-
-class Catalog extends React.Component<IConnectedCatalogProps & ICatalogProps, null> {
+class Catalog extends React.Component<
+  IConnectedCatalogProps & ICatalogProps,
+  null
+> {
   render() {
     const { data, navigation } = this.props;
     if (!data || data.loading) {
@@ -107,27 +109,23 @@ class Catalog extends React.Component<IConnectedCatalogProps & ICatalogProps, nu
 
     return (
       <ScrollView contentContainerStyle={styles.mainScreen}>
-        <WingBlank size="sm">
-          {startCats.map((parent, i) =>
-            <View key={i}>
-              <Text style={styles.categoryName}>
-                {parent.name}
-              </Text>
-              <SubCatalog
-                key={i}
-                categories={childrenMap[parent.id]}
-                navigation={navigation}
-                // isDrawer={isDrawer}
-              />
-            </View>
-          )}
-        </WingBlank>
+        {startCats.map((parent, i) =>
+          <View key={i}>
+            <Text style={styles.categoryName}>
+              {parent.name}
+            </Text>
+            <SubCatalog
+              key={i}
+              categories={childrenMap[parent.id]}
+              navigation={navigation}
+              // isDrawer={isDrawer}
+            />
+          </View>
+        )}
       </ScrollView>
     );
   }
 }
-
-
 
 const mapStateToProps: any = state => ({
   layout: state.layout

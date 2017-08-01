@@ -9,7 +9,9 @@ import { Catalog, FlatPages } from "../../modules/layout/index";
 
 // const styles = require("./styles.css");
 const styles = StyleSheet.create({
-  homePage: {}
+  homePage: {
+    margin: 4
+  }
 });
 
 interface IHomeScreenProps {
@@ -23,14 +25,14 @@ class HomeScreen extends React.Component<IHomeScreenProps, null> {
   render() {
     const { navigation } = this.props;
     return (
-      <ScrollView>
-        <WingBlank size="sm">
+      <ScrollView >
+        <View style={styles.homePage}>
           <Catalog navigation={navigation} />
-        </WingBlank>
-        {/*
-          <WhiteSpace size="lg" />
-          <FlatPages navigation={navigation} />
-        */}
+          {/*
+            <WhiteSpace size="lg" />
+            <FlatPages navigation={navigation} />
+          */}
+        </View>
       </ScrollView>
     );
   }
