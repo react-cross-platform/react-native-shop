@@ -13,14 +13,15 @@
     "android-linux": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android"
   },
   "dependencies": {
+    "@types/react-navigation": "^1.0.15",
     "antd-mobile": "2.0.0-alpha.2",
     "immutability-helper": "^2.2.2",
     "react": "16.0.0-alpha.12",
     "react-apollo": "^1.2.0",
     "react-native": "^0.45.1",
     "react-native-material-ripple": "^0.7.4",
+    "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",
-    "react-router-native": "^4.1.1",
     "redux": "^3.7.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0"
@@ -30,8 +31,6 @@
     "@types/jest": "^19.2.3",
     "@types/react": "^15.0.24",
     "@types/react-native": "ts2.4",
-    "@types/react-router": "^4.0.4",
-    "@types/react-router-native": "^4.0.1",
     "@types/react-test-renderer": "^15.5.0",
     "@types/redux-logger": "^3.0.0",
     "@types/redux-thunk": "^2.1.0",

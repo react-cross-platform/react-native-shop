@@ -94,6 +94,7 @@ interface IConnectedProductsProps {
 
 interface IProductsProps {
   categoryId: string;
+  navigation: any;
 }
 
 interface IProductsState {
@@ -233,7 +234,11 @@ class Products extends React.Component<
   // };
 
   render() {
-    const { data, catalog: { showOnlyViewed, viewedProductIds } } = this.props;
+    const {
+      navigation,
+      data,
+      catalog: { showOnlyViewed, viewedProductIds }
+    } = this.props;
     const { loading, allProducts, fetchMore } = data;
 
     if (loading === true) {
@@ -281,7 +286,7 @@ class Products extends React.Component<
         <WingBlank size="sm">
           <Flex justify="center" wrap="wrap">
             {filteredProducts.map((product, i) =>
-              <Product key={i} {...product} />
+              <Product key={i} {...product} navigation={navigation} />
             )}
           </Flex>
           <View

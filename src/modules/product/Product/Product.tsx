@@ -113,8 +113,8 @@ interface IConnectedProductProps {
 interface IProductProps {
   id: string;
   isModal: boolean;
-  history: any;
   subProductId: any
+  navigation: any;
 }
 
 const options = {
@@ -161,11 +161,6 @@ class Product extends React.Component<
   //   }
   // };
 
-  back = e => {
-    e.stopPropagation();
-    this.props.history.goBack();
-  };
-
   render() {
     const { data } = this.props;
     const { loading, product } = data;
@@ -184,17 +179,6 @@ class Product extends React.Component<
 
     return (
       <View>
-        <Flex justify="center" style={styles.header}>
-          <Flex.Item>
-            <Text
-              // style={styles.categoryName}
-              style={{textAlign: "center"}}
-              onClick={this.back}
-            >
-              {product.category.name}
-            </Text>
-          </Flex.Item>
-        </Flex>
         <ScrollView
           contentContainerStyle={styles.productContainer}
           // showsHorizontalScrollIndicator= {true}

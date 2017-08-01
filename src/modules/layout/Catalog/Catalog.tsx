@@ -43,6 +43,7 @@ interface IConnectedCatalogProps {
 
 interface ICatalogProps {
   isDrawer: boolean;
+  navigation: any;
 }
 
 const styles = StyleSheet.create({
@@ -58,10 +59,9 @@ const styles = StyleSheet.create({
 })
 
 
-// class Catalog extends Component<IConnectedCatalogProps & ICatalogProps, null> {
-class Catalog extends React.Component<any, null> {
+class Catalog extends React.Component<IConnectedCatalogProps & ICatalogProps, null> {
   render() {
-    const { data } = this.props;
+    const { data, navigation } = this.props;
     if (!data || data.loading) {
       return <View />;
     }
@@ -116,6 +116,7 @@ class Catalog extends React.Component<any, null> {
               <SubCatalog
                 key={i}
                 categories={childrenMap[parent.id]}
+                navigation={navigation}
                 // isDrawer={isDrawer}
               />
             </View>

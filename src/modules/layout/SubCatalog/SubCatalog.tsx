@@ -4,7 +4,6 @@ import { compose } from "react-apollo";
 import { Image, StyleSheet } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { connect } from "react-redux";
-import { Link } from "react-router-native";
 import { Dispatch } from "redux";
 
 import { ACTION_ADD_VIEWED_CATEGORY } from "../../catalog/constants";
@@ -39,13 +38,13 @@ const styles = StyleSheet.create({
 });
 
 interface IConnectedSubCatalogProps {
-  navigation: any;
   catalog: ICatalog;
   layout: ILayout;
   dispatch: Dispatch<{}>;
 }
 
 interface ISubCatalogProps {
+  navigation: any;
   categories: [ICategory];
   // isDrawer: boolean;
 }
@@ -65,18 +64,8 @@ class SubCatalog extends React.Component<
   IConnectedSubCatalogProps & ISubCatalogProps,
   any
 > {
-  onClick = (event, cat) => {
-    const { dispatch } = this.props;
-    dispatch({ type: ACTION_ADD_VIEWED_CATEGORY, categoryId: cat.id });
-    Promise
-      .resolve
-      // dispatch({ type: ACTION_SET_CATALOG_DRAWER, openCatalog: false })
-      ()
-      .then(response => {
-        // if (!this.isCurrentCategory(cat.id)) {
-        //   dispatch(push(`/category/${cat.id}`));
-        // }
-      });
+  handleNavigation = (id, name) => {
+    this.props.navigation.navigate("Category", { id, name });
   };
 
   // handleClick = (event, id) => {
@@ -106,18 +95,19 @@ class SubCatalog extends React.Component<
           <Flex justify="center" key={i} wrap="wrap">
             {cats.map((cat, index) =>
               <Flex.Item key={`cat${index}`}>
-                <Link to={`/category/${cat.id}`}>
-                  <View style={styles.card} justify="center">
-                    <Image
-                      resizeMode="contain"
-                      style={styles.image}
-                      source={{ uri: cat.image.src }}
-                    />
-                    <Text style={styles.text}>
-                      {cat.name}
-                    </Text>
-                  </View>
-                </Link>
+                <View style={styles.card} justify="center">
+                  <Image
+                    resizeMode="contain"
+                    style={styles.image}
+                    source={{ uri: cat.image.src }}
+                  />
+                  <Text
+                    style={styles.text}
+                    onPress={() => this.handleNavigation(cat.id, cat.name)}
+                  >
+                    {cat.name}
+                  </Text>
+                </View>
               </Flex.Item>
             )}
           </Flex>

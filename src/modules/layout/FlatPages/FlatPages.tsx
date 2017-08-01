@@ -2,7 +2,6 @@ import { View, Text, Icon, List } from "antd-mobile";
 import * as React from "react";
 import { compose, gql, graphql } from "react-apollo";
 import { connect } from "react-redux";
-import { Link } from "react-router-native";
 import { Dispatch } from "redux";
 import { StyleSheet } from "react-native";
 

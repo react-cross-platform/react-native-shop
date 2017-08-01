@@ -2,7 +2,6 @@ import { Text, View, Flex, Icon } from "antd-mobile";
 import * as React from "react";
 import { compose } from "react-apollo";
 import { connect } from "react-redux";
-import { Link } from "react-router-native";
 import { Dispatch } from "redux";
 import { StyleSheet } from "react-native";
 import Ripple from "react-native-material-ripple";
@@ -71,11 +70,9 @@ class HomeTrigger extends React.Component<
     } else {
       return (
         <Ripple>
-          <Link to="/">
-            <Text onClick={this.handleClick}>HOME</Text>
+          <Text onClick={this.handleClick}>HOME</Text>
 
-            {/* <Logo height={height} isActive={false} /> */}
-          </Link>
+          {/* <Logo height={height} isActive={false} /> */}
         </Ripple>
       );
     }

@@ -1,11 +1,18 @@
 import * as React from "react";
 import { Product } from "../../modules/product/index";
 
-class ProductPage extends React.Component<any, any> {
+interface IProductScreenProps {
+  navigation: any;
+}
+
+class ProductScreen extends React.Component<IProductScreenProps, null> {
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.name}`
+  });
   render() {
-    const { match } = this.props;
-    return <Product history={null} id={match.params.id} isModal={false} />;
+    const { navigation } = this.props;
+    return <Product navigation={navigation} id={navigation.state.params.id} isModal={false} />;
   }
 }
 
-export default ProductPage;
+export default ProductScreen;

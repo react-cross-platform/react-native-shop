@@ -1,7 +1,6 @@
 import { View, Text, Flex, Icon, WhiteSpace } from "antd-mobile";
 import * as React from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-native";
 import { Dispatch } from "redux";
 import { StyleSheet, Image } from "react-native";
 
@@ -58,7 +57,9 @@ interface IConnectedProductProps extends IProduct {
   dispatch: Dispatch<{}>;
 }
 
-interface IProductProps extends IProduct {}
+interface IProductProps extends IProduct {
+  navigation: any;
+}
 
 interface IProductState {
   titleImage: IImageWithColor;
@@ -83,6 +84,10 @@ class Product extends React.Component<
 
   changeTitleImage = (e, image) => {
     this.setState({ titleImage: image });
+  };
+
+  handleNavigation = (id, name) => {
+    this.props.navigation.navigate("Product", { id, name });
   };
 
   render() {
@@ -174,12 +179,16 @@ class Product extends React.Component<
         */}
 
         <View style={styles.infoContainer}>
-          <Link to={`/product/${id}`}>
-            <Text style={styles.info}>
-              {name} {brand.name} {subProduct.article}
-            </Text>
-          </Link>
-          <Text style={styles.price}>
+          <Text
+            style={styles.info}
+            onPress={() => this.handleNavigation(id, name)}
+          >
+            {name} {brand.name} {subProduct.article}
+          </Text>
+          <Text
+            style={styles.price}
+            onPress={() => this.handleNavigation(id, name)}
+          >
             {isSinglePrice ? "" : "от "}
             {parseInt(minPrice, 10)} грн
           </Text>

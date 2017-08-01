@@ -12,23 +12,26 @@ const styles = StyleSheet.create({
   homePage: {}
 });
 
-class HomeScreen extends React.Component<any, any> {
-  componentWillMount() {
-    this.props.dispatch({
-      type: ACTION_SET_CATALOG_DRAWER,
-      openCatalog: false
-    });
-  }
+interface IHomeScreenProps {
+  navigation: any;
+}
 
+class HomeScreen extends React.Component<IHomeScreenProps, null> {
+  static navigationOptions = {
+    title: "React Native Shop"
+  };
   render() {
+    const { navigation } = this.props;
     return (
-      <View>
+      <ScrollView>
         <WingBlank size="sm">
-          <Catalog />
+          <Catalog navigation={navigation} />
         </WingBlank>
-        <WhiteSpace size="lg" />
-        <FlatPages />
-      </View>
+        {/*
+          <WhiteSpace size="lg" />
+          <FlatPages navigation={navigation} />
+        */}
+      </ScrollView>
     );
   }
 }

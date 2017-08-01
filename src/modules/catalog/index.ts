@@ -1,4 +1,3 @@
-import Category from "./Category/Category";
 import Product from "./Product/Product";
 import Products from "./Products/Products";
 // import ProductsCounter from "./ProductsCounter/ProductsCounter";
@@ -7,7 +6,6 @@ import Products from "./Products/Products";
 import * as model from "./model";
 
 export {
-  Category,
   Products,
   Product,
   // ProductsCounter,
