@@ -182,7 +182,7 @@ class Product extends React.Component<
 
 
     return (
-      <View>
+      <View style={{flex: 1}}>
         <ScrollView
           contentContainerStyle={styles.productContainer}
           // showsHorizontalScrollIndicator= {true}

@@ -1,28 +1,35 @@
-import { View, Text, Flex, Toast } from "antd-mobile";
-import * as React from "react";
-import { StyleSheet } from "react-native";
+import { HEIGHT } from '../../layout/Header/Header';
+import { Text, Flex, Toast } from "antd-mobile";
+import * as React from 'react';
+import { StyleSheet, View } from "react-native";
 
 // const styles = require("./styles.css");
 const styles = StyleSheet.create({
-  buy: {},
 
   buyPrice: {
+    justifyContent: 'center',
     backgroundColor: "blue",
-    textAlign: "center",
-    width: "100%",
+    width: "50%",
     height: 40,
-    fontSize: 18,
   },
 
   buyButton: {
+    justifyContent: 'center',
     backgroundColor: "gray",
-    textAlign: "center",
-    width: "100%",
+    width: "50%",
     height: 40,
-    fontSize: 18,
   },
 
-  price: {},
+  price: {
+    textAlign: "center",
+    fontSize: 18
+  },
+
+  buy: {
+    textAlign: "center",
+    fontSize: 18
+  },
+
   currentPrice: {},
   oldPrice: {}
 });
@@ -40,20 +47,25 @@ class ProductBuy extends React.Component<
 > {
   render() {
     const { price, oldPrice } = this.props;
-    // debugger;
     return (
-      <Flex>
-        <Flex.Item>
-          <Text style={styles.buyPrice}>
+      <View 
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center'
+        }}
+      >
+        <View style={styles.buyPrice}>
+          <Text style={styles.price}>
             {parseInt(String(price), 10)} грн
           </Text>
-        </Flex.Item>
-        <Flex.Item >
-          <Text style={styles.buyButton}>
+        </View>
+        <View style={styles.buyButton}>
+          <Text style={styles.buy}>
             Купить
           </Text>
-        </Flex.Item>
-      </Flex>
+        </View>
+      </View>
     );
   }
 }
