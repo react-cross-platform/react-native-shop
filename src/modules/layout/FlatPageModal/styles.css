@@ -1,0 +1,25 @@
+.backPanel {
+  background-color: #2474cc;
+  color: white;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+}
+
+.backIcon {
+  padding: 0 20px;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+  width: 80%;
+  font-size: 0.4rem;
+}
+
+.flatpage * {
+  color: black !important;
+  font-size: 30px;
+}
