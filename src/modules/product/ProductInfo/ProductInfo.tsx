@@ -87,7 +87,7 @@ class ProductInfo extends React.Component<
               {/* <hr /> */}
               <SubProducts subProducts={subProducts} />
             </View>
-          : ""}
+          : <Text></Text>}
 
         {/* <hr /> */}
 

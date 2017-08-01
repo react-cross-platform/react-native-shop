@@ -120,8 +120,7 @@ interface IProductProps {
 const options = {
   options: props => ({
     variables: {
-      // id: props.id
-      id: 4837
+      id: props.id
     }
   })
 };
@@ -172,6 +171,7 @@ class Product extends React.Component<
     //   return <Loading />;
     // }
     const { brand, images, subProducts } = product;
+    const image = images[0].src;
     const activeSubProduct = getActiveSubProduct(subProducts, subProductId);
     const { price, oldPrice } = activeSubProduct;
 
@@ -190,7 +190,10 @@ class Product extends React.Component<
           <View
             style={styles.productContent}
           >
-            <Image resizeMode="stretch" style={{width: "30%", height: "30%", marginBottom: 30}} source={{uri: "https://i1.rozetka.ua/goods/1474555/roncato_flexi_500511_33_images_1474555001.jpg"}} />
+            <Image 
+              resizeMode="stretch" 
+              style={{width: "30%", height: "30%", marginBottom: 30}} 
+              source={{uri: image }} />
             <Flex
               justify="around"
               direction="column"
