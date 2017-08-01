@@ -70,10 +70,11 @@ query product($id: Int) {
 // const styles = require("./styles.css");
 const styles = StyleSheet.create({
   productContainer: {
-    // marginTop: 10,
-    paddingVertical: 20,
   },
-  productMainScreen: {},
+
+  productMainScreen: {
+    alignContent: "center"
+  },
 
   header: {
     height: 40,
@@ -81,9 +82,10 @@ const styles = StyleSheet.create({
   },
 
   infoTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    margin: 20
+    margin: 20,
+    textAlign: "center",
   },
 
   productTop: {
@@ -93,7 +95,9 @@ const styles = StyleSheet.create({
   },
 
   productTopBack: {},
-  productContent: {},
+  productContent: {
+    backgroundColor: "white"
+  },
   categoryName: {
     textAlign: "center"
   },
@@ -171,7 +175,7 @@ class Product extends React.Component<
     //   return <Loading />;
     // }
     const { brand, images, subProducts } = product;
-    const image = images[0].src;
+    const image = images[0];
     const activeSubProduct = getActiveSubProduct(subProducts, subProductId);
     const { price, oldPrice } = activeSubProduct;
 
@@ -190,17 +194,24 @@ class Product extends React.Component<
           <View
             style={styles.productContent}
           >
-            <Image 
-              resizeMode="stretch" 
-              style={{width: "30%", height: "30%", marginBottom: 30}} 
-              source={{uri: image }} />
+            <Flex style={{flex: 1, alignItems: "stretch" }}>
+              <Image 
+                resizeMode="contain" 
+                style={{
+                  flex: 1,
+                  alignSelf: 'center',
+                  height: 370,
+                }}
+                source={{uri: image.src }}
+              />
+            </Flex>
             <Flex
               justify="around"
               direction="column"
                style={styles.productMainScreen}
             >
               <Text style={styles.infoTitle}>
-                {product.name} {brand.name} {activeSubProduct.article}
+                {product.name} {brand.name} {"\n"} {activeSubProduct.article}
               </Text>
             </Flex>
             <Hr />

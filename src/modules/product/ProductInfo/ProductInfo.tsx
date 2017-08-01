@@ -16,10 +16,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: "#1296db",
     fontSize: 18,
+    fontWeight: "bold",
     marginTop: 10,
     marginBottom: 10,
   },
-  description: {},
+
+  description: {
+  },
+
   colors: {},
   colorIcon: {},
   color: {
@@ -28,6 +32,7 @@ const styles = StyleSheet.create({
 
   paramName: {
     fontSize: 16,
+    marginBottom: 10,
   },
 
   paramValue: {
@@ -77,6 +82,16 @@ class ProductInfo extends React.Component<
         ? images.filter(image => image.id === colorId)[0]
         : images.filter(image => image.isTitle === true)[0];
 
+    // <Text
+    //   className={styles.description}
+    //   dangerouslySetInnerHTML={createMarkup(dataProduct.description)}
+    // />
+    // <WebView 
+      // source={require(dataProduct.description)}
+      // source={{html: dataProduct.description.toString()}}
+      // ref={'webview'}
+      // automaticallyAdjustContentInsets={false}
+    // />
     return (
       <View
       // className={styles.productInfo}
@@ -93,7 +108,7 @@ class ProductInfo extends React.Component<
 
         {/* Select Color section */}
         <WingBlank>
-          <Flex justify="between" style={{height: 60}}>
+          <Flex justify="between">
             <Text
               style={styles.sectionTitle}
             >
@@ -200,12 +215,8 @@ class ProductInfo extends React.Component<
         {/* Product description section */}
         <WingBlank>
           <Text style={styles.sectionTitle}>О товаре</Text>
-          <View
-            className={styles.description}
-            dangerouslySetInnerHTML={createMarkup(dataProduct.description)}
-          />
           <Text>
-              {dataProduct.description}
+            {dataProduct.description}
           </Text>
 
         </WingBlank>

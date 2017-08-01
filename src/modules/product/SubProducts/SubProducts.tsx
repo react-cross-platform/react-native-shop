@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
   title: {
     color: "#1296db",
     fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 10,
+    marginBottom: 10
   },
 
   checkIcon: {},
@@ -63,6 +66,7 @@ class SubProducts extends React.Component<
           <Text style={styles.title}>Модификации</Text>
         </WingBlank>
         <List>
+          
           {subProducts.map((subProduct, index) =>
             <Item
               key={index}
