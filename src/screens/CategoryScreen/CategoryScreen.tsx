@@ -36,7 +36,9 @@ class CategoryScreen extends React.Component<
   });
 
   render() {
-    const { id, navigation } = this.props;
+    const { navigation } = this.props;
+    const { id } = this.props.navigation.state.params;
+
 
     return <Products categoryId={id} navigation={navigation} />;
   }

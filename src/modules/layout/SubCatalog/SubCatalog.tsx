@@ -1,4 +1,4 @@
-import { Flex, Text, View } from "antd-mobile";
+  import { Flex, Text, View } from "antd-mobile";
 import * as React from "react";
 import { compose } from "react-apollo";
 import { Image, StyleSheet } from "react-native";
