@@ -18,11 +18,15 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
 
-  checkIcon: {},
-  price: {
-    fontSize: 16,
-    fontWeight: "bold",
+  checkIcon: {
+    width: 20,
+    height: 20,
   },
+  // price: {
+    // fontSize: 16,
+    // fontWeight: "bold",
+    // color: "#efb336"
+  // },
   article: {
     fontSize: 16,
     marginLeft: 10
@@ -79,15 +83,24 @@ class SubProducts extends React.Component<
               thumb={
                 this.isActive(subProduct.id)
                   ? <Image
-                      // style={styles.checkIcon}
-                      style={{width: 20, height: 20}}
-                      source={{uri: "https://s-media-cache-ak0.pinimg.com/736x/58/98/d4/5898d4333274c9ebd68988c674bb77a7--poker-night-spaniels.jpg"}}
+                      style={styles.checkIcon}
+                      source={require('../../../../images/circle-check.png')}
                     />
-                  : <Image style={{height: 20, width: 20}} source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU9TovGp-kLvCNLWARzVA4P6Ytnx8Xf0qSIqGZLIqb24BqjWXn"}} />
+                  : <Image 
+                      style={{height: 20, width: 20}}
+                      source={require('../../../../images/circle.png')}
+                    />
               }
 
               extra={
-                <Text style={styles.price}>
+                <Text 
+                  // style={styles.price}
+                  style={{
+                    color: this.isActive(subProduct.id)? "orange": "gray",
+                    fontSize: 16,
+                    fontWeight: "bold",
+                  }}
+                >
                   {subProduct.price + " грн."} 
                 </Text>
               }

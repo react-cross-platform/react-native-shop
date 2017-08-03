@@ -3,7 +3,13 @@ import * as React from "react";
 import { compose } from "react-apollo";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet, Image, WebView } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  WebView,
+  Alert,
+  TouchableHighlight
+} from "react-native";
 import { Hr } from "../../layout/index";
 
 import { ACTION_SELECT_COLOR } from "../constants";
@@ -94,18 +100,13 @@ class ProductInfo extends React.Component<
         : images.filter(image => image.isTitle === true )[0];
 
     return (
-      <View
-      // className={styles.productInfo}
-      >
+      <View>
         {/* Select SubProduct section */}
         {subProducts.length > 1
           ? <View>
-              {/* <hr /> */}
               <SubProducts subProducts={subProducts} />
             </View>
           : <Text></Text>}
-
-        {/* <hr /> */}
 
         {/* Select Color section */}
         <WingBlank>
@@ -128,6 +129,8 @@ class ProductInfo extends React.Component<
                     <View
                       key={i}
                       style={{
+                        justifyContent: "center",
+                        alignItems: "center",
                         backgroundColor: e.colorValue,
                         height: 20,
                         width: 20,
@@ -135,35 +138,56 @@ class ProductInfo extends React.Component<
                         margin: 5
                       }}
                     >
-                      
+                      <Image
+                        source={require("../../../../images/checked.png")}
+                        style={{
+                          height: 15,
+                          width: 15,
+                        }}
+                      />
                     </View>
                     :
-                    <View
+                    <TouchableHighlight
                       key={i}
-                      style={{
-                        backgroundColor: e.colorValue,
-                        height: 20,
-                        width: 20,
-                        borderRadius: 10,
-                        margin: 5
-                      }}
-                    />
+                      onPress={() => this.changeColor(e.id)}
+                    >
+                      <View
+                        style={{
+                          backgroundColor: e.colorValue,
+                          height: 20,
+                          width: 20,
+                          borderRadius: 10,
+                          margin: 5
+                        }}
+                      />
+                    </TouchableHighlight>
                 )
                 :
                 images.filter(el => el.colorValue !== "").map((e, i) =>
                   <View
                     key={i}
                     style={{
+                      justifyContent: "center",
+                      alignItems: "center",
                       backgroundColor: e.colorValue,
                       height: 20,
                       width: 20,
                       borderRadius: 10,
                     }}
-                  />
+                  >
+                    <Image
+                      source={require("../../../../images/checked.png")}
+                      style={{
+                        height: 15,
+                        width: 15,
+                      }}
+                    />
+                  </View>
                 )
               } 
             </View>
-            <View style={{width: "20%", alignItems: "flex-end", justifyContent: "center"}}>    
+            
+            <View style={{width: "25%", alignItems: "flex-end", justifyContent: "center"}}>    
               <Text
                 style={styles.colorName}
               >
