@@ -69,8 +69,7 @@ query product($id: Int) {
 
 // const styles = require("./styles.css");
 const styles = StyleSheet.create({
-  productContainer: {
-  },
+  productContainer: {},
 
   productMainScreen: {
     alignContent: "center"
@@ -85,13 +84,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     margin: 20,
-    textAlign: "center",
+    textAlign: "center"
   },
 
   productTop: {
     backgroundColor: "blue",
-    height: 40,
-
+    height: 40
   },
 
   productTopBack: {},
@@ -117,7 +115,7 @@ interface IConnectedProductProps {
 interface IProductProps {
   id: string;
   isModal: boolean;
-  subProductId: any
+  subProductId: any;
   navigation: any;
 }
 
@@ -146,43 +144,40 @@ class Product extends React.Component<
   //   dispatch({ type: ACTION_ADD_VIEWED_PRODUCT, productId: id });
   // }
 
-  // componentWillReceiveProps = nextProps => {
-  //   const { data } = nextProps;
-  //   const { loading, product } = data;
-  //   if (loading === false) {
-  //     const { subProducts } = product;
-  //     const { subProductId } = nextProps.product;
-  //     const subProductIds = subProducts.map(sp => sp.id);
-  //     const subProductColor = product.images[0].id;
-  //     if (subProductIds.indexOf(subProductId) === -1) {
-  //       this.props.dispatch({
-  //         colorId: subProductColor,
-  //         subProductId: subProductIds[0],
-  //         type: ACTION_SELECT_SUBPRODUCT
-  //       });
-  //     }
-  //   }
-  // };
+  componentWillReceiveProps(nextProps) {
+    const { data } = nextProps;
+    const { loading, product } = data;
+    if (loading === false) {
+      const { subProducts } = product;
+      const { subProductId } = nextProps.product;
+      const subProductIds = subProducts.map(sp => sp.id);
+      const subProductColor = product.images[0].id;
+      if (subProductIds.indexOf(subProductId) === -1) {
+        this.props.dispatch({
+          colorId: subProductColor,
+          subProductId: subProductIds[0],
+          type: ACTION_SELECT_SUBPRODUCT
+        });
+      }
+    }
+  };
 
   render() {
     const { data } = this.props;
     const { loading, product } = data;
     const { subProductId, colorId } = this.props.product;
-    if (loading === true) {
+
+    if (loading === true || subProductId === null) {
       return <Loading />;
     }
-    // if (loading === true || subProductId === null) {
-    //   return <Loading />;
-    // }
+
     const { brand, images, subProducts } = product;
     const image = images[0];
     const activeSubProduct = getActiveSubProduct(subProducts, subProductId);
     const { price, oldPrice } = activeSubProduct;
 
-
-
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <ScrollView
           contentContainerStyle={styles.productContainer}
           // showsHorizontalScrollIndicator= {true}
@@ -190,25 +185,12 @@ class Product extends React.Component<
           // alwaysBounceVe={true}
           // scrollEnabled={true}
         >
-
-          <View
-            style={styles.productContent}
-          >
-            <Flex style={{flex: 1, alignItems: "stretch" }}>
-              <Image 
-                resizeMode="contain" 
-                style={{
-                  flex: 1,
-                  alignSelf: 'center',
-                  height: 370,
-                }}
-                source={{uri: image.src }}
-              />
-            </Flex>
+          <Images images={images} />
+          <View style={styles.productContent}>
             <Flex
               justify="around"
               direction="column"
-               style={styles.productMainScreen}
+              style={styles.productMainScreen}
             >
               <Text style={styles.infoTitle}>
                 {product.name} {brand.name} {"\n"} {activeSubProduct.article}
@@ -231,7 +213,7 @@ const mapStateToProps: any = state => ({
   product: state.product
 });
 
-export default compose<any, any,any>(
+export default compose<any, any, any>(
   connect<IConnectedProductProps, {}, IProductProps>(mapStateToProps),
   graphql(gql(PRODUCT_QUERY), options)
 )(Product as any);

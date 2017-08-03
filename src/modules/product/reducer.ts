@@ -5,7 +5,7 @@ import { ACTION_SELECT_SUBPRODUCT, ACTION_SELECT_COLOR } from "./constants";
 
 const DEFAULT_PRODUCT = {
   colorId: null,
-  subProductId: 30454
+  subProductId: null
 };
 
 const product = (state = DEFAULT_PRODUCT, action) => {

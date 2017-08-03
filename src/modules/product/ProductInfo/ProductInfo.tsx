@@ -3,7 +3,7 @@ import * as React from "react";
 import { compose } from "react-apollo";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, WebView } from "react-native";
 import { Hr } from "../../layout/index";
 
 import { ACTION_SELECT_COLOR } from "../constants";
@@ -23,10 +23,15 @@ const styles = StyleSheet.create({
 
   description: {
   },
-
-  colors: {},
+  colors: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   colorIcon: {},
-  color: {
+  colorName: {
+    alignItems: 'center',
     color: "gray",
   },
 
@@ -37,7 +42,12 @@ const styles = StyleSheet.create({
 
   paramValue: {
     fontSize: 16,
+  },
+
+  info: {
+    height: 250
   }
+
 });
 
 const { TabPane } = Tabs;
@@ -69,6 +79,7 @@ class ProductInfo extends React.Component<
   IConnectedProductInfoProps & IProductInfoProps,
   any
 > {
+
   changeColor = colorId => {
     this.props.dispatch({ type: ACTION_SELECT_COLOR, colorId });
   };
@@ -79,19 +90,9 @@ class ProductInfo extends React.Component<
     const { subProductId, colorId } = this.props.product;
     const activeImage =
       activeSubProduct.id === subProductId
-        ? images.filter(image => image.id === colorId)[0]
-        : images.filter(image => image.isTitle === true)[0];
+        ? images.filter(image => image.id === colorId )[0]
+        : images.filter(image => image.isTitle === true )[0];
 
-    // <Text
-    //   className={styles.description}
-    //   dangerouslySetInnerHTML={createMarkup(dataProduct.description)}
-    // />
-    // <WebView 
-      // source={require(dataProduct.description)}
-      // source={{html: dataProduct.description.toString()}}
-      // ref={'webview'}
-      // automaticallyAdjustContentInsets={false}
-    // />
     return (
       <View
       // className={styles.productInfo}
@@ -108,57 +109,68 @@ class ProductInfo extends React.Component<
 
         {/* Select Color section */}
         <WingBlank>
-          <Flex justify="between">
-            <Text
-              style={styles.sectionTitle}
-            >
-              Цвет
-            </Text>
-
-            {/*          <View className={styles.colors}>
-              {images.filter(el => el.colorValue !== "").length > 1
-                ? images.filter(el => el.colorValue !== "").map(
-                    (e, i) =>
-                      e.id === this.props.product.colorId
-                        ? <Icon
-                            className={styles.colorIcon}
-                            key={i}
-                            type={require("svg-sprite-loader!./circle-check_color.svg")}
-                            style={{
-                              fill: e.colorValue,
-                              color: e.colorValue
-                            }}
-                          />
-                        : <Icon
-                            className={styles.colorIcon}
-                            key={i}
-                            onClick={() => this.changeColor(e.id)}
-                            type={require("svg-sprite-loader!./icon-circle-for-colors.svg")}
-                            style={{
-                              fill: e.colorValue,
-                              color: e.colorValue
-                            }}
-                          />
-                  )
-                : images.filter(el => el.colorValue !== "").map((e, i) =>
-                    <Icon
-                      className={styles.tabIcon}
+          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{width: "20%"}}>
+              <Text
+                style={styles.sectionTitle}
+              >
+                Цвет
+              </Text>
+            </View>
+            <View style={styles.colors}>
+              {
+                images.filter(el => el.colorValue !== "").length > 1
+                ?
+                images.filter(el => el.colorValue !== "").map(
+                  (e, i) =>
+                  e.id === this.props.product.colorId
+                    ? 
+                    <View
                       key={i}
-                      type={require("svg-sprite-loader!./check-circle.svg")}
                       style={{
-                        fill: e.colorValue,
-                        color: e.colorValue
+                        backgroundColor: e.colorValue,
+                        height: 20,
+                        width: 20,
+                        borderRadius: 10,
+                        margin: 5
+                      }}
+                    >
+                      
+                    </View>
+                    :
+                    <View
+                      key={i}
+                      style={{
+                        backgroundColor: e.colorValue,
+                        height: 20,
+                        width: 20,
+                        borderRadius: 10,
+                        margin: 5
                       }}
                     />
-                  )}
-            </View> */}
-
-            <Text
-              style={styles.color}
-            >
-              {activeImage.colorName}
-            </Text>
-          </Flex>
+                )
+                :
+                images.filter(el => el.colorValue !== "").map((e, i) =>
+                  <View
+                    key={i}
+                    style={{
+                      backgroundColor: e.colorValue,
+                      height: 20,
+                      width: 20,
+                      borderRadius: 10,
+                    }}
+                  />
+                )
+              } 
+            </View>
+            <View style={{width: "20%", alignItems: "flex-end", justifyContent: "center"}}>    
+              <Text
+                style={styles.colorName}
+              >
+                { activeImage.colorName }
+              </Text>
+            </View>
+          </View>
         </WingBlank>
 
         <Hr />
@@ -215,11 +227,14 @@ class ProductInfo extends React.Component<
         {/* Product description section */}
         <WingBlank>
           <Text style={styles.sectionTitle}>О товаре</Text>
-          <Text>
-            {dataProduct.description}
-          </Text>
-
         </WingBlank>
+        <WebView 
+          source={{ html: dataProduct.description }}
+          ref={'webview'}
+          // automaticallyAdjustContentInsets={false}
+          scrollEnabled={true}
+          style={styles.info}
+        />
       </View>
     );
   }

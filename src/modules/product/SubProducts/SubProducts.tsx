@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
   },
   article: {
     fontSize: 16,
+    marginLeft: 10
   },
 });
 
@@ -44,6 +45,10 @@ class SubProducts extends React.Component<
   IConnectedSubProductsProps & ISubProductsProps,
   any
 > {
+  // componentWillMount(){
+  //   const currentSubProductId = this.props.subProducts[0].id;
+  //   this.props.dispatch({type: ACTION_SELECT_SUBPRODUCT, subProductId: currentSubProductId, colorId: currentSubProductId})
+  // }
   onChangePrice = elId => {
     this.props.dispatch({
       colorId: this.props.product.colorId,
@@ -53,7 +58,7 @@ class SubProducts extends React.Component<
   };
 
   isActive = subProductId => {
-    return subProductId === this.props.product.subProductId.toString();
+    return subProductId === this.props.product.subProductId;
   };
 
   render() {
@@ -78,11 +83,12 @@ class SubProducts extends React.Component<
                       style={{width: 20, height: 20}}
                       source={{uri: "https://s-media-cache-ak0.pinimg.com/736x/58/98/d4/5898d4333274c9ebd68988c674bb77a7--poker-night-spaniels.jpg"}}
                     />
-                  : <Image style={{height: 20, width: 20}} source={{uri: "https://s-media-cache-ak0.pinimg.com/736x/e7/af/fb/e7affb6c968d30e5c325575b1b6b0e1b--best-gray-paint-gray-paint-colors.jpg"}} />
+                  : <Image style={{height: 20, width: 20}} source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU9TovGp-kLvCNLWARzVA4P6Ytnx8Xf0qSIqGZLIqb24BqjWXn"}} />
               }
+
               extra={
                 <Text style={styles.price}>
-                  {subProduct.price}
+                  {subProduct.price + " грн."} 
                 </Text>
               }
             >

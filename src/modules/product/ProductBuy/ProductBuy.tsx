@@ -1,5 +1,6 @@
 import { HEIGHT } from '../../layout/Header/Header';
 import { Text, Flex, Toast } from "antd-mobile";
+import connect from "react-redux";
 import * as React from 'react';
 import { StyleSheet, View } from "react-native";
 
@@ -70,4 +71,4 @@ class ProductBuy extends React.Component<
   }
 }
 
-export default ProductBuy;
+export default (ProductBuy);

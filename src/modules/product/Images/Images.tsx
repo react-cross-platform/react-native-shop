@@ -1,13 +1,18 @@
 import { Carousel, Flex } from "antd-mobile";
 import * as React from "react";
-
-import { scaleImageSize } from "../Image/Image";
 import { IImage } from "../model";
 import { StyleSheet, Image } from "react-native";
 
-// const styles = require("./styles.css");
 const styles = StyleSheet.create({
-  image: {},
+  image: {
+    flex: 1,
+    alignSelf: "center",
+    height: 475
+  },
+
+  carousel: {
+    backgroundColor: "white"
+  },
 });
 
 interface IImagesProps {
@@ -25,28 +30,18 @@ class Images extends React.Component<IImagesProps, IImagesState> {
 
   render() {
     const { images } = this.props;
-    // const maxImageHeight = Math.max(
-    //   ...images.map(img => scaleImageSize(img.width, img.height, 1.5).height)
-    // );
 
-    const height = window.innerHeight * 0.65;
     const dotStyle = {
       position: "relative",
-      // top: innerHeight * 0.02
     };
     if (images.length > 1) {
       return (
         <Carousel
           autoplay={false}
-          // className={styles.carousel}
+          style={styles.carousel}
           dots={images.length > 1}
           infinite={false}
           selectedIndex={0}
-          // style={{
-            // height
-          // }}
-          // dotStyle={dotStyle}
-          // dotActiveStyle={dotStyle}
         >
           {this.props.images.map((image, i) =>
             <Flex
@@ -54,10 +49,12 @@ class Images extends React.Component<IImagesProps, IImagesState> {
               justify="center"
               align="center"
               style={{
-                height
+                flex: 1,
+                alignItems: "stretch"
               }}
             >
               <Image
+                resizeMode="contain"
                 style={styles.image}
                 source={{ uri: image.src }}
                 onLoad={() => {
@@ -78,11 +75,14 @@ class Images extends React.Component<IImagesProps, IImagesState> {
           justify="center"
           align="center"
           style={{
-            height: image.height
+            flex: 1,
+            alignItems: "stretch",
+            backgroundColor: "white"
           }}
         >
           <Image
-            // className={styles.image}
+            resizeMode="contain"
+            style={styles.image}
             source={{ uri: image.src }}
           />
         </Flex>
