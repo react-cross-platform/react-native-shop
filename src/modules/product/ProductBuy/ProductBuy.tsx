@@ -1,24 +1,29 @@
-import { HEIGHT } from '../../layout/Header/Header';
+import { HEIGHT } from "../../layout/Header/Header";
 import { Text, Flex, Toast } from "antd-mobile";
 import connect from "react-redux";
-import * as React from 'react';
+import * as React from "react";
 import { StyleSheet, View } from "react-native";
 
-// const styles = require("./styles.css");
 const styles = StyleSheet.create({
-
-  buyPrice: {
-    justifyContent: 'center',
-    backgroundColor: "blue",
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  containerPrice: {
+    justifyContent: "center",
+    backgroundColor: "white",
     width: "50%",
     height: 40,
+    borderTopColor: "lightgray",
+    borderTopWidth: 1
   },
 
   buyButton: {
-    justifyContent: 'center',
-    backgroundColor: "gray",
+    justifyContent: "center",
+    backgroundColor: "orange",
     width: "50%",
-    height: 40,
+    height: 40
   },
 
   price: {
@@ -49,26 +54,18 @@ class ProductBuy extends React.Component<
   render() {
     const { price, oldPrice } = this.props;
     return (
-      <View 
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <View style={styles.buyPrice}>
+      <View style={styles.footer}>
+        <View style={styles.containerPrice}>
           <Text style={styles.price}>
             {parseInt(String(price), 10)} грн
           </Text>
         </View>
         <View style={styles.buyButton}>
-          <Text style={styles.buy}>
-            Купить
-          </Text>
+          <Text style={styles.buy}>Купить</Text>
         </View>
       </View>
     );
   }
 }
 
-export default (ProductBuy);
+export default ProductBuy;
