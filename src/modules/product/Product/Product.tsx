@@ -1,14 +1,12 @@
-import { Text, Flex, Icon, WingBlank } from "antd-mobile";
+import { Flex, Text } from "antd-mobile";
 import * as React from "react";
 import { compose, gql, graphql } from "react-apollo";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet, Image, ScrollView, View } from "react-native";
 
 import { IData } from "../../../model";
-import { ACTION_ADD_VIEWED_PRODUCT } from "../../catalog/constants";
-import { HEIGHT } from "../../layout/Header/Header";
-import { Loading, Hr } from "../../layout/index";
+import { Loading } from "../../layout/index";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
 import { Images, ProductBuy, ProductInfo } from "../index";
 import { ICurrentProduct, IProduct, ISubProduct } from "../model";
@@ -160,10 +158,10 @@ class Product extends React.Component<
         });
       }
     }
-  };
+  }
 
   render() {
-    const { data } = this.props;
+    const { data, navigation } = this.props;
     const { loading, product } = data;
     const { subProductId, colorId } = this.props.product;
 
@@ -185,7 +183,7 @@ class Product extends React.Component<
           // alwaysBounceVe={true}
           // scrollEnabled={true}
         >
-          <Images images={images} />
+          <Images navigation={navigation} images={images} />
           <View style={styles.productContent}>
             <Flex
               justify="around"

@@ -1,4 +1,4 @@
-  import { Flex, Text, View } from "antd-mobile";
+import { Flex, Text, View } from "antd-mobile";
 import * as React from "react";
 import { compose } from "react-apollo";
 import { Image, StyleSheet } from "react-native";
@@ -6,16 +6,14 @@ import Ripple from "react-native-material-ripple";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { ACTION_ADD_VIEWED_CATEGORY } from "../../catalog/constants";
 import { ICatalog } from "../../catalog/model";
 import { ICategory } from "../../product/model";
 import { ILayout } from "../model";
 
-// const styles = require("./styles.css");
-
 const styles = StyleSheet.create({
   flexItem: {},
   card: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
@@ -46,7 +44,6 @@ interface IConnectedSubCatalogProps {
 interface ISubCatalogProps {
   navigation: any;
   categories: [ICategory];
-  // isDrawer: boolean;
 }
 
 function chunk(arr, len = 1) {
@@ -68,47 +65,32 @@ class SubCatalog extends React.Component<
     this.props.navigation.navigate("Category", { id, name });
   };
 
-  // handleClick = (event, id) => {
-  //   const { navigate } = this.props.navigation;
-  //   navigate("Category", {id: id});
-  // };
-
   isViewed(id) {
     const { catalog, categories } = this.props;
     return catalog.viewedCategoryIds.indexOf(id) !== -1;
   }
 
-  isCurrentCategory = id => {
-    // const { router: { location: { pathname } } } = this.props;
-    // return pathname.search(`/category/${id}`) !== -1;
-  };
-
   render() {
-    const {
-      dispatch,
-      categories
-      // isDrawer
-    } = this.props;
+    const { dispatch, categories } = this.props;
     return (
       <View>
         {chunk(categories, 2).map((cats, i) =>
           <Flex justify="center" key={i} wrap="wrap">
             {cats.map((cat, index) =>
-              <Flex.Item key={`cat${index}`}>
-                <View style={styles.card} justify="center">
-                  <Image
-                    resizeMode="contain"
-                    style={styles.image}
-                    source={{ uri: cat.image.src }}
-                  />
-                  <Text
-                    style={styles.text}
-                    onPress={() => this.handleNavigation(cat.id, cat.name)}
-                  >
-                    {cat.name}
-                  </Text>
-                </View>
-              </Flex.Item>
+              <Ripple
+                key={index}
+                onPress={() => this.handleNavigation(cat.id, cat.name)}
+                style={styles.card}
+              >
+                <Image
+                  resizeMode="contain"
+                  style={styles.image}
+                  source={{ uri: cat.image.src }}
+                />
+                <Text style={styles.text}>
+                  {cat.name}
+                </Text>
+              </Ripple>
             )}
           </Flex>
         )}
@@ -120,7 +102,6 @@ class SubCatalog extends React.Component<
 const mapStateToProps: any = state => ({
   catalog: state.catalog,
   layout: state.layout
-  // router: state.router
 });
 
 export default compose(

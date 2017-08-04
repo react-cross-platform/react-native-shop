@@ -1,8 +1,8 @@
-import { Flex, View, WingBlank } from "antd-mobile";
+import { View } from "antd-mobile";
 import update from "immutability-helper";
 import * as React from "react";
 import { compose, gql, graphql } from "react-apollo";
-import { ActivityIndicator, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
 import { IData } from "../../../model";
@@ -37,6 +37,15 @@ const ALL_PRODUCTS_QUERY = `
           colorValue
           isTitle
         }
+        images {
+          id
+          src
+          width
+          height
+          colorValue
+          colorName
+          isTitle
+        }
         subProducts {
           id
           article
@@ -54,9 +63,6 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: 3,
     marginBottom: 5
-  },
-  loading: {
-    margin: 50
   }
 });
 
@@ -76,10 +82,7 @@ interface IProductsProps {
   navigation: any;
 }
 
-interface IProductsState {
-  // haveMoreProducts?: boolean;
-  // scrolledProducts?: number;
-}
+interface IProductsState {}
 
 const options = {
   options: props => ({
@@ -96,33 +99,36 @@ class Products extends React.Component<
   IConnectedProductsProps & IProductsProps,
   IProductsState
 > {
-  // state = {
-  //   haveMoreProducts: true,
-  //   scrolledProducts: 0
-  // };
-
   _keyExtractor = (item, index) => index;
+
+  filterProducts = products => {
+    return products.filter(item => item.subProducts[0] !== undefined);
+  };
+
+  renderFooter = () => {
+    return <Loading />;
+  };
 
   render() {
     const { navigation, data } = this.props;
     const { loading, allProducts, fetchMore, networkStatus, refetch } = data;
 
-    if (data.networkStatus === 1) {
-      return <ActivityIndicator style={styles.loading} />;
+    if (networkStatus === 1) {
+      return <Loading />;
     }
 
     const { products, total } = allProducts;
-    const filteredProducts = products.filter(item => !!item.subProducts);
     return (
       <View style={styles.products}>
         <FlatList
-          data={filteredProducts}
+          data={this.filterProducts(products)}
           refreshing={networkStatus === 4}
           onRefresh={() => refetch()}
           onEndReachedThreshold={0.5}
           keyExtractor={this._keyExtractor}
           horizontal={false}
           numColumns={2}
+          ListFooterComponent={this.renderFooter}
           onEndReached={() => {
             fetchMore({
               variables: { offset: allProducts.products.length },
@@ -133,7 +139,9 @@ class Products extends React.Component<
                 return update(prev, {
                   allProducts: {
                     products: {
-                      $push: fetchMoreResult.allProducts.products
+                      $push: this.filterProducts(
+                        fetchMoreResult.allProducts.products
+                      )
                     }
                   }
                 });

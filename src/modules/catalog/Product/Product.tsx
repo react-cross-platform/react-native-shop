@@ -1,18 +1,17 @@
-import { View, Text, Flex, Icon, WhiteSpace } from "antd-mobile";
+import { Text, View } from "antd-mobile";
 import * as React from "react";
+import { StyleSheet } from "react-native";
+import Ripple from "react-native-material-ripple";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet, Image } from "react-native";
 
-// import { scaleImageSize } from "../../product/index";
+import { Images } from "../../product/index";
 import { IImageWithColor, IProduct } from "../../product/model";
 import { ICatalog } from "../model";
 
-// const styles = require("./styles.css");
-const maxImageHeight = 180;
-
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     backgroundColor: "white",
     borderRadius: 4,
     borderColor: "#bebfc1",
@@ -33,7 +32,7 @@ const styles = StyleSheet.create({
   },
 
   infoContainer: {
-    margin: 5
+    padding: 5
   },
 
   info: {
@@ -97,11 +96,11 @@ class Product extends React.Component<
       subProducts,
       brand,
       imagesWithColor,
-      catalog
+      catalog,
+      navigation
     } = this.props;
     const titleImage = this.state.titleImage;
     const subProduct = subProducts[0];
-    const url = `/product/${id}`;
     const prices = subProducts.map(el => el.price);
     const isSinglePrice = prices.length === 1;
     const minPrice = getMinOfArray(prices);
@@ -123,66 +122,14 @@ class Product extends React.Component<
       width -= 32;
     }
 
-    // const maxImageHeight = Math.max(
-    //   ...imagesWithColor.map(
-    //     img => scaleImageSize(img.width, img.height).height
-    //   )
-    // );
-
-    const linkParams = {
-      to: {
-        pathname: url,
-        state: { modal: true }
-      }
-    };
-
-    const height = window.innerHeight * 0.73;
-
     return (
       <View style={styles.card}>
-        {/*         {this.isViewed()
-          ? <div style={{ position: "absolute", top: 3, left: 10 }}>
-              <Icon
-                type={require("!svg-sprite-loader!./viewed.svg")}
-                size="sm"
-                style={{ fill: "orange" }}
-              />
-            </div>
-          : ""} */}
-
-        <Flex style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            resizeMode="contain"
-            source={{ uri: titleImage.src }}
-          />
-        </Flex>
-
-        {/* Images */}
-
-        {/*
-          {imagesWithColor.length > 1
-          ? <Flex justify="center">
-              {imagesWithColor.map((image, i) =>
-                <Icon
-                  key={i}
-                  type={require("!svg-sprite-loader!./dot.svg")}
-                  size={image.id === titleImage.id ? "lg" : "md"}
-                  style={{
-                    fill: image.colorValue
-                  }}
-                  onClick={e => this.changeTitleImage(e, image)}
-                />
-              )}
-            </Flex>
-          : ""}
-        */}
-
-        <View style={styles.infoContainer}>
-          <Text
-            style={styles.info}
-            onPress={() => this.handleNavigation(id, name)}
-          >
+        <Images navigation={navigation} images={imagesWithColor} />
+        <Ripple
+          style={styles.infoContainer}
+          onPress={() => this.handleNavigation(id, name)}
+        >
+          <Text style={styles.info}>
             {name} {brand.name} {subProduct.article}
           </Text>
           <Text
@@ -192,7 +139,7 @@ class Product extends React.Component<
             {isSinglePrice ? "" : "от "}
             {parseInt(minPrice, 10)} грн
           </Text>
-        </View>
+        </Ripple>
       </View>
     );
   }

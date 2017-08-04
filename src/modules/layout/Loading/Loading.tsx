@@ -1,17 +1,15 @@
-import { View, Text, Button, Icon, List, WingBlank } from "antd-mobile";
 import * as React from "react";
+import { ActivityIndicator } from "react-native";
 import { StyleSheet } from "react-native";
 
-// const styles = require("./styles.css");
-const styles = StyleSheet.create({ loading: {} });
+const styles = StyleSheet.create({
+  loading: {
+    margin: 15
+  }
+});
 
 const Loading = () => {
-  return <Text>Loading...</Text>;
-  // return (
-  //   <View className={styles.loading}>
-  //     <Icon type="loading" size="lg" />
-  //   </View>
-  // );
+  return <ActivityIndicator size="large" style={styles.loading} />;
 };
 
 export default Loading;

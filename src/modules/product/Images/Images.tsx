@@ -1,72 +1,79 @@
 import { Carousel, Flex } from "antd-mobile";
 import * as React from "react";
+import { Image, ScrollView, StyleSheet } from "react-native";
+
 import { IImage } from "../model";
-import { StyleSheet, Image } from "react-native";
 
 const styles = StyleSheet.create({
   image: {
     flex: 1,
     alignSelf: "center",
-    height: 475
-  },
-
-  carousel: {
-    backgroundColor: "white"
-  },
+    height: "90%"
+  }
 });
 
 interface IImagesProps {
+  navigation: any;
   images: [IImage];
 }
 
-interface IImagesState {
-  initialHeight: any;
-}
+interface IImagesState {}
 
 class Images extends React.Component<IImagesProps, IImagesState> {
-  state = {
-    initialHeight: 200
-  };
-
   render() {
-    const { images } = this.props;
+    const { images, navigation } = this.props;
+
+    let height;
+    let carouselHeight;
+    let margin;
+    if (navigation.state.routeName == "Product") {
+      height = 475;
+      carouselHeight = height;
+      margin = 10;
+    } else {
+      height = 250;
+      carouselHeight = height * 0.75;
+      margin = 5;
+    }
 
     const dotStyle = {
-      position: "relative",
+      position: "relative"
     };
     if (images.length > 1) {
       return (
-        <Carousel
-          autoplay={false}
-          style={styles.carousel}
-          dots={images.length > 1}
-          infinite={false}
-          selectedIndex={0}
-        >
-          {this.props.images.map((image, i) =>
-            <Flex
-              key={i}
-              justify="center"
-              align="center"
-              style={{
-                flex: 1,
-                alignItems: "stretch"
-              }}
-            >
-              <Image
-                resizeMode="contain"
-                style={styles.image}
-                source={{ uri: image.src }}
-                onLoad={() => {
-                  window.dispatchEvent(new Event("resize"));
-                  this.setState({
-                    initialHeight: null
-                  });
+        <ScrollView style={{ height }}>
+          <Carousel
+            autoplay={false}
+            style={{
+              backgroundColor: "white",
+              height: carouselHeight
+            }}
+            dots={images.length > 1}
+            infinite={false}
+            selectedIndex={0}
+            dotStyle={{ top: 12 }}
+          >
+            {images.map((image, i) =>
+              <Flex
+                key={i}
+                justify="center"
+                align="center"
+                style={{
+                  flex: 1,
+                  alignItems: "stretch",
+                  marginLeft: margin,
+                  marginRight: margin
                 }}
-              />
-            </Flex>
-          )}
-        </Carousel>
+              >
+                <Image
+                  resizeMode="contain"
+                  style={styles.image}
+                  source={{ uri: image.src }}
+                />
+              </Flex>
+            )}
+          </Carousel>
+        </ScrollView>
       );
     } else {
       const image = images[0];
@@ -77,7 +84,9 @@ class Images extends React.Component<IImagesProps, IImagesState> {
           style={{
             flex: 1,
             alignItems: "stretch",
-            backgroundColor: "white"
+            backgroundColor: "white",
+            marginLeft: margin,
+            marginRight: margin
           }}
         >
           <Image
