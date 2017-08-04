@@ -22,13 +22,18 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
-# Android/IntelliJ
+# IntelliJ
 #
 build/
 .idea
+*.iml
+
+# Android
 .gradle
 local.properties
-*.iml
+android/out
+android/app/build
+!app/build/outputs/apk/app-release.apk
 
 # node.js
 #
@@ -56,3 +61,4 @@ fastlane/screenshots
 !.vscode/launch.json
 !.vscode/tasks.json
 !.vscode/settings.json
+
