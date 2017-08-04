@@ -1,3 +1,4 @@
+import Hr from "../../layout/Hr/Hr";
 import { Flex, Text } from "antd-mobile";
 import * as React from "react";
 import { compose, gql, graphql } from "react-apollo";

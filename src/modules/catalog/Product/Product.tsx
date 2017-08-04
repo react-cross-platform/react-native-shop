@@ -13,12 +13,11 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     backgroundColor: "white",
-    borderRadius: 4,
+    borderRadius: 3,
     borderColor: "#bebfc1",
     borderWidth: 1,
     height: 250,
-    width: "48%",
-    margin: 3
+    margin: 2
   },
 
   imageContainer: {

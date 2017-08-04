@@ -10,7 +10,6 @@ import { View, Text } from "antd-mobile";
 import { Loading } from "../../modules/layout/index";
 import { Products } from "../../modules/catalog/index";
 
-
 // const styles = require("./styles.css");
 const styles = StyleSheet.create({
   category: {},
@@ -19,8 +18,7 @@ const styles = StyleSheet.create({
 
 interface IDataCategory extends IData {}
 
-interface IConnectedCategoryProps {
-}
+interface IConnectedCategoryProps {}
 
 interface ICategoryProps {
   id: string;
@@ -38,8 +36,6 @@ class CategoryScreen extends React.Component<
   render() {
     const { navigation } = this.props;
     const { id } = navigation.state.params;
-
-
     return <Products categoryId={id} navigation={navigation} />;
   }
 }

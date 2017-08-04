@@ -10,8 +10,6 @@ import { Loading } from "../../layout/index";
 import { Product } from "../index";
 import { IAllProduct, ICatalog } from "../model";
 
-// import MasonryInfiniteScroller from "react-masonry-infinite";
-// const ALL_PRODUCTS_QUERY = require("./allProducts.gql");
 const ALL_PRODUCTS_QUERY = `
   query allProducts($categoryId: Int, $offset: Int, $first: Int) {
     allProducts(categoryId: $categoryId, offset: $offset, first: $first) {
@@ -60,9 +58,7 @@ const ALL_PRODUCTS_QUERY = `
 
 const styles = StyleSheet.create({
   products: {
-    marginTop: 3,
-    marginLeft: 3,
-    marginBottom: 5
+    margin: 2
   }
 });
 

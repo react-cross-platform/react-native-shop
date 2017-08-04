@@ -25,15 +25,15 @@ class Images extends React.Component<IImagesProps, IImagesState> {
 
     let height;
     let carouselHeight;
-    let margin;
+    let padding;
     if (navigation.state.routeName == "Product") {
       height = 475;
       carouselHeight = height;
-      margin = 10;
+      padding = 10;
     } else {
       height = 250;
-      carouselHeight = height * 0.75;
-      margin = 5;
+      carouselHeight = height * 0.72;
+      padding = 5;
     }
 
     const dotStyle = {
@@ -61,8 +61,8 @@ class Images extends React.Component<IImagesProps, IImagesState> {
                 style={{
                   flex: 1,
                   alignItems: "stretch",
-                  marginLeft: margin,
-                  marginRight: margin
+                  paddingLeft: padding,
+                  paddingRight: padding
                 }}
               >
                 <Image
@@ -85,8 +85,8 @@ class Images extends React.Component<IImagesProps, IImagesState> {
             flex: 1,
             alignItems: "stretch",
             backgroundColor: "white",
-            marginLeft: margin,
-            marginRight: margin
+            marginLeft: padding,
+            marginRight: padding
           }}
         >
           <Image

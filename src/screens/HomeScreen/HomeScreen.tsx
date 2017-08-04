@@ -10,7 +10,7 @@ import { Catalog, FlatPages } from "../../modules/layout/index";
 // const styles = require("./styles.css");
 const styles = StyleSheet.create({
   homePage: {
-    margin: 4
+    margin: 2
   }
 });
 

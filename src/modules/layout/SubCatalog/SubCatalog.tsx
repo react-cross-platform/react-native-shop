@@ -17,22 +17,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    borderRadius: 4,
+    borderRadius: 3,
     borderColor: "#bebfc1",
     borderWidth: 1,
     height: 140,
-    margin: 3
+    margin: 2
   },
   image: {
     width: "60%",
     height: "60%"
   },
-  text: {
+  name: {
     fontSize: 16,
-    margin: 5
-  },
-  category: {},
-  name: {}
+    margin: 5,
+    textAlign: "center"
+  }
 });
 
 interface IConnectedSubCatalogProps {
@@ -87,7 +86,7 @@ class SubCatalog extends React.Component<
                   style={styles.image}
                   source={{ uri: cat.image.src }}
                 />
-                <Text style={styles.text}>
+                <Text style={styles.name}>
                   {cat.name}
                 </Text>
               </Ripple>
