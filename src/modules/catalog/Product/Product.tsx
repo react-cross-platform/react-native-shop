@@ -1,13 +1,13 @@
-import { Text, View } from "antd-mobile";
-import * as React from "react";
-import { StyleSheet } from "react-native";
-import Ripple from "react-native-material-ripple";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
+import { Text, View } from 'antd-mobile';
+import * as React from 'react';
+import { StyleSheet } from 'react-native';
+import Ripple from 'react-native-material-ripple';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
-import { Images } from "../../product/index";
-import { IImageWithColor, IProduct } from "../../product/model";
-import { ICatalog } from "../model";
+import { Images } from '../../product/index';
+import { IImageWithColor, IProduct } from '../../product/model';
+import { ICatalog } from '../model';
 
 const styles = StyleSheet.create({
   card: {

@@ -1,8 +1,6 @@
-import { HEIGHT } from "../../layout/Header/Header";
-import { Text, Flex, Toast } from "antd-mobile";
-import connect from "react-redux";
-import * as React from "react";
-import { StyleSheet, View } from "react-native";
+import { Text } from 'antd-mobile';
+import * as React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   footer: {

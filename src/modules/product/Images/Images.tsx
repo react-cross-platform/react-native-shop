@@ -1,8 +1,8 @@
-import { Carousel, Flex } from "antd-mobile";
-import * as React from "react";
-import { Image, ScrollView, StyleSheet } from "react-native";
+import { Carousel, Flex } from 'antd-mobile';
+import * as React from 'react';
+import { Image, ScrollView, StyleSheet } from 'react-native';
 
-import { IImage } from "../model";
+import { IImage } from '../model';
 
 const styles = StyleSheet.create({
   image: {

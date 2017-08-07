@@ -1,7 +1,0 @@
-query flatpages {
-  flatPages {
-    id
-    name
-    content
-  }
-}

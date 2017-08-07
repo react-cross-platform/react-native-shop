@@ -6,7 +6,6 @@ import layout from "./modules/layout/reducer";
 import product from "./modules/product/reducer";
 
 const apollo: any = client.reducer();
-// const router: any = routerReducer;
 
 const rootReducers = combineReducers(
   {
@@ -14,7 +13,6 @@ const rootReducers = combineReducers(
     catalog,
     layout,
     product,
-    // router
   } as any
 );
 

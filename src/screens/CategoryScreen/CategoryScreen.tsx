@@ -1,16 +1,9 @@
-import { ILayout } from "../../modules/layout/model";
-import { ICategory } from "../../modules/product/model";
-import { IData } from "../../model";
 import * as React from "react";
-import { compose, gql, graphql } from "react-apollo";
-import { connect } from "react-redux";
 import { StyleSheet } from "react-native";
-import { Dispatch } from "redux";
-import { View, Text } from "antd-mobile";
-import { Loading } from "../../modules/layout/index";
+
+import { IData } from "../../model";
 import { Products } from "../../modules/catalog/index";
 
-// const styles = require("./styles.css");
 const styles = StyleSheet.create({
   category: {},
   categoryName: {}

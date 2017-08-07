@@ -1,11 +1,10 @@
-import { createStore, combineReducers, compose, applyMiddleware } from "redux";
-// import { composeWithDevTools } from "redux-devtools-extension";
-import logger from "redux-logger";
+import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
-import rootReducer from "./rootReducer";
-import client from "./graphqlClient";
-import { Platform } from "react-native";
 
+import client from "./graphqlClient";
+import rootReducer from "./rootReducer";
+
+// import { composeWithDevTools } from "redux-devtools-extension";
 const initialState = {};
 
 const middlewares = [thunk, client.middleware()];

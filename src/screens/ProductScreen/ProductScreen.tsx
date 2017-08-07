@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Product } from "../../modules/product/index";
 
 interface IProductScreenProps {
@@ -11,7 +12,13 @@ class ProductScreen extends React.Component<IProductScreenProps, null> {
   });
   render() {
     const { navigation } = this.props;
-    return <Product navigation={navigation} id={navigation.state.params.id} isModal={false} />;
+    return (
+      <Product
+        navigation={navigation}
+        id={navigation.state.params.id}
+        isModal={false}
+      />
+    );
   }
 }
 

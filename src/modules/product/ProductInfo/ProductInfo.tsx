@@ -11,8 +11,7 @@ import { ICurrentProduct, IProduct, ISubProduct } from "../model";
 import { Hr } from "../../layout/index";
 
 const styles = StyleSheet.create({
-  productInfo: {},
-  sectionTitle: {
+  title: {
     color: "#1296db",
     fontSize: 18,
     fontWeight: "bold",
@@ -20,7 +19,24 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
 
+  colorSection: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+
+  circle: {
+    height: 15,
+    width: 15
+  },
+
+  checkedCircle: {
+    height: 15,
+    width: 15
+  },
+
   description: {},
+
   colors: {
     flex: 1,
     flexDirection: "row",
@@ -28,6 +44,13 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   colorIcon: {},
+
+  containerColorName: {
+    width: "25%",
+    alignItems: "flex-end",
+    justifyContent: "center"
+  },
+
   colorName: {
     alignItems: "center",
     color: "gray"
@@ -89,22 +112,14 @@ class ProductInfo extends React.Component<
       <View>
         {/* Select SubProduct section */}
         {subProducts.length > 1
-          ? <View>
-              <SubProducts subProducts={subProducts} />
-            </View>
+          ? <SubProducts subProducts={subProducts} />
           : <Text />}
 
         {/* Select Color section */}
         <WingBlank>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between"
-            }}
-          >
+          <View style={styles.colorSection}>
             <View style={{ width: "20%" }}>
-              <Text style={styles.sectionTitle}>Цвет</Text>
+              <Text style={styles.title}>Цвет</Text>
             </View>
             <View style={styles.colors}>
               {images.filter(el => el.colorValue !== "").length > 1
@@ -125,10 +140,7 @@ class ProductInfo extends React.Component<
                           >
                             <Image
                               source={require("../../../../images/checked.png")}
-                              style={{
-                                height: 15,
-                                width: 15
-                              }}
+                              style={styles.checkedCircle}
                             />
                           </View>
                         : <TouchableHighlight
@@ -160,22 +172,13 @@ class ProductInfo extends React.Component<
                     >
                       <Image
                         source={require("../../../../images/checked.png")}
-                        style={{
-                          height: 15,
-                          width: 15
-                        }}
+                        style={styles.checkedCircle}
                       />
                     </View>
                   )}
             </View>
 
-            <View
-              style={{
-                width: "25%",
-                alignItems: "flex-end",
-                justifyContent: "center"
-              }}
-            >
+            <View style={styles.containerColorName}>
               <Text style={styles.colorName}>
                 {activeImage.colorName}
               </Text>
@@ -187,7 +190,7 @@ class ProductInfo extends React.Component<
 
         {/* Product params section */}
         <WingBlank>
-          <Text style={styles.sectionTitle}>Характеристики</Text>
+          <Text style={styles.title}>Характеристики</Text>
           {attributes.map((el, index) =>
             <Flex key={index} justify="between">
               <Flex>
@@ -231,7 +234,7 @@ class ProductInfo extends React.Component<
 
         {/* Product description section */}
         <WingBlank>
-          <Text style={styles.sectionTitle}>О товаре</Text>
+          <Text style={styles.title}>О товаре</Text>
         </WingBlank>
         <WebView
           source={{ html: dataProduct.description }}

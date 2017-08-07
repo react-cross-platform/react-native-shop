@@ -1,9 +1,9 @@
+import { WingBlank } from "antd-mobile";
 import * as React from "react";
-import { compose, graphql, gql } from "react-apollo";
+import { compose, gql, graphql } from "react-apollo";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import { WingBlank } from "antd-mobile";
 
 import { IData } from "../../../model";
 import { SubCatalog } from "../../layout/index";
@@ -94,27 +94,6 @@ class Catalog extends React.Component<
       }
     }
 
-    // if (isDrawer) {
-    //   styles.catalog.padding = 10;
-    //   styles.catalog = {
-    //     // width: window.innerWidth * 0.8,
-    //     padding: 10
-    //   };
-    // }
-
-    // {/*             <SubCatalog
-    //               key={i}
-    //               categories={childrenMap[parent.id]}
-    //               // isDrawer={isDrawer}
-    //             />
-
-    // {cat.image && cat.image.src
-    //   ? <Image
-    //       style={{ width: 50, height: 50 }}
-    //       source={{ uri: cat.image.src }}
-    //     />
-    //   : ""}
-
     return (
       <WingBlank size="sm">
         <ScrollView>
@@ -127,7 +106,6 @@ class Catalog extends React.Component<
                 key={i}
                 categories={childrenMap[parent.id]}
                 navigation={navigation}
-                // isDrawer={isDrawer}
               />
             </View>
           )}

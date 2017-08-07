@@ -1,4 +1,3 @@
-import Hr from "../../layout/Hr/Hr";
 import { Flex, Text } from "antd-mobile";
 import * as React from "react";
 import { compose, gql, graphql } from "react-apollo";
@@ -7,12 +6,11 @@ import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
 import { IData } from "../../../model";
-import { Loading } from "../../layout/index";
+import { Loading, Hr } from "../../layout/index";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
 import { Images, ProductBuy, ProductInfo } from "../index";
 import { ICurrentProduct, IProduct, ISubProduct } from "../model";
 
-// const PRODUCT_QUERY = require("./product.gql");
 const PRODUCT_QUERY = `
 query product($id: Int) {
   product(id: $id) {
@@ -63,12 +61,9 @@ query product($id: Int) {
     }
   }
 }
-
 `;
 
-// const styles = require("./styles.css");
 const styles = StyleSheet.create({
-  productContainer: {},
 
   productMainScreen: {
     alignContent: "center"
@@ -91,14 +86,13 @@ const styles = StyleSheet.create({
     height: 40
   },
 
-  productTopBack: {},
   productContent: {
     backgroundColor: "white"
   },
+
   categoryName: {
     textAlign: "center"
   },
-  productName: {}
 });
 
 interface IDataProduct extends IData {
@@ -134,11 +128,6 @@ class Product extends React.Component<
   IConnectedProductProps & IProductProps,
   any
 > {
-  // componentWillMount() {
-  //   const { dispatch, id } = this.props;
-  //   dispatch({ type: ACTION_ADD_VIEWED_PRODUCT, productId: id });
-  // }
-
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
     const { loading, product } = data;
@@ -146,7 +135,9 @@ class Product extends React.Component<
       const { subProducts } = product;
       const { subProductId } = nextProps.product;
       const subProductIds = subProducts.map(sp => sp.id);
-      const subProductColor = product.images.filter(el => el.colorValue && el.colorName !== "")[0].id;
+      const subProductColor = product.images.filter(
+        el => el.colorValue && el.colorName !== ""
+      )[0].id;
       if (subProductIds.indexOf(subProductId) === -1) {
         this.props.dispatch({
           colorId: subProductColor,
@@ -173,13 +164,7 @@ class Product extends React.Component<
 
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView
-          contentContainerStyle={styles.productContainer}
-          // showsHorizontalScrollIndicator= {true}
-          // alwaysBounceHorizontal={true}
-          // alwaysBounceVe={true}
-          // scrollEnabled={true}
-        >
+        <ScrollView>
           <Images navigation={navigation} images={images} />
           <View style={styles.productContent}>
             <Flex
