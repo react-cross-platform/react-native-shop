@@ -8,7 +8,12 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     alignSelf: "center",
-    height: "90%"
+    height: "90%",
+    marginTop: 10
+  },
+
+  carousel: {
+    backgroundColor: "white"
   }
 });
 

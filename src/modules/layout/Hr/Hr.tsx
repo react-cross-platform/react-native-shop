@@ -7,14 +7,13 @@ const styles = StyleSheet.create({
     borderBottomColor: 'lightgray',
     borderBottomWidth: 1,
   }
-
 })
 
 class Hr extends Component<any, any> {
 
   render(){
     return (
-      <View style={styles.root}></View>
+      <View style={styles.root}/>
     )
   }
 }

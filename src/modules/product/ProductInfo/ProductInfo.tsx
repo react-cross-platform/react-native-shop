@@ -1,22 +1,15 @@
-import { Text, View, Checkbox, Flex, Icon, Tabs, WingBlank } from "antd-mobile";
+import { Checkbox, Flex, Tabs, Text, View, WingBlank } from "antd-mobile";
 import * as React from "react";
 import { compose } from "react-apollo";
+import { Image, StyleSheet, TouchableHighlight, WebView } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import {
-  StyleSheet,
-  Image,
-  WebView,
-  Alert,
-  TouchableHighlight
-} from "react-native";
-import { Hr } from "../../layout/index";
 
 import { ACTION_SELECT_COLOR } from "../constants";
 import { SubProducts } from "../index";
 import { ICurrentProduct, IProduct, ISubProduct } from "../model";
+import { Hr } from "../../layout/index";
 
-// const styles = require("./styles.css");
 const styles = StyleSheet.create({
   productInfo: {},
   sectionTitle: {
@@ -74,10 +67,6 @@ const options = {
     }
   })
 };
-
-function createMarkup(html) {
-  return { __html: html };
-}
 
 class ProductInfo extends React.Component<
   IConnectedProductInfoProps & IProductInfoProps,
@@ -247,7 +236,6 @@ class ProductInfo extends React.Component<
         <WebView
           source={{ html: dataProduct.description }}
           ref={"webview"}
-          // automaticallyAdjustContentInsets={false}
           scrollEnabled={true}
           style={styles.info}
         />

@@ -130,10 +130,6 @@ const getActiveSubProduct = (subProducts, subProductId): ISubProduct => {
   return subProducts.filter(sp => sp.id === subProductId)[0] || subProducts[0];
 };
 
-function createMarkup(html) {
-  return { __html: html };
-}
-
 class Product extends React.Component<
   IConnectedProductProps & IProductProps,
   any
@@ -150,7 +146,7 @@ class Product extends React.Component<
       const { subProducts } = product;
       const { subProductId } = nextProps.product;
       const subProductIds = subProducts.map(sp => sp.id);
-      const subProductColor = product.images[0].id;
+      const subProductColor = product.images.filter(el => el.colorValue && el.colorName !== "")[0].id;
       if (subProductIds.indexOf(subProductId) === -1) {
         this.props.dispatch({
           colorId: subProductColor,

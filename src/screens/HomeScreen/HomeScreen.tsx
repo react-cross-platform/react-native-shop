@@ -25,13 +25,11 @@ class HomeScreen extends React.Component<IHomeScreenProps, null> {
   render() {
     const { navigation } = this.props;
     return (
-      <ScrollView >
-        <View style={styles.homePage}>
+      <ScrollView>
+        <View>
           <Catalog navigation={navigation} />
-          {/*
-            <WhiteSpace size="lg" />
-            <FlatPages navigation={navigation} />
-          */}
+          <WhiteSpace size="lg" />
+          <FlatPages navigation={navigation} />
         </View>
       </ScrollView>
     );

@@ -1,15 +1,20 @@
-import React, { Component } from "react";
-import { View, Text, StyleSheet, ViewStyle, TextStyle } from "react-native";
+import * as React from "react";
 import { ApolloProvider } from "react-apollo";
-import store from "./store";
-import client from "./graphqlClient";
-import { Catalog, Layout } from "./modules/layout/index";
-import { HomeScreen, CategoryScreen, ProductScreen } from "./screens/index";
+import { StyleSheet } from "react-native";
 import { StackNavigator } from "react-navigation";
 
-interface Props {}
+import client from "./graphqlClient";
+import {
+  CategoryScreen,
+  FlatPageScreen,
+  HomeScreen,
+  ProductScreen
+} from "./screens/index";
+import store from "./store";
 
-interface State {}
+interface IAppProps {}
+
+interface IAppState {}
 
 const style = StyleSheet.create({
   body: {
@@ -21,10 +26,11 @@ const style = StyleSheet.create({
 const NavigationApp = StackNavigator({
   Home: { screen: HomeScreen },
   Category: { screen: CategoryScreen },
-  Product: { screen: ProductScreen }
+  Product: { screen: ProductScreen },
+  FlatPage: { screen: FlatPageScreen }
 }) as any;
 
-export default class App extends Component<Props, State> {
+export default class App extends React.Component<IAppProps, IAppState> {
   render() {
     return (
       <ApolloProvider store={store} client={client}>

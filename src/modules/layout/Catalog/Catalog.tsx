@@ -53,9 +53,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 20
   },
-  mainScreen: {
-    backgroundColor: "#f5f5f9"
-  }
 });
 
 class Catalog extends React.Component<
@@ -108,21 +105,23 @@ class Catalog extends React.Component<
     //   : ""}
 
     return (
-      <ScrollView contentContainerStyle={styles.mainScreen}>
-        {startCats.map((parent, i) =>
-          <View key={i}>
-            <Text style={styles.categoryName}>
-              {parent.name}
-            </Text>
-            <SubCatalog
-              key={i}
-              categories={childrenMap[parent.id]}
-              navigation={navigation}
-              // isDrawer={isDrawer}
-            />
-          </View>
-        )}
-      </ScrollView>
+      <WingBlank size="sm">
+        <ScrollView>
+          {startCats.map((parent, i) =>
+            <View key={i}>
+              <Text style={styles.categoryName}>
+                {parent.name}
+              </Text>
+              <SubCatalog
+                key={i}
+                categories={childrenMap[parent.id]}
+                navigation={navigation}
+                // isDrawer={isDrawer}
+              />
+            </View>
+          )}
+        </ScrollView>
+      </WingBlank>
     );
   }
 }
