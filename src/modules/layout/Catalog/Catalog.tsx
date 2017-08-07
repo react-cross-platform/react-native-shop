@@ -29,7 +29,6 @@ const CATEGORIES_QUERY = `
     }
   }
 `;
-// const styles = require("./styles.css");
 
 interface ICatalogData extends IData {
   categories: [ICategory];
@@ -42,7 +41,6 @@ interface IConnectedCatalogProps {
 }
 
 interface ICatalogProps {
-  isDrawer: boolean;
   navigation: any;
 }
 
@@ -53,12 +51,25 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 20
   },
+  icon: {
+    width: 26,
+    height: 26
+  }
 });
 
 class Catalog extends React.Component<
   IConnectedCatalogProps & ICatalogProps,
   null
 > {
+  static navigationOptions = {
+    tabBarLabel: "КАТАЛОГ",
+    tabBarIcon: ({ tintColor }) =>
+      <Image
+        source={require("../../../../images/catalog.png")}
+        style={[styles.icon, { tintColor: tintColor }]}
+      />
+  };
+
   render() {
     const { data, navigation } = this.props;
     if (!data || data.loading) {
@@ -126,30 +137,4 @@ class Catalog extends React.Component<
   }
 }
 
-const mapStateToProps: any = state => ({
-  layout: state.layout
-});
-
-export default compose<any, any, any>(
-  connect<IConnectedCatalogProps, {}, ICatalogProps>(mapStateToProps),
-  graphql(
-    gql(CATEGORIES_QUERY),
-    {
-      options: ({ layout, router }) => ({
-        // skip: !(router.location.pathname === "/" || layout.openCatalog)
-      })
-    } as any
-  )
-)(Catalog as any);
-
-// export default compose(
-//   connect<IConnectedCatalogProps, {}, ICatalogProps>(mapStateToProps),
-//   graphql(
-//     gql(CATEGORIES_QUERY),
-//     {
-//       options: ({ layout, router }) => ({
-//         // skip: !(router.location.pathname === "/" || layout.openCatalog)
-//       })
-//     } as any
-//   )
-// )(Catalog as any);
+export default graphql<any, any, any>(gql(CATEGORIES_QUERY))(Catalog as any);

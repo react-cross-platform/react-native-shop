@@ -1,12 +1,11 @@
 import { List, Text, View } from "antd-mobile";
 import * as React from "react";
 import { gql, graphql } from "react-apollo";
-import { StyleSheet, TouchableHighlight } from "react-native";
-import { Dispatch } from "redux";
+import { StyleSheet, Image } from "react-native";
 
 import { IData } from "../../../model";
 import { Loading } from "../index";
-import { IFlatPage, ILayout } from "../model";
+import { IFlatPage } from "../model";
 
 const FLATPAGES_QUERY = `
   query flatpages {
@@ -24,6 +23,10 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: "bold",
     margin: 20
+  },
+  icon: {
+    width: 26,
+    height: 26
   }
 });
 
@@ -43,6 +46,15 @@ class FlatPages extends React.Component<
   IConnectedFlatPagesProps & IFlatPagesProps,
   any
 > {
+  static navigationOptions = {
+    tabBarLabel: "ИНФО",
+    tabBarIcon: ({ tintColor }) =>
+      <Image
+        source={require("../../../../images/info.png")}
+        style={[styles.icon, { tintColor: tintColor }]}
+      />
+  };
+
   handleNavigation = (name, content) => {
     const { navigation } = this.props;
     navigation.navigate("FlatPage", { name, content });
@@ -77,11 +89,4 @@ class FlatPages extends React.Component<
   }
 }
 
-export default graphql<any, any, any>(
-  gql(FLATPAGES_QUERY) as any
-  // {
-  //   options: ({ layout, router }) => ({
-  //     skip: !(router.location.pathname === "/" || layout.openMenu)
-  //   })
-  // } as any
-)(FlatPages as any);
+export default graphql<any, any, any>(gql(FLATPAGES_QUERY))(FlatPages as any);
