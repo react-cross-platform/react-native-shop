@@ -1,7 +1,8 @@
 {
   "name": "react-native-shop",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "NODE_ENV=production node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
@@ -15,10 +16,11 @@
   "dependencies": {
     "@types/react-navigation": "^1.0.15",
     "antd-mobile": "2.0.0-alpha.2",
+    "expo": "19.0.0",
     "immutability-helper": "^2.2.2",
     "react": "16.0.0-alpha.12",
     "react-apollo": "^1.2.0",
-    "react-native": "^0.47.1",
+    "react-native": "0.46.1",
     "react-native-material-ripple": "^0.7.4",
     "react-navigation": "^1.0.0-beta.11",
     "react-redux": "^5.0.5",

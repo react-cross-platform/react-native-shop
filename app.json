@@ -1,4 +1,16 @@
 {
   "name": "ReactNativeShop",
-  "displayName": "ReactNativeShop"
+  "displayName": "ReactNativeShop",
+  "expo": {
+    "name": "ReactNativeShop",
+    "slug": "react-native-shop",
+    "sdkVersion": "19.0.0",
+    "privacy": "public",
+    "ios": {
+      "bundleIdentifier": "com.serga.reactnativeshop"
+    },
+    "android": {
+      "package": "com.serga.reactnativeshop"
+    }
+  }
 }
