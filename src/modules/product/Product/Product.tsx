@@ -1,7 +1,7 @@
 import { Flex, Text } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { compose, gql, graphql } from "react-apollo";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Dimensions } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -64,6 +64,10 @@ query product($id: Int) {
 `;
 
 const styles = StyleSheet.create({
+  product: {
+    backgroundColor: "white",
+    flex: 1
+  },
 
   productMainScreen: {
     alignContent: "center"
@@ -76,6 +80,8 @@ const styles = StyleSheet.create({
 
   infoTitle: {
     fontSize: 20,
+    lineHeight: 22,
+    height: 45,
     fontWeight: "bold",
     margin: 20,
     textAlign: "center"
@@ -86,13 +92,9 @@ const styles = StyleSheet.create({
     height: 40
   },
 
-  productContent: {
-    backgroundColor: "white"
-  },
-
   categoryName: {
     textAlign: "center"
-  },
+  }
 });
 
 interface IDataProduct extends IData {
@@ -162,30 +164,19 @@ class Product extends React.Component<
     const activeSubProduct = getActiveSubProduct(subProducts, subProductId);
     const { price, oldPrice } = activeSubProduct;
 
-    return (
-      <View style={{ flex: 1 }}>
+    return <View style={styles.product}>
         <ScrollView>
           <Images navigation={navigation} images={images} />
-          <View style={styles.productContent}>
-            <Flex
-              justify="around"
-              direction="column"
-              style={styles.productMainScreen}
-            >
-              <Text style={styles.infoTitle}>
-                {product.name} {brand.name} {"\n"} {activeSubProduct.article}
-              </Text>
-            </Flex>
-            <Hr />
-            <ProductInfo
-              dataProduct={product}
-              activeSubProduct={activeSubProduct}
-            />
-          </View>
+          <Flex justify="around" direction="column" style={styles.productMainScreen}>
+            <Text style={styles.infoTitle}>
+              {product.name} {brand.name} {"\n"} {activeSubProduct.article}
+            </Text>
+          </Flex>
+          <Hr />
+          <ProductInfo dataProduct={product} activeSubProduct={activeSubProduct} />
         </ScrollView>
         <ProductBuy price={price} oldPrice={oldPrice} />
-      </View>
-    );
+      </View>;
   }
 }
 

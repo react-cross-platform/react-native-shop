@@ -1,9 +1,12 @@
+# node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
 # OSX
-#
 .DS_Store
 
 # Xcode
-#
 build/
 *.pbxuser
 !default.pbxuser
@@ -22,12 +25,6 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
-# IntelliJ
-#
-build/
-.idea
-*.iml
-
 # Android
 .gradle
 local.properties
@@ -35,11 +32,21 @@ android/out
 android/app/build
 !app/build/outputs/apk/app-release.apk
 
-# node.js
-#
-node_modules/
-npm-debug.log
-yarn-error.log
+# IntelliJ
+.idea
+*.iml
+
+# TypeScript
+build/
+
+# VSCode
+.vscode/
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+
+# Expo
+.expo
 
 # BUCK
 buck-out/
@@ -52,13 +59,7 @@ buck-out/
 # screenshots whenever they are needed.
 # For more information about the recommended setup visit:
 # https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Gitignore.md
-
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
-
-.vscode/
-!.vscode/launch.json
-!.vscode/tasks.json
-!.vscode/settings.json
 

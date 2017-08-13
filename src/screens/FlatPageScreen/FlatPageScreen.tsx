@@ -1,5 +1,5 @@
 import { WingBlank } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { StyleSheet, View, WebView } from "react-native";
 
 const styles = StyleSheet.create({

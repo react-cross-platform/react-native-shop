@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { StyleSheet } from "react-native";
 import { StackNavigator } from "react-navigation";

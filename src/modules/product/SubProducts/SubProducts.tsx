@@ -1,6 +1,6 @@
 import undefined from "antd-mobile/lib/white-space/index.web";
 import { View, Text, Icon, List, WingBlank, WhiteSpace } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
@@ -8,7 +8,6 @@ import { ACTION_SELECT_SUBPRODUCT } from "../constants";
 import { ICurrentProduct, ISubProduct } from "../model";
 import { StyleSheet, Image } from "react-native";
 
-// const styles = require("./styles.css");
 const styles = StyleSheet.create({
   title: {
     color: "#1296db",
@@ -17,20 +16,14 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10
   },
-
   checkIcon: {
     width: 20,
-    height: 20,
+    height: 20
   },
-  // price: {
-    // fontSize: 16,
-    // fontWeight: "bold",
-    // color: "#efb336"
-  // },
   article: {
     fontSize: 16,
     marginLeft: 10
-  },
+  }
 });
 
 const Item = List.Item;
@@ -49,10 +42,6 @@ class SubProducts extends React.Component<
   IConnectedSubProductsProps & ISubProductsProps,
   any
 > {
-  // componentWillMount(){
-  //   const currentSubProductId = this.props.subProducts[0].id;
-  //   this.props.dispatch({type: ACTION_SELECT_SUBPRODUCT, subProductId: currentSubProductId, colorId: currentSubProductId})
-  // }
   onChangePrice = elId => {
     this.props.dispatch({
       colorId: this.props.product.colorId,
@@ -75,7 +64,6 @@ class SubProducts extends React.Component<
           <Text style={styles.title}>Модификации</Text>
         </WingBlank>
         <List>
-          
           {subProducts.map((subProduct, index) =>
             <Item
               key={index}
@@ -84,24 +72,23 @@ class SubProducts extends React.Component<
                 this.isActive(subProduct.id)
                   ? <Image
                       style={styles.checkIcon}
-                      source={require('../../../../images/circle-check.png')}
+                      source={require("../../../../images/circle-check.png")}
                     />
-                  : <Image 
-                      style={{height: 20, width: 20}}
-                      source={require('../../../../images/circle.png')}
+                  : <Image
+                      style={{ height: 20, width: 20 }}
+                      source={require("../../../../images/circle.png")}
                     />
               }
-
               extra={
-                <Text 
+                <Text
                   // style={styles.price}
                   style={{
-                    color: this.isActive(subProduct.id)? "orange": "gray",
+                    color: this.isActive(subProduct.id) ? "orange" : "gray",
                     fontSize: 16,
-                    fontWeight: "bold",
+                    fontWeight: "bold"
                   }}
                 >
-                  {subProduct.price + " грн."} 
+                  {subProduct.price + " грн."}
                 </Text>
               }
             >

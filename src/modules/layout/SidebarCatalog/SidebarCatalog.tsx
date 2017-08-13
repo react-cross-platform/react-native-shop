@@ -1,5 +1,5 @@
 import { Drawer } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { compose } from "react-apollo";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";

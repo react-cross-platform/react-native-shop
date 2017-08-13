@@ -1,84 +1,88 @@
-import { Carousel, Flex } from 'antd-mobile';
-import * as React from 'react';
-import { Image, ScrollView, StyleSheet } from 'react-native';
+import { Carousel, Flex } from "antd-mobile";
+import React from "react";
+import { Image, ScrollView, StyleSheet, Dimensions } from "react-native";
+import Ripple from "react-native-material-ripple";
 
-import { IImage } from '../model';
+import { IImage } from "../model";
 
 const styles = StyleSheet.create({
+  carousel: {
+    backgroundColor: "white"
+  },
+  flex: {
+    flex: 1,
+    alignItems: "stretch",
+    backgroundColor: "white"
+  },
   image: {
     flex: 1,
     alignSelf: "center",
-    height: "90%",
-    marginTop: 10
-  },
-
-  carousel: {
-    backgroundColor: "white"
+    height: "90%"
   }
 });
 
 interface IImagesProps {
   navigation: any;
   images: [IImage];
+  productId?: string;
+  productName?: string;
 }
 
 interface IImagesState {}
 
 class Images extends React.Component<IImagesProps, IImagesState> {
-  render() {
-    const { images, navigation } = this.props;
+  private isProductScreen = () => {
+    const { navigation } = this.props;
+    return navigation.state.routeName == "Product";
+  };
 
-    let height;
+  render() {
+    const { images } = this.props;
     let carouselHeight;
     let padding;
-    if (navigation.state.routeName == "Product") {
-      height = 475;
-      carouselHeight = height;
+
+    let { height } = Dimensions.get("window");
+
+    if (this.isProductScreen()) {
+      height = height - 173;
       padding = 10;
     } else {
-      height = 250;
-      carouselHeight = height * 0.72;
+      height = 200;
       padding = 5;
     }
 
-    const dotStyle = {
-      position: "relative"
-    };
     if (images.length > 1) {
       return (
-        <ScrollView style={{ height }}>
-          <Carousel
-            autoplay={false}
-            style={{
-              backgroundColor: "white",
-              height: carouselHeight
-            }}
-            dots={images.length > 1}
-            infinite={false}
-            selectedIndex={0}
-            dotStyle={{ top: 12 }}
-          >
-            {images.map((image, i) =>
-              <Flex
-                key={i}
-                justify="center"
-                align="center"
-                style={{
-                  flex: 1,
-                  alignItems: "stretch",
-                  paddingLeft: padding,
-                  paddingRight: padding
-                }}
-              >
-                <Image
-                  resizeMode="contain"
-                  style={styles.image}
-                  source={{ uri: image.src }}
-                />
-              </Flex>
-            )}
-          </Carousel>
-        </ScrollView>
+        <Carousel
+          autoplay={false}
+          style={[styles.carousel, { height: height - 8 }]}
+          dots={images.length > 1}
+          infinite={false}
+          selectedIndex={0}
+          dotStyle={{ top: 5 }}
+        >
+          {images.map((image, i) =>
+            <Flex
+              key={i}
+              justify="center"
+              align="center"
+              style={[
+                styles.flex,
+                {
+                  marginLeft: padding,
+                  marginRight: padding,
+                  paddingBottom: 20
+                }
+              ]}
+            >
+              <Image
+                resizeMode="contain"
+                style={styles.image}
+                source={{ uri: image.src }}
+              />
+            </Flex>
+          )}
+        </Carousel>
       );
     } else {
       const image = images[0];
@@ -86,13 +90,13 @@ class Images extends React.Component<IImagesProps, IImagesState> {
         <Flex
           justify="center"
           align="center"
-          style={{
-            flex: 1,
-            alignItems: "stretch",
-            backgroundColor: "white",
-            marginLeft: padding,
-            marginRight: padding
-          }}
+          style={[
+            styles.flex,
+            {
+              marginLeft: padding,
+              marginRight: padding
+            }
+          ]}
         >
           <Image
             resizeMode="contain"

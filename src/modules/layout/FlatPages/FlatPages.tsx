@@ -1,5 +1,5 @@
 import { List, Text, View } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { gql, graphql } from "react-apollo";
 import { StyleSheet, Image } from "react-native";
 

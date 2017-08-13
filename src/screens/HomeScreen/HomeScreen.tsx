@@ -1,5 +1,5 @@
 import { WhiteSpace, View, Text, WingBlank } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Button, ScrollView, StyleSheet, Platform } from "react-native";
 

@@ -1,5 +1,5 @@
 import { WingBlank } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { compose, gql, graphql } from "react-apollo";
 import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
 import { connect } from "react-redux";

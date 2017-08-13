@@ -1,5 +1,5 @@
 import { Flex, Text, View } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { compose } from "react-apollo";
 import { Image, StyleSheet } from "react-native";
 import Ripple from "react-native-material-ripple";
@@ -11,7 +11,6 @@ import { ICategory } from "../../product/model";
 import { ILayout } from "../model";
 
 const styles = StyleSheet.create({
-  flexItem: {},
   card: {
     flex: 1,
     justifyContent: "center",

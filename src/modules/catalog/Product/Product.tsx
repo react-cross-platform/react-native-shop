@@ -1,13 +1,13 @@
-import { Text, View } from 'antd-mobile';
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
-import Ripple from 'react-native-material-ripple';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { Text, View } from "antd-mobile";
+import React from "react";
+import { StyleSheet } from "react-native";
+import Ripple from "react-native-material-ripple";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
-import { Images } from '../../product/index';
-import { IImageWithColor, IProduct } from '../../product/model';
-import { ICatalog } from '../model';
+import { Images } from "../../product/index";
+import { IImageWithColor, IProduct } from "../../product/model";
+import { ICatalog } from "../model";
 
 const styles = StyleSheet.create({
   card: {
@@ -31,12 +31,15 @@ const styles = StyleSheet.create({
   },
 
   infoContainer: {
-    padding: 5
+    paddingRight: 8,
+    paddingLeft: 8,
+    paddingBottom: 8
   },
 
   info: {
     fontSize: 13,
-    lineHeight: 15
+    lineHeight: 15,
+    maxHeight: 30,
   },
 
   price: {
@@ -63,6 +66,25 @@ interface IProductState {
   titleImage: IImageWithColor;
 }
 
+const handleNavigation = (navigation, id, name) => {
+  navigation.navigate("Product", { id, name });
+};
+
+const Wrapper = props => {
+  // FixMe: This is temporary hack solution
+  const { withNavigation, navigation, id, name, children } = props;
+  return withNavigation
+    ? <Ripple
+        onPress={() => handleNavigation(navigation, id, name)}
+        style={styles.card}
+      >
+        {children}
+      </Ripple>
+    : <View style={styles.card}>
+        {children}
+      </View>;
+};
+
 class Product extends React.Component<
   IConnectedProductProps & IProductProps,
   IProductState
@@ -84,10 +106,6 @@ class Product extends React.Component<
     this.setState({ titleImage: image });
   };
 
-  handleNavigation = (id, name) => {
-    this.props.navigation.navigate("Product", { id, name });
-  };
-
   render() {
     const {
       id,
@@ -98,11 +116,13 @@ class Product extends React.Component<
       catalog,
       navigation
     } = this.props;
+
     const titleImage = this.state.titleImage;
     const subProduct = subProducts[0];
     const prices = subProducts.map(el => el.price);
     const isSinglePrice = prices.length === 1;
     const minPrice = getMinOfArray(prices);
+    const isSingleImage = imagesWithColor.length == 1;
 
     let cardPadding: number;
     let borderRadius: number;
@@ -122,24 +142,29 @@ class Product extends React.Component<
     }
 
     return (
-      <View style={styles.card}>
+      <Wrapper
+        withNavigation={imagesWithColor.length == 1}
+        navigation={navigation}
+        id={id}
+        name={name}
+      >
         <Images navigation={navigation} images={imagesWithColor} />
         <Ripple
           style={styles.infoContainer}
-          onPress={() => this.handleNavigation(id, name)}
+          onPress={() => handleNavigation(navigation, id, name)}
         >
           <Text style={styles.info}>
             {name} {brand.name} {subProduct.article}
           </Text>
           <Text
             style={styles.price}
-            onPress={() => this.handleNavigation(id, name)}
+            onPress={() => handleNavigation(navigation, id, name)}
           >
             {isSinglePrice ? "" : "от "}
             {parseInt(minPrice, 10)} грн
           </Text>
         </Ripple>
-      </View>
+      </Wrapper>
     );
   }
 }

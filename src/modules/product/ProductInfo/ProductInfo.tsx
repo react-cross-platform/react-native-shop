@@ -1,5 +1,5 @@
 import { Checkbox, Flex, Tabs, Text, View, WingBlank } from "antd-mobile";
-import * as React from "react";
+import React from "react";
 import { compose } from "react-apollo";
 import { Image, StyleSheet, TouchableHighlight, WebView } from "react-native";
 import { connect } from "react-redux";
@@ -15,8 +15,8 @@ const styles = StyleSheet.create({
     color: "#1296db",
     fontSize: 18,
     fontWeight: "bold",
-    marginTop: 10,
-    marginBottom: 10
+    marginTop: 15,
+    marginBottom: 15,
   },
 
   colorSection: {
@@ -66,7 +66,10 @@ const styles = StyleSheet.create({
   },
 
   info: {
-    height: 250
+    height: 250,
+    top: -10,
+    marginLeft: 10,
+    marginRight: 10
   }
 });
 

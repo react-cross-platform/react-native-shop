@@ -1,6 +1,6 @@
 import { View } from "antd-mobile";
 import update from "immutability-helper";
-import * as React from "react";
+import React from "react";
 import { compose, gql, graphql } from "react-apollo";
 import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
