@@ -11,6 +11,9 @@
     },
     "android": {
       "package": "com.serga.reactnativeshop"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff"
     }
   }
 }

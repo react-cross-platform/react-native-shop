@@ -1,7 +1,6 @@
 import { Carousel, Flex } from "antd-mobile";
 import React from "react";
-import { Image, ScrollView, StyleSheet, Dimensions } from "react-native";
-import Ripple from "react-native-material-ripple";
+import { Dimensions, Image, Platform, StyleSheet } from "react-native";
 
 import { IImage } from "../model";
 
@@ -38,24 +37,23 @@ class Images extends React.Component<IImagesProps, IImagesState> {
 
   render() {
     const { images } = this.props;
-    let carouselHeight;
-    let padding;
-
+    let carouselHeight, padding;
     let { height } = Dimensions.get("window");
 
     if (this.isProductScreen()) {
-      height = height - 173;
+      height -= Platform.OS === "ios" ? 188 : 205;
       padding = 10;
     } else {
-      height = 200;
+      height = 192;
       padding = 5;
     }
 
+    // if (images.length > 1) {
     if (images.length > 1) {
       return (
         <Carousel
           autoplay={false}
-          style={[styles.carousel, { height: height - 8 }]}
+          style={[styles.carousel, { height: height }]}
           dots={images.length > 1}
           infinite={false}
           selectedIndex={0}
@@ -93,6 +91,7 @@ class Images extends React.Component<IImagesProps, IImagesState> {
           style={[
             styles.flex,
             {
+              height,
               marginLeft: padding,
               marginRight: padding
             }
