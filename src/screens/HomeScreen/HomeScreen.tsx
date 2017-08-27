@@ -6,6 +6,7 @@ import { Button, ScrollView, StyleSheet, Platform } from "react-native";
 import { ACTION_SET_CATALOG_DRAWER } from "../../modules/layout/constants";
 import { FlatPages, Catalog } from "../../modules/layout/index";
 import { TabNavigator } from "react-navigation";
+import { CartTrigger } from "../../modules/cart/index";
 
 const HomeScreen = TabNavigator(
   {
@@ -19,9 +20,10 @@ const HomeScreen = TabNavigator(
         fontSize: 12
       }
     },
-    navigationOptions: {
-      title: "React Native Shop"
-    }
+    navigationOptions: (props) => ({
+      title: "React Native Shop",
+      headerRight: <CartTrigger navigation={(props as any).navigation} />
+    })
   }
 );
 

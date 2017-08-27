@@ -3,6 +3,7 @@ import { StyleSheet } from "react-native";
 
 import { IData } from "../../model";
 import { Products } from "../../modules/catalog/index";
+import { CartTrigger } from "../../modules/cart/index";
 
 const styles = StyleSheet.create({
   category: {},
@@ -23,7 +24,8 @@ class CategoryScreen extends React.Component<
   null
 > {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.name}`
+    title: `${navigation.state.params.name}`,
+    headerRight: <CartTrigger navigation={navigation} />
   });
 
   render() {

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   colorIcon: {},
 
   containerColorName: {
-    width: "25%",
+    width: "26%",
     alignItems: "flex-end",
     justifyContent: "center"
   },

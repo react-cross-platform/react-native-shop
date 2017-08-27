@@ -1,6 +1,12 @@
-import { Text } from 'antd-mobile';
-import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Text } from "antd-mobile";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import Ripple from "react-native-material-ripple";
+import { connect } from "react-redux";
+
+import { ACTION_ADD_CART_ITEM } from "../../cart/constants";
+import { ICartItem } from "../../cart/model";
+import { prettyPrice } from "../../cart/utils";
 
 const styles = StyleSheet.create({
   footer: {
@@ -8,6 +14,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
+
   containerPrice: {
     justifyContent: "center",
     backgroundColor: "white",
@@ -17,53 +24,109 @@ const styles = StyleSheet.create({
     borderTopWidth: 1
   },
 
-  buyButton: {
+  putCart: {
     justifyContent: "center",
     backgroundColor: "orange",
     width: "50%",
     height: 40
   },
 
+  toCart: {
+    justifyContent: "center",
+    backgroundColor: "#15c544",
+
+    width: "50%",
+    height: 40
+  },
+
   price: {
     textAlign: "center",
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: "bold"
   },
 
   buy: {
+    color: "white",
     textAlign: "center",
-    fontSize: 18
-  },
-
-  currentPrice: {},
-  oldPrice: {}
+    fontSize: 18,
+    fontWeight: "bold"
+  }
 });
 
-interface IConnectedProductBuyProps {}
+interface IConnectedProductBuyProps {
+  dispatch: any;
+  cart: [ICartItem];
+  product: any;
+}
 
 interface IProductBuyProps {
-  price: number;
-  oldPrice?: number;
+  price: string;
+  oldPrice?: string;
+  subProductId: string;
+  colorId: string;
+  navigation: any;
+  productId: string;
 }
 
 class ProductBuy extends React.Component<
   IConnectedProductBuyProps & IProductBuyProps,
   any
 > {
+  putToCart(productId, subProductId, colorId, price) {
+    this.props.dispatch({
+      type: ACTION_ADD_CART_ITEM,
+      productId,
+      subProductId,
+      colorId,
+      price
+    });
+  }
+
+  handleNavigation = () => {
+    const { navigation } = this.props;
+    navigation.navigate("Cart");
+  };
+
   render() {
-    const { price, oldPrice } = this.props;
+    const {
+      price,
+      oldPrice,
+      productId,
+      subProductId,
+      colorId,
+      cart
+    } = this.props;
+    const totalPrice = parseInt(String(price), 10);
+
+    const inCart =
+      cart.filter(el => el.subProductId === subProductId).length > 0;
     return (
       <View style={styles.footer}>
         <View style={styles.containerPrice}>
           <Text style={styles.price}>
-            {parseInt(String(price), 10)} грн
+            {prettyPrice(totalPrice)} грн.
           </Text>
         </View>
-        <View style={styles.buyButton}>
-          <Text style={styles.buy}>Купить</Text>
-        </View>
+        {inCart
+          ? <Ripple style={styles.toCart} onPress={this.handleNavigation}>
+              <Text style={styles.buy}>Перейти в корзину</Text>
+            </Ripple>
+          : <Ripple
+              style={styles.putCart}
+              onPress={() =>
+                this.putToCart(productId, subProductId, colorId, price)}
+            >
+              <Text style={styles.buy}>Добавить в корзину</Text>
+            </Ripple>}
       </View>
     );
   }
 }
 
-export default ProductBuy;
+const mapStateToProps: any = state => ({
+  cart: state.cart
+});
+
+export default connect<IConnectedProductBuyProps, {}, IProductBuyProps>(
+  mapStateToProps
+)(ProductBuy);

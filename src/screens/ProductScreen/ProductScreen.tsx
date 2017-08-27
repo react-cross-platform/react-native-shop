@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Product } from "../../modules/product/index";
+import { CartTrigger } from "../../modules/cart/index";
 
 interface IProductScreenProps {
   navigation: any;
@@ -8,7 +9,8 @@ interface IProductScreenProps {
 
 class ProductScreen extends React.Component<IProductScreenProps, null> {
   static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.name}`
+    title: `${navigation.state.params.name}`,
+    headerRight: <CartTrigger navigation={navigation} />
   });
   render() {
     const { navigation } = this.props;

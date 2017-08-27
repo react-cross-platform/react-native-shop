@@ -8,7 +8,8 @@ import {
   CategoryScreen,
   FlatPageScreen,
   HomeScreen,
-  ProductScreen
+  ProductScreen,
+  CartScreen
 } from "./screens/index";
 import store from "./store";
 
@@ -27,7 +28,8 @@ const NavigationApp = StackNavigator({
   Home: { screen: HomeScreen },
   Category: { screen: CategoryScreen },
   Product: { screen: ProductScreen },
-  FlatPage: { screen: FlatPageScreen }
+  FlatPage: { screen: FlatPageScreen },
+  Cart: { screen: CartScreen },
 }) as any;
 
 export default class App extends React.Component<IAppProps, IAppState> {

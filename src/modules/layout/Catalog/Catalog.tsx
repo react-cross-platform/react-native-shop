@@ -30,6 +30,20 @@ const CATEGORIES_QUERY = `
   }
 `;
 
+const styles = StyleSheet.create({
+  categoryName: {
+    textAlign: "center",
+    fontSize: 25,
+    fontWeight: "bold",
+    margin: 20
+  },
+
+  icon: {
+    width: 26,
+    height: 26
+  }
+});
+
 interface ICatalogData extends IData {
   categories: [ICategory];
 }
@@ -44,18 +58,6 @@ interface ICatalogProps {
   navigation: any;
 }
 
-const styles = StyleSheet.create({
-  categoryName: {
-    textAlign: "center",
-    fontSize: 25,
-    fontWeight: "bold",
-    margin: 20
-  },
-  icon: {
-    width: 26,
-    height: 26
-  }
-});
 
 class Catalog extends React.Component<
   IConnectedCatalogProps & ICatalogProps,

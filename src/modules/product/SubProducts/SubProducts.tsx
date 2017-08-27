@@ -1,12 +1,12 @@
-import undefined from "antd-mobile/lib/white-space/index.web";
-import { View, Text, Icon, List, WingBlank, WhiteSpace } from "antd-mobile";
+import { List, Text, View, WingBlank } from "antd-mobile";
 import React from "react";
+import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import { prettyPrice } from "../../cart/utils";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
 import { ICurrentProduct, ISubProduct } from "../model";
-import { StyleSheet, Image } from "react-native";
 
 const styles = StyleSheet.create({
   title: {
@@ -81,14 +81,13 @@ class SubProducts extends React.Component<
               }
               extra={
                 <Text
-                  // style={styles.price}
                   style={{
                     color: this.isActive(subProduct.id) ? "orange" : "gray",
                     fontSize: 16,
                     fontWeight: "bold"
                   }}
                 >
-                  {subProduct.price + " грн."}
+                  {prettyPrice(subProduct.price) + " грн."}
                 </Text>
               }
             >

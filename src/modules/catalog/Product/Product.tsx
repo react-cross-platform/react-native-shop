@@ -8,6 +8,7 @@ import { Dispatch } from "redux";
 import { Images } from "../../product/index";
 import { IImageWithColor, IProduct } from "../../product/model";
 import { ICatalog } from "../model";
+import { prettyPrice } from "../../cart/utils";
 
 const styles = StyleSheet.create({
   card: {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   info: {
     fontSize: 13,
     lineHeight: 15,
-    maxHeight: 30,
+    maxHeight: 30
   },
 
   price: {
@@ -122,6 +123,7 @@ class Product extends React.Component<
     const prices = subProducts.map(el => el.price);
     const isSinglePrice = prices.length === 1;
     const minPrice = getMinOfArray(prices);
+    const productPrice = parseInt(minPrice, 10);
     const isSingleImage = imagesWithColor.length == 1;
 
     let cardPadding: number;
@@ -161,7 +163,7 @@ class Product extends React.Component<
             onPress={() => handleNavigation(navigation, id, name)}
           >
             {isSinglePrice ? "" : "от "}
-            {parseInt(minPrice, 10)} грн
+            {prettyPrice(productPrice)} грн.
           </Text>
         </Ripple>
       </Wrapper>

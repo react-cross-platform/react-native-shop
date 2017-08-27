@@ -164,19 +164,35 @@ class Product extends React.Component<
     const activeSubProduct = getActiveSubProduct(subProducts, subProductId);
     const { price, oldPrice } = activeSubProduct;
 
-    return <View style={styles.product}>
+    return (
+      <View style={styles.product}>
         <ScrollView>
           <Images navigation={navigation} images={images} />
-          <Flex justify="around" direction="column" style={styles.productMainScreen}>
+          <Flex
+            justify="around"
+            direction="column"
+            style={styles.productMainScreen}
+          >
             <Text style={styles.infoTitle}>
               {product.name} {brand.name} {"\n"} {activeSubProduct.article}
             </Text>
           </Flex>
           <Hr />
-          <ProductInfo dataProduct={product} activeSubProduct={activeSubProduct} />
+          <ProductInfo
+            dataProduct={product}
+            activeSubProduct={activeSubProduct}
+          />
         </ScrollView>
-        <ProductBuy price={price} oldPrice={oldPrice} />
-      </View>;
+        <ProductBuy
+          price={price}
+          oldPrice={oldPrice}
+          navigation={navigation}
+          productId={product.id}
+          subProductId={subProductId}
+          colorId={this.props.product.colorId}
+        />
+      </View>
+    );
   }
 }
 

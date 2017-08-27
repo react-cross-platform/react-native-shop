@@ -11,8 +11,8 @@ import { Product } from "../index";
 import { IAllProduct, ICatalog } from "../model";
 
 const ALL_PRODUCTS_QUERY = `
-  query allProducts($categoryId: Int, $offset: Int, $first: Int) {
-    allProducts(categoryId: $categoryId, offset: $offset, first: $first) {
+  query allProducts($ids: [Int], $categoryId: Int, $offset: Int, $first: Int) {
+    allProducts(ids: $ids, categoryId: $categoryId, offset: $offset, first: $first) {
       total
       products {
         id

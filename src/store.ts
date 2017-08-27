@@ -1,22 +1,20 @@
-import { applyMiddleware, compose, createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 import client from "./graphqlClient";
 import rootReducer from "./rootReducer";
 
-// import { composeWithDevTools } from "redux-devtools-extension";
 const initialState = {};
 
 const middlewares = [thunk, client.middleware()];
-// if (process.env.DEBUG) {
-//   middlewares.push(logger);
-// }
+middlewares.push(logger);
 
 const store = createStore(
   rootReducer,
   initialState,
-  // composeWithDevTools(
-  compose(applyMiddleware(...middlewares))
+  composeWithDevTools(applyMiddleware(...middlewares))
 );
 
 export default store;
