@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   buy: {
     color: "white",
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "bold"
   }
 });
