@@ -3,8 +3,9 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-# OSX
+# OS
 .DS_Store
+*.tar.gz
 
 # Xcode
 build/
@@ -62,4 +63,5 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+
 
