@@ -6,18 +6,16 @@ import { connect } from "react-redux";
 import { ICartItem } from "../model";
 
 const styles = StyleSheet.create({
-  ripple: {
-    paddingRight: 15,
-    paddingBottom: 15
-  },
-
-  image: {
-    height: 22,
-    width: 22
+  commonContainer: {
+    height: "100%",
+    width: "120%",
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 22
   },
 
   counterContainer: {
-    top: 8,
+    top: 2,
     left: 13,
     justifyContent: "center",
     alignItems: "center",
@@ -32,6 +30,12 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontWeight: "900",
     color: "white"
+  },
+
+  image: {
+    bottom: 6,
+    height: 25,
+    width: 25
   }
 });
 interface IConnectedCartTriggerProps {
@@ -53,7 +57,12 @@ class CartTrigger extends React.Component<
   render() {
     const { cart } = this.props;
     return (
-      <Ripple style={styles.ripple} onPress={this.handleNavigation}>
+      <Ripple
+        rippleCentered={true}
+        rippleSize={50}
+        style={styles.commonContainer}
+        onPress={this.handleNavigation}
+      >
         {cart.length > 0
           ? <View style={styles.counterContainer}>
               <Text style={styles.counter}>

@@ -1,7 +1,7 @@
 import { List, Text, View } from "antd-mobile";
 import React from "react";
 import { gql, graphql } from "react-apollo";
-import { StyleSheet, Image } from "react-native";
+import { Image, StyleSheet } from "react-native";
 
 import { IData } from "../../../model";
 import { Loading } from "../index";
@@ -24,9 +24,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 20
   },
+
   icon: {
     width: 26,
     height: 26
+  },
+
+  name: {
+    fontSize: 18,
+    paddingLeft: 12
   }
 });
 
@@ -55,6 +61,47 @@ class FlatPages extends React.Component<
       />
   };
 
+  getIcon = id => {
+    const _id = parseInt(id);
+    switch (_id) {
+      // info
+      case 4: {
+        return require("../../../../images/flat-page-info.png");
+      }
+      // contacts
+      case 5: {
+        return require("../../../../images/flat-page-contacts.png");
+      }
+      // exchange and return
+      case 8: {
+        return require("../../../../images/flat-page-exchange.png");
+      }
+      // make order
+      case 7: {
+        return require("../../../../images/flat-page-order.png");
+      }
+      // buyers
+      case 10: {
+        return require("../../../../images/flat-page-buyers.png");
+      }
+      // discount card
+      case 6: {
+        return require("../../../../images/flat-page-discount.png");
+      }
+      // shipping and payment
+      case 2: {
+        return require("../../../../images/flat-page-delivery.png");
+      }
+      // guarantee
+      case 3: {
+        return require("../../../../images/flat-page-guarantee.png");
+      }
+      default: {
+        return require("../../../../images/flat-page-info.png");
+      }
+    }
+  };
+
   handleNavigation = (name, content) => {
     const { navigation } = this.props;
     navigation.navigate("FlatPage", { name, content });
@@ -73,14 +120,22 @@ class FlatPages extends React.Component<
         <List>
           {flatPages.map(page =>
             <List.Item
-              onClick={() => {
-                this.handleNavigation(page.name, page.content);
-              }}
               key={page.name}
               wrap={true}
               arrow="horizontal"
+              thumb={
+                <Image
+                  style={{ width: 20, height: 20 }}
+                  source={this.getIcon(page.id)}
+                />
+              }
+              onClick={() => {
+                this.handleNavigation(page.name, page.content);
+              }}
             >
-              {page.name}
+              <Text style={styles.name}>
+                {page.name}
+              </Text>
             </List.Item>
           )}
         </List>
