@@ -1,10 +1,11 @@
 import { List, Text, View } from "antd-mobile";
+import gql from "graphql-tag";
 import React from "react";
-import { gql, graphql } from "react-apollo";
+import { graphql } from "react-apollo";
 import { Image, StyleSheet } from "react-native";
 
+import { Loading } from "..";
 import { IData } from "../../../model";
-import { Loading } from "../index";
 import { IFlatPage } from "../model";
 
 const FLATPAGES_QUERY = `
@@ -54,11 +55,12 @@ class FlatPages extends React.Component<
 > {
   static navigationOptions = {
     tabBarLabel: "ИНФО",
-    tabBarIcon: ({ tintColor }) =>
+    tabBarIcon: ({ tintColor }) => (
       <Image
         source={require("../../../../images/info.png")}
         style={[styles.icon, { tintColor: tintColor }]}
       />
+    )
   };
 
   getIcon = id => {
@@ -118,7 +120,7 @@ class FlatPages extends React.Component<
       <View>
         <Text style={styles.title}>Инфо</Text>
         <List>
-          {flatPages.map(page =>
+          {flatPages.map(page => (
             <List.Item
               key={page.name}
               wrap={true}
@@ -133,11 +135,9 @@ class FlatPages extends React.Component<
                 this.handleNavigation(page.name, page.content);
               }}
             >
-              <Text style={styles.name}>
-                {page.name}
-              </Text>
+              <Text style={styles.name}>{page.name}</Text>
             </List.Item>
-          )}
+          ))}
         </List>
       </View>
     );

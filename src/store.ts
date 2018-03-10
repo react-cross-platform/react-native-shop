@@ -3,13 +3,11 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
-import client from "./graphqlClient";
 import rootReducer from "./rootReducer";
 
 const initialState = {};
 
-const middlewares = [thunk, client.middleware()];
-middlewares.push(logger);
+const middlewares = [thunk, logger];
 
 const store = createStore(
   rootReducer,

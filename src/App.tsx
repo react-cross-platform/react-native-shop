@@ -2,15 +2,16 @@ import React from "react";
 import { ApolloProvider } from "react-apollo";
 import { StyleSheet } from "react-native";
 import { StackNavigator } from "react-navigation";
+import { Provider } from "react-redux";
 
 import client from "./graphqlClient";
 import {
+  CartScreen,
   CategoryScreen,
   FlatPageScreen,
   HomeScreen,
-  ProductScreen,
-  CartScreen
-} from "./screens/index";
+  ProductScreen
+} from "./screens";
 import store from "./store";
 
 interface IAppProps {}
@@ -29,15 +30,17 @@ const NavigationApp = StackNavigator({
   Category: { screen: CategoryScreen },
   Product: { screen: ProductScreen },
   FlatPage: { screen: FlatPageScreen },
-  Cart: { screen: CartScreen },
+  Cart: { screen: CartScreen }
 }) as any;
 
 export default class App extends React.Component<IAppProps, IAppState> {
   render() {
     return (
-      <ApolloProvider store={store} client={client}>
-        <NavigationApp />
-      </ApolloProvider>
+      <Provider store={store}>
+        <ApolloProvider client={client}>
+          <NavigationApp />
+        </ApolloProvider>
+      </Provider>
     );
   }
 }

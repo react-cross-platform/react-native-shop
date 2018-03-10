@@ -8,25 +8,21 @@
   dependencies:
     react-native-vector-icons "4.1.1"
 
-"@types/async@^2.0.31":
-  version "2.0.40"
-  resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.40.tgz#ac02de68e66c004a61b7cb16df8b1db3a254cca9"
-
-"@types/graphql@^0.9.0":
-  version "0.9.4"
-  resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.9.4.tgz#cdeb6bcbef9b6c584374b81aa7f48ecf3da404fa"
+"@types/async@2.0.47":
+  version "2.0.47"
+  resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.47.tgz#f49ba1dd1f189486beb6e1d070a850f6ab4bd521"
 
 "@types/immutability-helper@^2.0.15":
   version "2.0.15"
   resolved "https://registry.yarnpkg.com/@types/immutability-helper/-/immutability-helper-2.0.15.tgz#1bd2d11e850791267a6302ab86107c0b0ad01bfa"
 
-"@types/isomorphic-fetch@0.0.34":
-  version "0.0.34"
-  resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.34.tgz#3c3483e606c041378438e951464f00e4e60706d6"
-
 "@types/jest@^19.2.3":
   version "19.2.4"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-19.2.4.tgz#543651712535962b7dc615e18e4a381fc2687442"
+
+"@types/node@^9.4.6":
+  version "9.4.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.7.tgz#57d81cd98719df2c9de118f2d5f3b1120dcd7275"
 
 "@types/react-native@*", "@types/react-native@ts2.4":
   version "0.46.5"
@@ -62,6 +58,10 @@
   resolved "https://registry.yarnpkg.com/@types/redux-thunk/-/redux-thunk-2.1.32.tgz#27fac368ced9ea170bf15e5fa4a21d9201f73102"
   dependencies:
     redux "^3.6.0"
+
+"@types/zen-observable@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.3.tgz#91b728599544efbb7386d8b6633693a3c2e7ade5"
 
 abab@^1.0.3:
   version "1.0.3"
@@ -195,20 +195,64 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client@^1.4.0:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-1.8.1.tgz#17481cc15dc787202684c4a6fdaa80ba84568a10"
+apollo-cache-inmemory@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/apollo-cache-inmemory/-/apollo-cache-inmemory-1.1.10.tgz#472442c6c59395159ae7d686ea33056248b26125"
   dependencies:
-    graphql "^0.10.0"
-    graphql-anywhere "^3.0.1"
-    graphql-tag "^2.0.0"
-    redux "^3.4.0"
+    apollo-cache "^1.1.5"
+    apollo-utilities "^1.0.9"
+    graphql-anywhere "^4.1.6"
+
+apollo-cache@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/apollo-cache/-/apollo-cache-1.1.5.tgz#159488bb8981ceacfe26172666a593f38318dbf7"
+  dependencies:
+    apollo-utilities "^1.0.9"
+
+apollo-client@^2.2.6:
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-2.2.6.tgz#38b5a197976f3c22b63623c455d4c4606e420b66"
+  dependencies:
+    "@types/zen-observable" "^0.5.3"
+    apollo-cache "^1.1.5"
+    apollo-link "^1.0.0"
+    apollo-link-dedup "^1.0.0"
+    apollo-utilities "^1.0.9"
     symbol-observable "^1.0.2"
-    whatwg-fetch "^2.0.0"
+    zen-observable "^0.7.0"
   optionalDependencies:
-    "@types/async" "^2.0.31"
-    "@types/graphql" "^0.9.0"
-    "@types/isomorphic-fetch" "0.0.34"
+    "@types/async" "2.0.47"
+
+apollo-link-dedup@^1.0.0:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/apollo-link-dedup/-/apollo-link-dedup-1.0.8.tgz#8c3028cf32557bd040ab6ba8856f38067bdacead"
+  dependencies:
+    apollo-link "^1.2.1"
+
+apollo-link-http-common@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/apollo-link-http-common/-/apollo-link-http-common-0.2.3.tgz#82ae0d4ff0cdd7c5c8826411d9dd7f7d8049ca46"
+  dependencies:
+    apollo-link "^1.2.1"
+
+apollo-link-http@^1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.5.3.tgz#3aa0d3ecfe5666ef0c360f359c425ff6ea1d285b"
+  dependencies:
+    apollo-link "^1.2.1"
+    apollo-link-http-common "^0.2.3"
+
+apollo-link@^1.0.0, apollo-link@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.2.1.tgz#c120b16059f9bd93401b9f72b94d2f80f3f305d2"
+  dependencies:
+    "@types/node" "^9.4.6"
+    apollo-utilities "^1.0.0"
+    zen-observable-ts "^0.8.6"
+
+apollo-utilities@^1.0.0, apollo-utilities@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.9.tgz#16f9f2f92fd6c651d497aba6f2747ce17d87d80a"
 
 append-transform@^0.4.0:
   version "0.4.0"
@@ -1829,9 +1873,21 @@ fbjs-scripts@^0.7.0:
     semver "^5.1.0"
     through2 "^2.0.0"
 
-fbjs@0.8.12, fbjs@^0.8.3, fbjs@^0.8.4, fbjs@^0.8.9:
+fbjs@0.8.12, fbjs@^0.8.3, fbjs@^0.8.4:
   version "0.8.12"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.12.tgz#10b5d92f76d45575fd63a217d4ea02bea2f8ed04"
+  dependencies:
+    core-js "^1.0.0"
+    isomorphic-fetch "^2.1.1"
+    loose-envify "^1.0.0"
+    object-assign "^4.1.0"
+    promise "^7.1.1"
+    setimmediate "^1.0.5"
+    ua-parser-js "^0.7.9"
+
+fbjs@^0.8.16, fbjs@^0.8.9:
+  version "0.8.16"
+  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.16.tgz#5e67432f550dc41b572bf55847b8aca64e5337db"
   dependencies:
     core-js "^1.0.0"
     isomorphic-fetch "^2.1.1"
@@ -2004,19 +2060,21 @@ graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.3, graceful-fs@^4.1.6,
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
 
-graphql-anywhere@^3.0.0, graphql-anywhere@^3.0.1:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-3.1.0.tgz#3ea0d8e8646b5cee68035016a9a7557c15c21e96"
-
-graphql-tag@^2.0.0:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.4.2.tgz#6a63297d8522d03a2b72d26f1b239aab343840cd"
-
-graphql@^0.10.0:
-  version "0.10.5"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.10.5.tgz#c9be17ca2bdfdbd134077ffd9bbaa48b8becd298"
+graphql-anywhere@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/graphql-anywhere/-/graphql-anywhere-4.1.6.tgz#1329ee62c76ff363aa44570d12067178b8611dca"
   dependencies:
-    iterall "^1.1.0"
+    apollo-utilities "^1.0.9"
+
+graphql-tag@^2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.8.0.tgz#52cdea07a842154ec11a2e840c11b977f9b835ce"
+
+graphql@^0.13.1:
+  version "0.13.1"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.13.1.tgz#9b3db3d8e40d1827e4172404bfdd2e4e17a58b55"
+  dependencies:
+    iterall "^1.2.0"
 
 growly@^1.3.0:
   version "1.3.0"
@@ -2118,8 +2176,8 @@ hoist-non-react-statics@^1.0.3:
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
 hoist-non-react-statics@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.2.0.tgz#b099ca82f3640b1244309c8a526a2bd60ad9d7d9"
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -2161,9 +2219,13 @@ iconv-lite@0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
 
-iconv-lite@^0.4.17, iconv-lite@~0.4.13:
+iconv-lite@^0.4.17:
   version "0.4.18"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.18.tgz#23d8656b16aae6742ac29732ea8f0336a4789cf2"
+
+iconv-lite@~0.4.13:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
 image-size@^0.3.5:
   version "0.3.5"
@@ -2213,9 +2275,15 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2:
+invariant@^2.0.0, invariant@^2.2.0, invariant@^2.2.2:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
+  dependencies:
+    loose-envify "^1.0.0"
+
+invariant@^2.2.1:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.3.tgz#1a827dfde7dcbd7c323f0ca826be8fa7c5e9d688"
   dependencies:
     loose-envify "^1.0.0"
 
@@ -2411,9 +2479,9 @@ istanbul-reports@^1.1.1:
   dependencies:
     handlebars "^4.0.3"
 
-iterall@^1.1.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.1.tgz#f7f0af11e9a04ec6426260f5019d9fcca4d50214"
+iterall@^1.2.0:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.2.2.tgz#92d70deb8028e0c39ff3164fdbf4d8b088130cd7"
 
 jest-changed-files@^20.0.3:
   version "20.0.3"
@@ -2785,9 +2853,13 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
-lodash-es@^4.2.0, lodash-es@^4.2.1:
+lodash-es@^4.2.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
+
+lodash-es@^4.2.1:
+  version "4.17.7"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.7.tgz#db240a3252c3dd8360201ac9feef91ac977ea856"
 
 lodash._basecopy@^3.0.0:
   version "3.0.1"
@@ -2835,9 +2907,9 @@ lodash.escape@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
-lodash.flatten@^4.2.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.flatten/-/lodash.flatten-4.4.0.tgz#f31c22225a9632d2bbf8e4addbef240aa765a61f"
+lodash.flowright@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.flowright/-/lodash.flowright-3.5.0.tgz#2b5fff399716d7e7dc5724fe9349f67065184d67"
 
 lodash.get@^4.4.2:
   version "4.4.2"
@@ -2850,14 +2922,6 @@ lodash.isarguments@^3.0.0:
 lodash.isarray@^3.0.0:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
-
-lodash.isequal@^4.1.1:
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
-
-lodash.isobject@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/lodash.isobject/-/lodash.isobject-3.0.2.tgz#3c8fb8d5b5bf4bf90ae06e14f2a530a4ed935e1d"
 
 lodash.keys@^3.0.0, lodash.keys@^3.1.2:
   version "3.1.2"
@@ -2920,9 +2984,13 @@ lodash@^3.5.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.6.1:
+lodash@^4.0.0, lodash@^4.14.0, lodash@^4.16.6, lodash@^4.2.0, lodash@^4.3.0, lodash@^4.6.1:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
+lodash@^4.2.1:
+  version "4.17.5"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
 
 longest@^1.0.1:
   version "1.0.1"
@@ -3160,7 +3228,14 @@ negotiator@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.1.tgz#2b327184e8992101177b28563fb5e7102acd0ca9"
 
-node-fetch@^1.0.1, node-fetch@^1.3.3:
+node-fetch@^1.0.1:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
+  dependencies:
+    encoding "^0.1.11"
+    is-stream "^1.0.1"
+
+node-fetch@^1.3.3:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.1.tgz#899cb3d0a3c92f952c47f1b876f4c8aeabd400d5"
   dependencies:
@@ -3465,12 +3540,20 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9:
+prop-types@15.x, prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.7, prop-types@^15.5.9:
   version "15.5.10"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
+
+prop-types@^15.5.8:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.1.tgz#36644453564255ddda391191fb3a125cbdf654ca"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.3.1"
+    object-assign "^4.1.1"
 
 prr@~0.0.0:
   version "0.0.0"
@@ -3686,20 +3769,15 @@ rc-util@4.x, rc-util@^4.0.4:
     babel-runtime "6.x"
     shallowequal "^0.2.2"
 
-react-apollo@^1.2.0:
-  version "1.4.8"
-  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-1.4.8.tgz#b510f207b08ce4bd1e3adbd46a3ede68e3af27e7"
+react-apollo@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-apollo/-/react-apollo-2.0.4.tgz#01dd32a8e388672f5d7385b21cdd0b94009ee9ee"
   dependencies:
-    apollo-client "^1.4.0"
-    graphql-anywhere "^3.0.0"
-    graphql-tag "^2.0.0"
+    apollo-link "^1.0.0"
     hoist-non-react-statics "^2.2.0"
     invariant "^2.2.1"
-    lodash.flatten "^4.2.0"
-    lodash.isequal "^4.1.1"
-    lodash.isobject "^3.0.2"
+    lodash.flowright "^3.5.0"
     lodash.pick "^4.4.0"
-    object-assign "^4.0.1"
     prop-types "^15.5.8"
 
 react-clone-referenced-element@^1.0.1:
@@ -4036,7 +4114,7 @@ redux-thunk@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
-redux@^3.4.0, redux@^3.6.0, redux@^3.7.1:
+redux@^3.6.0, redux@^3.7.1:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
@@ -4570,8 +4648,8 @@ supports-color@^4.0.0:
     has-flag "^2.0.0"
 
 symbol-observable@^1.0.2, symbol-observable@^1.0.3:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.0.4.tgz#29bf615d4aa7121bdd898b22d4b3f9bc4e2aa03d"
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/symbol-observable/-/symbol-observable-1.2.0.tgz#c22688aed4eab3cdc2dfeacbb561660560a00804"
 
 symbol-tree@^3.2.1:
   version "3.2.2"
@@ -4685,8 +4763,8 @@ typescript@2.4.0:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.0.tgz#aef5a8d404beba36ad339abf079ddddfffba86dd"
 
 ua-parser-js@^0.7.9:
-  version "0.7.14"
-  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.14.tgz#110d53fa4c3f326c121292bbeac904d2e03387ca"
+  version "0.7.17"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.17.tgz#e9ec5f9498b9ec910e7ae3ac626a805c4d09ecac"
 
 uglify-js@2.7.5, uglify-js@^2.6:
   version "2.7.5"
@@ -4814,7 +4892,7 @@ whatwg-encoding@^1.0.1:
   dependencies:
     iconv-lite "0.4.13"
 
-whatwg-fetch@>=0.10.0, whatwg-fetch@^2.0.0:
+whatwg-fetch@>=0.10.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
 
@@ -4999,6 +5077,16 @@ yargs@~3.10.0:
     cliui "^2.1.0"
     decamelize "^1.0.0"
     window-size "0.1.0"
+
+zen-observable-ts@^0.8.6:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.8.8.tgz#1a586dc204fa5632a88057f879500e0d2ba06869"
+  dependencies:
+    zen-observable "^0.7.0"
+
+zen-observable@^0.7.0:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.7.1.tgz#f84075c0ee085594d3566e1d6454207f126411b3"
 
 zscroller@~0.3.0:
   version "0.3.0"

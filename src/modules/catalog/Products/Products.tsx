@@ -1,13 +1,14 @@
 import { View } from "antd-mobile";
+import gql from "graphql-tag";
 import update from "immutability-helper";
 import React from "react";
-import { compose, gql, graphql } from "react-apollo";
+import { compose, graphql } from "react-apollo";
 import { FlatList, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 
+import { Product } from "..";
 import { IData } from "../../../model";
-import { Loading } from "../../layout/index";
-import { Product } from "../index";
+import { Loading } from "../../layout";
 import { IAllProduct, ICatalog } from "../model";
 
 const ALL_PRODUCTS_QUERY = `

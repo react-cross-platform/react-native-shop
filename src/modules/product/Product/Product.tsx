@@ -1,14 +1,15 @@
 import { Flex, Text } from "antd-mobile";
+import gql from "graphql-tag";
 import React from "react";
-import { compose, gql, graphql } from "react-apollo";
-import { ScrollView, StyleSheet, View, Dimensions } from "react-native";
+import { compose, graphql } from "react-apollo";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
+import { Images, ProductBuy, ProductInfo } from "..";
 import { IData } from "../../../model";
-import { Loading, Hr } from "../../layout/index";
+import { Hr, Loading } from "../../layout";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
-import { Images, ProductBuy, ProductInfo } from "../index";
 import { ICurrentProduct, IProduct, ISubProduct } from "../model";
 
 const PRODUCT_QUERY = `

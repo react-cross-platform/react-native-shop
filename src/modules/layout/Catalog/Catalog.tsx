@@ -1,12 +1,12 @@
 import { WingBlank } from "antd-mobile";
+import gql from "graphql-tag";
 import React from "react";
-import { compose, gql, graphql } from "react-apollo";
-import { ScrollView, StyleSheet, Text, View, Image } from "react-native";
-import { connect } from "react-redux";
+import { graphql } from "react-apollo";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Dispatch } from "redux";
 
 import { IData } from "../../../model";
-import { SubCatalog } from "../../layout/index";
+import { SubCatalog } from "../../layout";
 import { ICategory } from "../../product/model";
 import { ILayout } from "../model";
 
@@ -58,18 +58,18 @@ interface ICatalogProps {
   navigation: any;
 }
 
-
 class Catalog extends React.Component<
   IConnectedCatalogProps & ICatalogProps,
   null
 > {
   static navigationOptions = {
     tabBarLabel: "КАТАЛОГ",
-    tabBarIcon: ({ tintColor }) =>
+    tabBarIcon: ({ tintColor }) => (
       <Image
         source={require("../../../../images/catalog.png")}
         style={[styles.icon, { tintColor: tintColor }]}
       />
+    )
   };
 
   render() {
@@ -99,18 +99,16 @@ class Catalog extends React.Component<
     return (
       <WingBlank size="sm">
         <ScrollView>
-          {startCats.map((parent, i) =>
+          {startCats.map((parent, i) => (
             <View key={i}>
-              <Text style={styles.categoryName}>
-                {parent.name}
-              </Text>
+              <Text style={styles.categoryName}>{parent.name}</Text>
               <SubCatalog
                 key={i}
                 categories={childrenMap[parent.id]}
                 navigation={navigation}
               />
             </View>
-          )}
+          ))}
         </ScrollView>
       </WingBlank>
     );

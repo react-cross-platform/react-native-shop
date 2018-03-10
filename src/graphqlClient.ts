@@ -1,14 +1,12 @@
-import ApolloClient, { createNetworkInterface } from "apollo-client";
-import { Platform } from "react-native";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { ApolloClient } from "apollo-client";
+import { HttpLink } from "apollo-link-http";
 
-export const GRAPHQL_URI =
-  Platform.OS === "ios"
-    ? "https://shop.serga.name/graphql"
-    : "http://shop.serga.name/graphql";
-// export const GRAPHQL_URI = 'http://192.168.31.20:8000/graphql';
+const GRAPHQL_URL = "https://shop.serga.name/graphql";
 
 const client = new ApolloClient({
-  networkInterface: createNetworkInterface({ uri: GRAPHQL_URI })
+  link: new HttpLink({ uri: GRAPHQL_URL }),
+  cache: new InMemoryCache()
 });
 
 export default client;
