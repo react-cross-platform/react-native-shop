@@ -1,9 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
-import { connect } from "react-redux";
-
+import gql from "graphql-tag";
+import { graphql } from "react-apollo";
 import { ICartItem } from "../model";
+import { CART_QUERY } from "../Cart/Cart";
 
 const styles = StyleSheet.create({
   commonContainer: {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   }
 });
 interface IConnectedCartTriggerProps {
-  cart: [ICartItem];
+  data: any;
 }
 
 interface ICartTriggerProps {
@@ -54,8 +55,14 @@ class CartTrigger extends React.Component<
     const { navigation } = this.props;
     navigation.navigate("Cart");
   };
+
   render() {
-    const { cart } = this.props;
+    const { data: { loading, cart } } = this.props;
+
+    if (loading) {
+      return null;
+    }
+
     return (
       <Ripple
         rippleCentered={true}
@@ -63,13 +70,13 @@ class CartTrigger extends React.Component<
         style={styles.commonContainer}
         onPress={this.handleNavigation}
       >
-        {cart.length > 0
-          ? <View style={styles.counterContainer}>
-              <Text style={styles.counter}>
-                {cart.length}
-              </Text>
-            </View>
-          : <Text />}
+        {cart && cart.items.length > 0 ? (
+          <View style={styles.counterContainer}>
+            <Text style={styles.counter}>{cart.items.length}</Text>
+          </View>
+        ) : (
+          <Text />
+        )}
 
         <Image
           source={require("./../../../../images/cart.png")}
@@ -80,10 +87,4 @@ class CartTrigger extends React.Component<
   }
 }
 
-const mapStateToProps: any = state => ({
-  cart: state.cart
-});
-
-export default connect<IConnectedCartTriggerProps, {}, ICartTriggerProps>(
-  mapStateToProps
-)(CartTrigger);
+export default graphql<any, any>(CART_QUERY)(CartTrigger);

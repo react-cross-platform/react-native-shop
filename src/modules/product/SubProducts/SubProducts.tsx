@@ -44,7 +44,7 @@ class SubProducts extends React.Component<
 > {
   onChangePrice = elId => {
     this.props.dispatch({
-      colorId: this.props.product.colorId,
+      colorId: this.props.product.colorId[0],
       subProductId: elId,
       type: ACTION_SELECT_SUBPRODUCT
     });
@@ -64,20 +64,22 @@ class SubProducts extends React.Component<
           <Text style={styles.title}>Модификации</Text>
         </WingBlank>
         <List>
-          {subProducts.map((subProduct, index) =>
+          {subProducts.map((subProduct, index) => (
             <Item
               key={index}
               onClick={() => this.onChangePrice(subProduct.id)}
               thumb={
-                this.isActive(subProduct.id)
-                  ? <Image
-                      style={styles.checkIcon}
-                      source={require("../../../../images/circle-check.png")}
-                    />
-                  : <Image
-                      style={{ height: 20, width: 20 }}
-                      source={require("../../../../images/circle.png")}
-                    />
+                this.isActive(subProduct.id) ? (
+                  <Image
+                    style={styles.checkIcon}
+                    source={require("../../../../images/circle-check.png")}
+                  />
+                ) : (
+                  <Image
+                    style={{ height: 20, width: 20 }}
+                    source={require("../../../../images/circle.png")}
+                  />
+                )
               }
               extra={
                 <Text
@@ -91,11 +93,9 @@ class SubProducts extends React.Component<
                 </Text>
               }
             >
-              <Text style={styles.article}>
-                {subProduct.article}
-              </Text>
+              <Text style={styles.article}>{subProduct.article}</Text>
             </Item>
-          )}
+          ))}
         </List>
       </View>
     );

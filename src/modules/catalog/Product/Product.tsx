@@ -64,7 +64,7 @@ interface IProductProps extends IProduct {
 }
 
 interface IProductState {
-  titleImage: IImageWithColor;
+  titleImage: any;
 }
 
 const handleNavigation = (navigation, id, name) => {
@@ -74,16 +74,16 @@ const handleNavigation = (navigation, id, name) => {
 const Wrapper = props => {
   // FixMe: This is temporary hack solution
   const { withNavigation, navigation, id, name, children } = props;
-  return withNavigation
-    ? <Ripple
-        onPress={() => handleNavigation(navigation, id, name)}
-        style={styles.card}
-      >
-        {children}
-      </Ripple>
-    : <View style={styles.card}>
-        {children}
-      </View>;
+  return withNavigation ? (
+    <Ripple
+      onPress={() => handleNavigation(navigation, id, name)}
+      style={styles.card}
+    >
+      {children}
+    </Ripple>
+  ) : (
+    <View style={styles.card}>{children}</View>
+  );
 };
 
 class Product extends React.Component<

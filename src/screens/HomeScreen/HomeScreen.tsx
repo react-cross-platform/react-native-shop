@@ -20,11 +20,11 @@ const HomeScreen = TabNavigator(
         fontSize: 12
       }
     },
-    navigationOptions: (props) => ({
+    navigationOptions: props => ({
       title: "React Native Shop",
       headerRight: <CartTrigger navigation={(props as any).navigation} />
     })
-  }
+  } as any
 );
 
 export default HomeScreen;

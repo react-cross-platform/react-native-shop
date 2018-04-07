@@ -29,7 +29,6 @@ class SidebarCatalog extends React.Component<IConnectedSideBarProps, any> {
 
   render() {
     const { layout, dispatch } = this.props;
-    console.log("layout catalog", layout.openCatalog);
     // Trick for Safari to disable forward swike but enable swipe back
     // to prevent conflict with Safary's prev/next history actions
     // const dragToggleDistance = swipeEnabled() ? 60 : 0;

@@ -5,7 +5,10 @@ import { HttpLink } from "apollo-link-http";
 const GRAPHQL_URL = "https://shop.serga.name/graphql";
 
 const client = new ApolloClient({
-  link: new HttpLink({ uri: GRAPHQL_URL }),
+  link: new HttpLink({
+    uri: GRAPHQL_URL,
+    credentials: "include"
+  }),
   cache: new InMemoryCache()
 });
 
