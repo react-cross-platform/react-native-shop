@@ -1,4 +1,4 @@
-export const prettyPrice = value => {
+export const formatPrice = value => {
   const convertToString = value.toString();
   const splitValue = convertToString.split("");
   const valueLength = splitValue.length;

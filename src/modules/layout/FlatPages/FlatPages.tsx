@@ -112,7 +112,7 @@ class FlatPages extends React.Component<
   render() {
     const { data } = this.props;
     const { loading, flatPages } = data;
-    if (loading === true) {
+    if (loading) {
       return <Loading />;
     }
 

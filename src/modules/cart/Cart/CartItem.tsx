@@ -2,7 +2,7 @@ import React from "react";
 import { Stepper, WhiteSpace, WingBlank } from "antd-mobile";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Hr } from "../../layout/index";
-import { prettyPrice } from "../utils";
+import { formatPrice } from "../utils";
 import RemoveCartItem from "./RemoveCartItem";
 
 import { ICartItem } from "../model";
@@ -88,22 +88,19 @@ interface ICartItemProps {
   product: ICartItem;
 }
 
-class CartItem extends React.Component<
-  IConnectedCartItemProps & ICartItemProps,
-  any
-> {
-  constructor() {
-    super();
-    this.state = {
-      language: "java"
-    };
-  }
+interface Props extends IConnectedCartItemProps, ICartItemProps {}
+interface State {}
+
+class CartItem extends React.Component<Props, State> {
   // handleNavigation = (navigation, id, name) => {
   //   navigation.navigate("Product", { id, name });
   // };
 
   onChange = value => {
-    const { amount, subProduct: { price } } = this.props.product;
+    const {
+      amount,
+      subProduct: { price }
+    } = this.props.product;
     getCartItemTotalPrice(price, amount);
   };
 
@@ -112,7 +109,11 @@ class CartItem extends React.Component<
       product: {
         amount,
         attributeValues,
-        subProduct: { article, price, product: { brand, name, images } }
+        subProduct: {
+          article,
+          price,
+          product: { brand, name, images }
+        }
       },
       navigation
     } = this.props;
@@ -163,7 +164,7 @@ class CartItem extends React.Component<
               </View>
             </View>
             <Text style={styles.infoPriceContainer}>
-              Цена: {prettyPrice(Math.round(price))} грн.
+              Цена: {formatPrice(Math.round(price))} грн.
             </Text>
           </View>
 

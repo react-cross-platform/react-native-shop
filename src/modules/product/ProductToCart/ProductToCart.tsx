@@ -8,7 +8,7 @@ import gql from "graphql-tag";
 
 import { ACTION_ADD_CART_ITEM } from "../../cart/constants";
 import { ICartItem } from "../../cart/model";
-import { prettyPrice } from "../../cart/utils";
+import { formatPrice } from "../../cart/utils";
 import { CART_QUERY } from "../../cart/Cart/Cart";
 import client from "../../../graphqlClient";
 
@@ -28,14 +28,14 @@ const styles = StyleSheet.create({
     borderTopWidth: 1
   },
 
-  putCart: {
+  addCartItem: {
     justifyContent: "center",
     backgroundColor: "orange",
     width: "50%",
     height: 40
   },
 
-  toCart: {
+  openCart: {
     justifyContent: "center",
     backgroundColor: "#15c544",
 
@@ -81,15 +81,15 @@ interface OwnProps {
 }
 
 interface GraphQLProps {
-  submit?: () => any;
+  submit?: () => void;
 }
 
 interface Props extends OwnProps, GraphQLProps {}
 
 interface State {}
 
-class ProductBuy extends React.Component<Props, State> {
-  handleNavigation = () => {
+class ProductToCart extends React.Component<Props, State> {
+  openCart = () => {
     const { navigation } = this.props;
     navigation.navigate("Cart");
   };
@@ -103,7 +103,7 @@ class ProductBuy extends React.Component<Props, State> {
     const { price, subProductId, attributeValueIds } = this.props;
     const totalPrice = parseInt(String(price), 10);
     const cartData = client.readQuery({ query: CART_QUERY }) as any;
-    const inCart = cartData.cart.items
+    const inCart = cartData.cart
       ? cartData.cart.items.filter(item => item.subProduct.id === subProductId)
           .length > 0
       : false;
@@ -111,14 +111,14 @@ class ProductBuy extends React.Component<Props, State> {
     return (
       <View style={styles.footer}>
         <View style={styles.containerPrice}>
-          <Text style={styles.price}>{prettyPrice(totalPrice)} грн.</Text>
+          <Text style={styles.price}>{formatPrice(totalPrice)} грн.</Text>
         </View>
         {inCart ? (
-          <Ripple style={styles.toCart} onPress={this.handleNavigation}>
+          <Ripple style={styles.openCart} onPress={this.openCart}>
             <Text style={styles.buy}>Перейти в корзину</Text>
           </Ripple>
         ) : (
-          <Ripple style={styles.putCart} onPress={this.addCartItem}>
+          <Ripple style={styles.addCartItem} onPress={this.addCartItem}>
             <Text style={styles.buy}>Добавить в корзину</Text>
           </Ripple>
         )}
@@ -201,7 +201,11 @@ const addCartItemOptions: OperationOption<OwnProps, GraphQLProps> = {
             attributeValueIds
           },
           update: (client, props: any) => {
-            const { data: { addCartItem: { cartItem } } } = props;
+            const {
+              data: {
+                addCartItem: { cartItem }
+              }
+            } = props;
             const data: any = client.readQuery({ query: CART_QUERY });
             if (!data.cart) {
               data.cart = cartItem.cart;
@@ -219,4 +223,4 @@ const addCartItemOptions: OperationOption<OwnProps, GraphQLProps> = {
 export default compose(
   graphql<any, any>(CART_QUERY, cartOptions),
   graphql<GraphQLProps, Props>(ADD_CART_ITEM_MUTATION, addCartItemOptions)
-)(ProductBuy);
+)(ProductToCart);

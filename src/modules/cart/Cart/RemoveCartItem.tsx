@@ -23,14 +23,20 @@ const styles = StyleSheet.create({
 });
 
 interface IConnectedCartItemRemoveProps {}
-
 interface ICartItemRemoveProps {
   product: any;
+  submit: any;
 }
 
-class RemoveCartItem extends React.Component<any & any, any> {
+interface Props extends IConnectedCartItemRemoveProps, ICartItemRemoveProps {}
+interface State {}
+
+class RemoveCartItem extends React.Component<Props, State> {
   removeCartItem = () => {
-    const { submit, product: { id } } = this.props;
+    const {
+      submit,
+      product: { id }
+    } = this.props;
     Modal.alert("Удалить из корзины?", "", [
       { text: "Нет", onPress: () => null },
       { text: "Да", onPress: () => submit(id) }

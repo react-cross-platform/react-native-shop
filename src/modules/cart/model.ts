@@ -17,7 +17,7 @@ export interface ICartItem {
   amount: number;
   price: number;
   subProduct: ISubProduct;
-  attributeValues: [IAttributeValue];
+  attributeValues: IAttributeValue[];
 }
 
 export interface ISubProduct {

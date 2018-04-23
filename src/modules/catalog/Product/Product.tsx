@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
 import { Images } from "../../product/index";
 import { IImageWithColor, IProduct } from "../../product/model";
 import { ICatalog } from "../model";
-import { prettyPrice } from "../../cart/utils";
+import { formatPrice } from "../../cart/utils";
 
 const styles = StyleSheet.create({
   card: {
@@ -163,7 +163,7 @@ class Product extends React.Component<
             onPress={() => handleNavigation(navigation, id, name)}
           >
             {isSinglePrice ? "" : "от "}
-            {prettyPrice(productPrice)} грн.
+            {formatPrice(productPrice)} грн.
           </Text>
         </Ripple>
       </Wrapper>

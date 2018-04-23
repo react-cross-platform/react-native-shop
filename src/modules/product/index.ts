@@ -1,6 +1,6 @@
 import Images from "./Images/Images";
 import Product from "./Product/Product";
-import ProductBuy from "./ProductBuy/ProductBuy";
+import ProductToCart from "./ProductToCart/ProductToCart";
 import ProductInfo from "./ProductInfo/ProductInfo";
 import SubProducts from "./SubProducts/SubProducts";
 
@@ -12,7 +12,7 @@ export {
   Images,
   ProductInfo,
   SubProducts,
-  ProductBuy,
+  ProductToCart,
   reducer,
   model
 };

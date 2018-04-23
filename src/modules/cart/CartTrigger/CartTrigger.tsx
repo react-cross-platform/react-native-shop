@@ -57,7 +57,9 @@ class CartTrigger extends React.Component<
   };
 
   render() {
-    const { data: { loading, cart } } = this.props;
+    const {
+      data: { loading, cart }
+    } = this.props;
 
     if (loading) {
       return null;
@@ -70,13 +72,12 @@ class CartTrigger extends React.Component<
         style={styles.commonContainer}
         onPress={this.handleNavigation}
       >
-        {cart && cart.items.length > 0 ? (
-          <View style={styles.counterContainer}>
-            <Text style={styles.counter}>{cart.items.length}</Text>
-          </View>
-        ) : (
-          <Text />
-        )}
+        {cart &&
+          cart.items.length > 0 && (
+            <View style={styles.counterContainer}>
+              <Text style={styles.counter}>{cart.items.length}</Text>
+            </View>
+          )}
 
         <Image
           source={require("./../../../../images/cart.png")}

@@ -6,7 +6,7 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Images, ProductBuy, ProductInfo } from "..";
+import { Images, ProductToCart, ProductInfo } from "..";
 import { IData } from "../../../model";
 import { Hr, Loading } from "../../layout";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   productMainScreen: {
-    alignContent: "center"
+    height: '7%'
   },
 
   header: {
@@ -83,23 +83,24 @@ const styles = StyleSheet.create({
     backgroundColor: "skyblue"
   },
 
-  infoTitle: {
+  productName: {
     fontSize: 20,
-    lineHeight: 22,
-    height: 45,
     fontWeight: "bold",
-    margin: 20,
     textAlign: "center"
   },
 
-  productTop: {
-    backgroundColor: "blue",
-    height: 40
+  productBrand: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center"
   },
 
-  categoryName: {
-    textAlign: "center"
-  }
+  productArticle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginLeft: 5
+  },
 });
 
 interface IDataProduct extends IData {
@@ -137,13 +138,13 @@ class Product extends React.Component<
   componentWillReceiveProps(nextProps) {
     const { data } = nextProps;
     const { loading, product } = data;
-    if (loading === false) {
+    if (!loading) {
       const { subProducts, images } = product;
       const colorId = images[0].attributeValue.id;
       const { subProductId } = nextProps.product;
       const subProductIds = subProducts.map(sp => sp.id);
       const subProductColorIds = product.images
-        .filter(attribute => attribute.attributeValue !== null)
+        .filter(attribute => !!attribute.attributeValue)
         .map(color => color.attributeValue.id);
       if (subProductIds.indexOf(subProductId) === -1) {
         this.props.dispatch({
@@ -160,7 +161,7 @@ class Product extends React.Component<
     const { loading, product } = data;
     const { subProductId, colorId } = this.props.product;
 
-    if (loading === true) {
+    if (loading) {
       return <Loading />;
     }
 
@@ -173,23 +174,31 @@ class Product extends React.Component<
       <View style={styles.product}>
         <ScrollView>
           <Images navigation={navigation} images={images} />
-          <Flex
-            justify="around"
-            direction="column"
-            style={styles.productMainScreen}
-          >
-            <Text style={styles.infoTitle}>
-              {product.name} {product.brand.name} {"\n"}{" "}
-              {activeSubProduct.article}
-            </Text>
-          </Flex>
+          <View style={styles.productMainScreen}>
+            <Text style={styles.productName}>{product.name}</Text>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Text style={styles.productBrand}>
+                {product.brand.name}
+              </Text>
+              <Text style={styles.productArticle}>
+                {activeSubProduct.article}
+              </Text>
+            </View>
+          </View>
           <Hr />
           <ProductInfo
             dataProduct={product}
             activeSubProduct={activeSubProduct}
           />
         </ScrollView>
-        <ProductBuy
+        <ProductToCart
           price={price}
           navigation={navigation}
           attributeValueIds={colorId}

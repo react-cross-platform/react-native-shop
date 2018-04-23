@@ -4,7 +4,7 @@ import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { prettyPrice } from "../../cart/utils";
+import { formatPrice } from "../../cart/utils";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
 import { ICurrentProduct, ISubProduct } from "../model";
 
@@ -89,7 +89,7 @@ class SubProducts extends React.Component<
                     fontWeight: "bold"
                   }}
                 >
-                  {prettyPrice(subProduct.price) + " грн."}
+                  {formatPrice(subProduct.price) + " грн."}
                 </Text>
               }
             >

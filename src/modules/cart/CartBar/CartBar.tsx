@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
 import { connect } from "react-redux";
 
-import { prettyPrice } from "../utils";
+import { formatPrice } from "../utils";
 
 const styles = StyleSheet.create({
   footerContainer: {
@@ -76,9 +76,7 @@ class CartBar extends React.Component<
         <View style={styles.footerContainer}>
           <View style={styles.containerTotalPrice}>
             <Text style={styles.price}>Стоимость заказа</Text>
-            <Text style={styles.price}>
-              {prettyPrice(totalPrice)} грн.
-            </Text>
+            <Text style={styles.price}>{formatPrice(totalPrice)} грн.</Text>
           </View>
           <Ripple
             style={styles.buyCart}

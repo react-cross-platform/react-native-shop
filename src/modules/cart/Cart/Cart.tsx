@@ -10,7 +10,7 @@ import {
   WebView
 } from "react-native";
 import { connect } from "react-redux";
-import { prettyPrice } from "../utils";
+import { formatPrice } from "../utils";
 
 import { Loading } from "../../../modules/layout/index";
 import client from "../../../graphqlClient";
@@ -18,6 +18,7 @@ import { CartBar } from "../index";
 import { ICartItem } from "../model";
 import { IProduct } from "../../product/model";
 import CartItem from "./CartItem";
+import EmptyCart from "./EmptyCart";
 
 const styles = StyleSheet.create({
   emptyCartContainer: {
@@ -56,33 +57,41 @@ interface ICartProps {
   navigation: any;
 }
 
-const reducerForSumm = (accumulator, currentValue) =>
-  accumulator + currentValue;
-
 class Cart extends React.Component<IConnectedCartProps & ICartProps, any> {
-  render() {
-    const { navigation, dataCart: { loading, cart } } = this.props;
-    const totalPrice =
-      cart.items.length > 0 && cart.items.map(item => item.price);
+  isEmpty = cart => {
+    if (!cart || cart.items.length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
-    const totalCartPrice = totalPrice.length
-      ? totalPrice.reduce(reducerForSumm)
-      : "0";
+  render() {
+    const {
+      navigation,
+      dataCart: { loading, cart }
+    } = this.props;
 
     if (loading) {
       return <Loading />;
     }
 
+    const cartIsEmpty = this.isEmpty(cart);
+    const totalPrice = !cartIsEmpty && cart.items.map(item => item.price);
+    const totalCartPrice =
+      !cartIsEmpty &&
+      totalPrice.reduce((sum, currentValue) => sum + currentValue);
+
     return (
       <View
         style={{
           flex: 1,
-          backgroundColor: cart.items.length ? "#ebebef" : "#ffffff"
+          backgroundColor: cartIsEmpty ? "#ffffff" : "#ebebef"
         }}
       >
-        {cart.items.length ? (
+        {!cartIsEmpty ? (
           <ScrollView>
-            <Text style={styles.totalCost}>{`Итого к оплате: ${prettyPrice(
+            <Text style={styles.totalCost}>{`Итого к оплате: ${formatPrice(
               totalCartPrice
             )} грн`}</Text>
             <View style={styles.cartItems}>
@@ -96,15 +105,7 @@ class Cart extends React.Component<IConnectedCartProps & ICartProps, any> {
             </View>
           </ScrollView>
         ) : (
-          <View style={styles.emptyCartContainer}>
-            <Image
-              source={require("../../../../images/sad-smile.png")}
-              style={{
-                resizeMode: "contain"
-              }}
-            />
-            <Text style={styles.emptyCartText}>Корзина Пуста</Text>
-          </View>
+          <EmptyCart />
         )}
       </View>
     );

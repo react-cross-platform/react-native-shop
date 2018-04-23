@@ -94,10 +94,10 @@ const options = {
   })
 };
 
-class ProductInfo extends React.Component<
-  IConnectedProductInfoProps & IProductInfoProps,
-  any
-> {
+interface Props extends IConnectedProductInfoProps, IProductInfoProps {}
+interface State {}
+
+class ProductInfo extends React.Component<Props, State> {
   changeColor = colorId => {
     this.props.dispatch({ type: ACTION_SELECT_COLOR, colorId });
   };
@@ -117,11 +117,7 @@ class ProductInfo extends React.Component<
     return (
       <View>
         {/* Select SubProduct section */}
-        {subProducts.length > 1 ? (
-          <SubProducts subProducts={subProducts} />
-        ) : (
-          <Text />
-        )}
+        <SubProducts subProducts={subProducts} />
 
         {/* Select Color section */}
         <WingBlank>
