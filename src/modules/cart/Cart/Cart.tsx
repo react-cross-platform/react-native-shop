@@ -123,7 +123,6 @@ export const CART_QUERY = gql`
   query cart {
     cart {
       id
-      totalPrice
       phone
       email
       firstName

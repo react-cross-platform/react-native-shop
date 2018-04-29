@@ -211,6 +211,7 @@ const addCartItemOptions: OperationOption<OwnProps, GraphQLProps> = {
               data.cart = cartItem.cart;
               data.cart!.items = [];
             }
+            delete cartItem.cart;
             data.cart!.items.push(cartItem);
             client.writeQuery({ query: CART_QUERY, data });
           }
