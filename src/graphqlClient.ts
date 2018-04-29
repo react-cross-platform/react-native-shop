@@ -1,11 +1,16 @@
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { ApolloClient } from "apollo-client";
-import { HttpLink } from "apollo-link-http";
+import { createHttpLink } from "apollo-link-http";
 
 const GRAPHQL_URL = "https://shop.serga.name/graphql";
 
+const httpLink = createHttpLink({
+  uri: GRAPHQL_URL,
+  credentials: "include"
+});
+
 const client = new ApolloClient({
-  link: new HttpLink({ uri: GRAPHQL_URL }),
+  link: httpLink,
   cache: new InMemoryCache()
 });
 

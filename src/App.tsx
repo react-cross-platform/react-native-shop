@@ -4,7 +4,13 @@ import { StyleSheet } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
 import client from "src/graphqlClient";
-import { CartScreen, CategoryScreen, FlatPageScreen, HomeScreen, ProductScreen } from "src/screens";
+import {
+  CartScreen,
+  CategoryScreen,
+  FlatPageScreen,
+  HomeScreen,
+  ProductScreen
+} from "src/screens";
 import store from "src/store";
 
 interface IAppProps {}
@@ -24,7 +30,7 @@ const NavigationApp = StackNavigator({
   Product: { screen: ProductScreen },
   FlatPage: { screen: FlatPageScreen },
   Cart: { screen: CartScreen }
-}) as any;
+} as any);
 
 export default class App extends React.Component<IAppProps, IAppState> {
   render() {

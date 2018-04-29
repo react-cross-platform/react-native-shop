@@ -216,7 +216,7 @@ class ProductInfo extends React.Component<
                   <Text style={styles.paramName}>Размер, ШxВxГ</Text>
                   <View className={styles.paramValue}>
                     <Text>
-                      {supProduct.attributes.length !== 0
+                      {!!supProduct.attributes.length
                         ? <Text>
                             {supProduct.attributes
                               .slice(0, 3)

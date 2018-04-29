@@ -1,5 +1,5 @@
 {
-  "name": "react-native-shop",
+  "name": "ReactNativeShop",
   "version": "0.0.1",
   "private": false,
   "main": "node_modules/expo/AppEntry.js",
@@ -14,19 +14,18 @@
     "android-linux": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && react-native run-android"
   },
   "dependencies": {
-    "antd-mobile": "2.0.0-alpha.2",
-    "apollo-cache-inmemory": "^1.1.10",
-    "apollo-client": "^2.2.6",
-    "apollo-link-http": "^1.5.3",
+    "antd-mobile": "2.1.6",
+    "apollo-client-preset": "1.0.8",
+    "apollo-link-context": "^1.0.3",
     "expo": "19.0.0",
-    "graphql": "^0.13.1",
-    "graphql-tag": "^2.8.0",
+    "graphql": "0.11.7",
+    "graphql-tag": "2.8.0",
     "immutability-helper": "^2.2.2",
-    "react": "16.0.0-alpha.12",
-    "react-apollo": "^2.0.4",
-    "react-native": "0.46.1",
+    "react": "^16.3.0-alpha.1",
+    "react-apollo": "2.0.4",
+    "react-native": "0.54.2",
     "react-native-material-ripple": "^0.7.4",
-    "react-navigation": "^1.0.0-beta.11",
+    "react-navigation": "^1.5.11",
     "react-redux": "^5.0.5",
     "redux": "^3.7.1",
     "redux-logger": "^3.0.6",
@@ -34,14 +33,11 @@
     "tslib": "^1.9.0"
   },
   "devDependencies": {
-    "@types/immutability-helper": "^2.0.15",
     "@types/jest": "^19.2.3",
-    "@types/react": "^15.0.24",
-    "@types/react-native": "ts2.4",
-    "@types/react-navigation": "1.0.19",
+    "@types/react": "^16.0.28",
+    "@types/react-native": "0.52.16",
     "@types/react-test-renderer": "^15.5.0",
     "@types/redux-logger": "^3.0.0",
-    "@types/redux-thunk": "^2.1.0",
     "babel-jest": "20.0.3",
     "babel-plugin-import": "^1.2.1",
     "babel-preset-react-native": "^2.1.0",
@@ -51,7 +47,7 @@
     "react-test-renderer": "16.0.0-alpha.12",
     "redux-devtools-extension": "^2.13.2",
     "rimraf": "^2.6.1",
-    "typescript": "2.4.0"
+    "typescript": "2.7.2"
   },
   "jest": {
     "preset": "react-native"

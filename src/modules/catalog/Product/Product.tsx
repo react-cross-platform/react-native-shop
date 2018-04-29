@@ -10,6 +10,9 @@ import { IImageWithColor, IProduct } from "../../product/model";
 import { ICatalog } from "../model";
 import { prettyPrice } from "../../cart/utils";
 
+// FIXME: fix via TS config
+declare const Math;
+
 const styles = StyleSheet.create({
   card: {
     flex: 1,
@@ -74,23 +77,24 @@ const handleNavigation = (navigation, id, name) => {
 const Wrapper = props => {
   // FixMe: This is temporary hack solution
   const { withNavigation, navigation, id, name, children } = props;
-  return withNavigation
-    ? <Ripple
-        onPress={() => handleNavigation(navigation, id, name)}
-        style={styles.card}
-      >
-        {children}
-      </Ripple>
-    : <View style={styles.card}>
-        {children}
-      </View>;
+  return withNavigation ? (
+    <Ripple
+      onPress={() => handleNavigation(navigation, id, name)}
+      style={styles.card}
+    >
+      {children}
+    </Ripple>
+  ) : (
+    <View style={styles.card}>{children}</View>
+  );
 };
 
 class Product extends React.Component<
   IConnectedProductProps & IProductProps,
   IProductState
 > {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const { imagesWithColor } = this.props;
     this.state = {
       titleImage:
@@ -123,25 +127,8 @@ class Product extends React.Component<
     const prices = subProducts.map(el => el.price);
     const isSinglePrice = prices.length === 1;
     const minPrice = getMinOfArray(prices);
-    const productPrice = parseInt(minPrice, 10);
+    const productPrice = Math.floor(minPrice);
     const isSingleImage = imagesWithColor.length == 1;
-
-    let cardPadding: number;
-    let borderRadius: number;
-    let width = Math.round(window.innerWidth / 2);
-    if (window.innerWidth <= 640) {
-      cardPadding = 10;
-      borderRadius = 4;
-      width -= 22;
-    } else if (window.innerWidth <= 750) {
-      cardPadding = 14;
-      borderRadius = 6;
-      width -= 28;
-    } else {
-      cardPadding = 15;
-      borderRadius = 8;
-      width -= 32;
-    }
 
     return (
       <Wrapper
