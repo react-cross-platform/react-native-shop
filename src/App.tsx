@@ -3,16 +3,9 @@ import { ApolloProvider } from "react-apollo";
 import { StyleSheet } from "react-native";
 import { StackNavigator } from "react-navigation";
 import { Provider } from "react-redux";
-
-import client from "./graphqlClient";
-import {
-  CartScreen,
-  CategoryScreen,
-  FlatPageScreen,
-  HomeScreen,
-  ProductScreen
-} from "./screens";
-import store from "./store";
+import client from "src/graphqlClient";
+import { CartScreen, CategoryScreen, FlatPageScreen, HomeScreen, ProductScreen } from "src/screens";
+import store from "src/store";
 
 interface IAppProps {}
 
