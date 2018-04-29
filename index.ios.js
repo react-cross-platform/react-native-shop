@@ -2,6 +2,6 @@
 
 import { AppRegistry } from "react-native";
 
-import App from "./build";
+import App from "./src/App";
 
 AppRegistry.registerComponent('ReactNativeShop', () => App);
