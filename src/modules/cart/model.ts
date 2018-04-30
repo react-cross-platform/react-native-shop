@@ -6,7 +6,7 @@ export interface ICartItem {
   comment: string;
   city: string;
   address: string;
-  items: [ICartItem];
+  items: ICartItem[];
   amount: number;
   firstName: string;
   lastName: string;

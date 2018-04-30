@@ -11,7 +11,8 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
     alignItems: "stretch",
-    backgroundColor: "white"
+    backgroundColor: "white",
+    paddingBottom: 20
   },
   image: {
     flex: 1,
@@ -59,7 +60,7 @@ class Images extends React.Component<IImagesProps, IImagesState> {
           selectedIndex={0}
           dotStyle={{ top: 5 }}
         >
-          {images.map((image, i) =>
+          {images.map((image, i) => (
             <Flex
               key={i}
               justify="center"
@@ -68,8 +69,7 @@ class Images extends React.Component<IImagesProps, IImagesState> {
                 styles.flex,
                 {
                   marginLeft: padding,
-                  marginRight: padding,
-                  paddingBottom: 20
+                  marginRight: padding
                 }
               ]}
             >
@@ -79,7 +79,7 @@ class Images extends React.Component<IImagesProps, IImagesState> {
                 source={{ uri: image.src }}
               />
             </Flex>
-          )}
+          ))}
         </Carousel>
       );
     } else {

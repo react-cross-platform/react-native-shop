@@ -11,6 +11,10 @@ import { ICurrentProduct, IProduct, ISubProduct } from "../model";
 import { Hr } from "../../layout/index";
 
 const styles = StyleSheet.create({
+  viewTitle: {
+    width: "20%"
+  },
+
   title: {
     color: "#1296db",
     fontSize: 18,
@@ -43,7 +47,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  colorIcon: {},
+
+  color: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    margin: 5
+  },
 
   containerColorName: {
     width: "26%",
@@ -121,7 +133,7 @@ class ProductInfo extends React.Component<Props, State> {
         {/* Select Color section */}
         <WingBlank>
           <View style={styles.colorSection}>
-            <View style={{ width: "20%" }}>
+            <View style={styles.viewTitle}>
               <Text style={styles.title}>Цвет</Text>
             </View>
             <View style={styles.colors}>
@@ -131,15 +143,10 @@ class ProductInfo extends React.Component<Props, State> {
                       color.attributeValue.id === colorId[0] ? (
                         <View
                           key={i}
-                          style={{
-                            justifyContent: "center",
-                            alignItems: "center",
-                            backgroundColor: color.attributeValue.value,
-                            height: 20,
-                            width: 20,
-                            borderRadius: 10,
-                            margin: 5
-                          }}
+                          style={[
+                            styles.color,
+                            { backgroundColor: color.attributeValue.value }
+                          ]}
                         >
                           <Image
                             source={require("../../../../images/checked.png")}
@@ -154,13 +161,10 @@ class ProductInfo extends React.Component<Props, State> {
                           }
                         >
                           <View
-                            style={{
-                              backgroundColor: color.attributeValue.value,
-                              height: 20,
-                              width: 20,
-                              borderRadius: 10,
-                              margin: 5
-                            }}
+                            style={[
+                              styles.color,
+                              { backgroundColor: color.attributeValue.value }
+                            ]}
                           />
                         </TouchableHighlight>
                       )
@@ -170,14 +174,10 @@ class ProductInfo extends React.Component<Props, State> {
                     .map((color, i) => (
                       <View
                         key={i}
-                        style={{
-                          justifyContent: "center",
-                          alignItems: "center",
-                          backgroundColor: color.attributeValue.value,
-                          height: 20,
-                          width: 20,
-                          borderRadius: 10
-                        }}
+                        style={[
+                          styles.color,
+                          { backgroundColor: color.attributeValue.value }
+                        ]}
                       >
                         <Image
                           source={require("../../../../images/checked.png")}

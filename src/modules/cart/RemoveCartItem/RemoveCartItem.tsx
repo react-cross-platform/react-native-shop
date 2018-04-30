@@ -6,7 +6,7 @@ import { Modal } from "antd-mobile";
 
 import RippleWithTimeout from "../../../utils/RippleWithTimeout";
 import client from "../../../graphqlClient";
-import { CART_QUERY } from "./Cart";
+import { CART_QUERY } from "../Cart/Cart";
 
 const styles = StyleSheet.create({
   container: {

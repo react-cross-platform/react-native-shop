@@ -26,6 +26,11 @@ const styles = StyleSheet.create({
     margin: 20
   },
 
+  sectionIcon: { 
+    width: 20,
+    height: 20
+  },
+
   icon: {
     width: 26,
     height: 26
@@ -127,7 +132,7 @@ class FlatPages extends React.Component<
               arrow="horizontal"
               thumb={
                 <Image
-                  style={{ width: 20, height: 20 }}
+                  style={styles.sectionIcon}
                   source={this.getIcon(page.id)}
                 />
               }

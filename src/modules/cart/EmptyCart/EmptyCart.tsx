@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
     borderTopColor: "lightgray",
     borderTopWidth: 1
   },
+  
   emptyCartText: {
     fontSize: 28,
     fontWeight: "bold",

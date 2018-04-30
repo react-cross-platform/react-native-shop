@@ -4,7 +4,7 @@ import Ripple from "react-native-material-ripple";
 import gql from "graphql-tag";
 import { graphql } from "react-apollo";
 import { ICartItem } from "../model";
-import { CART_QUERY } from "../Cart/Cart";
+import { isEmpty } from "../Cart/Cart";
 
 const styles = StyleSheet.create({
   commonContainer: {
@@ -65,6 +65,8 @@ class CartTrigger extends React.Component<
       return null;
     }
 
+    const cartIsEmpty = isEmpty(cart);
+
     return (
       <Ripple
         rippleCentered={true}
@@ -72,12 +74,11 @@ class CartTrigger extends React.Component<
         style={styles.commonContainer}
         onPress={this.handleNavigation}
       >
-        {cart &&
-          cart.items.length > 0 && (
-            <View style={styles.counterContainer}>
-              <Text style={styles.counter}>{cart.items.length}</Text>
-            </View>
-          )}
+        {!cartIsEmpty && (
+          <View style={styles.counterContainer}>
+            <Text style={styles.counter}>{cart.items.length}</Text>
+          </View>
+        )}
 
         <Image
           source={require("./../../../../images/cart.png")}
@@ -87,5 +88,56 @@ class CartTrigger extends React.Component<
     );
   }
 }
+
+const CART_QUERY = gql`
+  query cart {
+    cart {
+      id
+      phone
+      email
+      firstName
+      lastName
+      city
+      address
+      comment
+      items {
+        id
+        amount
+        price
+        attributeValues {
+          id
+          name
+          value
+        }
+        subProduct {
+          id
+          article
+          price
+          oldPrice
+          product {
+            id
+            name
+            brand {
+              id
+              name
+            }
+            images(size: SM, withColorOnly: true) {
+              id
+              src
+              width
+              height
+              isTitle
+              attributeValue {
+                id
+                name
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
 export default graphql<any, any>(CART_QUERY)(CartTrigger);

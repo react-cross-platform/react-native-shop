@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   productMainScreen: {
-    height: '7%'
+    height: "7%"
   },
 
   header: {
@@ -89,6 +89,13 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
 
+  productAttributes: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
   productBrand: {
     fontSize: 20,
     fontWeight: "bold",
@@ -100,7 +107,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginLeft: 5
-  },
+  }
 });
 
 interface IDataProduct extends IData {
@@ -136,8 +143,9 @@ class Product extends React.Component<
   any
 > {
   componentWillReceiveProps(nextProps) {
-    const { data } = nextProps;
+    const { data, selectSubproduct } = nextProps;
     const { loading, product } = data;
+
     if (!loading) {
       const { subProducts, images } = product;
       const colorId = images[0].attributeValue.id;
@@ -147,11 +155,7 @@ class Product extends React.Component<
         .filter(attribute => !!attribute.attributeValue)
         .map(color => color.attributeValue.id);
       if (subProductIds.indexOf(subProductId) === -1) {
-        this.props.dispatch({
-          type: ACTION_SELECT_SUBPRODUCT,
-          colorId: subProductColorIds[0],
-          subProductId: subProductIds[0]
-        });
+        selectSubproduct(subProductColorIds[0], subProductIds[0]);
       }
     }
   }
@@ -176,17 +180,8 @@ class Product extends React.Component<
           <Images navigation={navigation} images={images} />
           <View style={styles.productMainScreen}>
             <Text style={styles.productName}>{product.name}</Text>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center"
-              }}
-            >
-              <Text style={styles.productBrand}>
-                {product.brand.name}
-              </Text>
+            <View style={styles.productAttributes}>
+              <Text style={styles.productBrand}>{product.brand.name}</Text>
               <Text style={styles.productArticle}>
                 {activeSubProduct.article}
               </Text>
@@ -214,7 +209,20 @@ const mapStateToProps: any = state => ({
   product: state.product
 });
 
+const mapDispatchToProps: any = dispatch => ({
+  selectSubproduct: (colorId, subProductId) => {
+    dispatch({
+      type: ACTION_SELECT_SUBPRODUCT,
+      colorId,
+      subProductId
+    });
+  }
+});
+
 export default compose<any, any, any>(
-  connect<IConnectedProductProps, {}, IProductProps>(mapStateToProps),
+  connect<IConnectedProductProps, {}, IProductProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   graphql(PRODUCT_QUERY, options)
 )(Product as any);

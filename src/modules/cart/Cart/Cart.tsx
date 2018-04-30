@@ -14,19 +14,21 @@ import { formatPrice } from "../utils";
 
 import { Loading } from "../../../modules/layout/index";
 import client from "../../../graphqlClient";
-import { CartBar } from "../index";
 import { ICartItem } from "../model";
 import { IProduct } from "../../product/model";
-import CartItem from "./CartItem";
-import EmptyCart from "./EmptyCart";
+import { EmptyCart, CartItem, CartBar } from "../index";
+
+export const isEmpty = cart => {
+  if (!cart || cart.items.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 const styles = StyleSheet.create({
-  emptyCartContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-    borderTopColor: "lightgray",
-    borderTopWidth: 1
+  cartContainer: {
+    flex: 1
   },
 
   totalCost: {
@@ -36,14 +38,10 @@ const styles = StyleSheet.create({
     fontWeight: "900",
     alignSelf: "center"
   },
+
   cartItems: {
     borderBottomWidth: 4.5,
     borderColor: "#d6d7da"
-  },
-  emptyCartText: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginTop: 30
   }
 });
 
@@ -58,14 +56,6 @@ interface ICartProps {
 }
 
 class Cart extends React.Component<IConnectedCartProps & ICartProps, any> {
-  isEmpty = cart => {
-    if (!cart || cart.items.length === 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   render() {
     const {
       navigation,
@@ -76,20 +66,25 @@ class Cart extends React.Component<IConnectedCartProps & ICartProps, any> {
       return <Loading />;
     }
 
-    const cartIsEmpty = this.isEmpty(cart);
-    const totalPrice = !cartIsEmpty && cart.items.map(item => item.price);
-    const totalCartPrice =
-      !cartIsEmpty &&
-      totalPrice.reduce((sum, currentValue) => sum + currentValue);
+    const cartIsEmpty = isEmpty(cart);
+
+    if (cartIsEmpty) {
+      return <EmptyCart />;
+    }
+
+    const totalPrice = cart.items.map(item => item.price);
+    const totalCartPrice = totalPrice.reduce(
+      (sum, currentValue) => sum + currentValue
+    );
 
     return (
       <View
-        style={{
-          flex: 1,
-          backgroundColor: cartIsEmpty ? "#ffffff" : "#ebebef"
-        }}
+        style={[
+          styles.cartContainer,
+          { backgroundColor: cartIsEmpty ? "#ffffff" : "#ebebef" }
+        ]}
       >
-        {!cartIsEmpty ? (
+        {!cartIsEmpty && (
           <ScrollView>
             <Text style={styles.totalCost}>{`Итого к оплате: ${formatPrice(
               totalCartPrice
@@ -104,8 +99,6 @@ class Cart extends React.Component<IConnectedCartProps & ICartProps, any> {
               ))}
             </View>
           </ScrollView>
-        ) : (
-          <EmptyCart />
         )}
       </View>
     );
