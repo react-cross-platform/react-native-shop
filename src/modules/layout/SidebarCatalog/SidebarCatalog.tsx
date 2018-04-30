@@ -38,9 +38,9 @@ class SidebarCatalog extends React.Component<IConnectedSideBarProps, any> {
         onOpenChange={this.handleChange}
         open={layout.openCatalog === true}
         sidebar={<Catalog />}
-        drawerWidth={350}
+        // drawerWidth={350}
         // RN
-        drawerBackgroundColor="white"
+        // drawerBackgroundColor="white"
       >
         {this.props.children}
       </Drawer>

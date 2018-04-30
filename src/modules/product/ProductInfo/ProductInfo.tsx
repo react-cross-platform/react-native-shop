@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const { TabPane } = Tabs;
 const { AgreeItem, CheckboxItem } = Checkbox;
 
 interface IConnectedProductInfoProps {
