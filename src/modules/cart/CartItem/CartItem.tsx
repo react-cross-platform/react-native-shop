@@ -3,7 +3,7 @@ import { WhiteSpace, WingBlank } from "antd-mobile";
 import { Image, StyleSheet, Text, View } from "react-native";
 import { Hr } from "../../layout/index";
 import { formatPrice } from "../utils";
-import { RemoveCartItem } from "../index";
+import RemoveCartItem from '../RemoveCartItem/RemoveCartItem'
 
 import { ICartItem } from "../model";
 

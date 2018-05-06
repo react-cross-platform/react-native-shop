@@ -16,7 +16,9 @@ import { Loading } from "../../../modules/layout/index";
 import client from "../../../graphqlClient";
 import { ICartItem } from "../model";
 import { IProduct } from "../../product/model";
-import { EmptyCart, CartItem, CartBar } from "../index";
+import CartItem from '../CartItem/CartItem'
+import EmptyCart from '../EmptyCart/EmptyCart'
+import CartBar from '../CartBar/CartBar'
 
 export const isEmpty = cart => {
   if (!cart || cart.items.length === 0) {
