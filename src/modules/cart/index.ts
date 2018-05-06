@@ -1,18 +1,19 @@
 import Cart from "./Cart/Cart";
-import CartTrigger from "./CartTrigger/CartTrigger";
 import CartItem from "./CartItem/CartItem";
-import CartItemRemove from "./CartItemRemove/CartItemRemove";
+import AddCartItem from "./AddCartItem/AddCartItem";
+import RemoveCartItem from "./RemoveCartItem/RemoveCartItem";
+import CartTrigger from "./CartTrigger/CartTrigger";
 import CartBar from "./CartBar/CartBar";
-
+import EmptyCart from "./EmptyCart/EmptyCart";
 import * as model from "./model";
-import reducer from "./reducer";
 
 export {
   Cart,
-  CartTrigger,
   CartItem,
-  CartItemRemove,
+  AddCartItem,
+  RemoveCartItem,
+  CartTrigger,
   CartBar,
-  model,
-  reducer
+  EmptyCart,
+  model
 };

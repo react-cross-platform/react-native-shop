@@ -1,3 +1,2 @@
 export const ACTION_ADD_CART_ITEM = "cart.ACTION_ADD_CART_ITEM";
 export const ACTION_REMOVE_CART_ITEM = "cart.ACTION_REMOVE_CART_ITEM";
-export const ACTION_SET_COUNT = "cart.ACTION_SET_COUNT";

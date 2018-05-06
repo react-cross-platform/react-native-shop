@@ -1,9 +1,14 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
-import { Cart } from '../../modules/cart/index';
+import { Cart } from "../../modules/cart/index";
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  cartScreen: {
+    flex: 1,
+    backgroundColor: "white"
+  }
+});
 
 interface IConnectedCartScreenProps {}
 
@@ -22,7 +27,7 @@ class CartScreen extends React.Component<
   render() {
     const { navigation } = this.props;
     return (
-      <View style={{ backgroundColor: "white", flex: 1 }}>
+      <View style={styles.cartScreen}>
         <Cart navigation={navigation} />
       </View>
     );

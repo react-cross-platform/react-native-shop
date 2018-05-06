@@ -6,62 +6,66 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { Images, ProductBuy, ProductInfo } from "..";
+import { Images, ProductToCart, ProductInfo } from "..";
 import { IData } from "../../../model";
 import { Hr, Loading } from "../../layout";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
 import { ICurrentProduct, IProduct, ISubProduct } from "../model";
+import { CART_QUERY } from "../../cart/Cart/Cart";
 
-const PRODUCT_QUERY = `
-query product($id: Int) {
-  product(id: $id) {
-    id
-    name
-    shortDescription
-    description
-    brand {
+const PRODUCT_QUERY = gql`
+  query product($id: Int) {
+    product(id: $id) {
       id
       name
-    }
-    category {
-      id
-      name
-    }
-    images {
-      id
-      src
-      width
-      height
-      colorValue
-      colorName
-      isTitle
-    }
-    subProducts {
-      id
-      article
-      price
-      oldPrice
-      discount
-      attributes {
+      shortDescription
+      description
+      brand {
+        id
         name
-        values {
+      }
+      category {
+        id
+        name
+      }
+      images(size: MD, withColorOnly: false) {
+        id
+        src
+        width
+        height
+        isTitle
+        attributeValue {
           id
           name
           value
+        }
+      }
+      subProducts {
+        id
+        article
+        price
+        oldPrice
+        discount
+        attributes {
+          name
+          values {
+            id
+            name
+            value
+            description
+          }
+        }
+      }
+      attributes {
+        id
+        name
+        values {
+          name
           description
         }
       }
     }
-    attributes {
-      id
-      name
-      values {
-        name
-        description
-      }
-    }
   }
-}
 `;
 
 const styles = StyleSheet.create({
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
   },
 
   productMainScreen: {
-    alignContent: "center"
+    height: "7%"
   },
 
   header: {
@@ -79,22 +83,30 @@ const styles = StyleSheet.create({
     backgroundColor: "skyblue"
   },
 
-  infoTitle: {
+  productName: {
     fontSize: 20,
-    lineHeight: 22,
-    height: 45,
     fontWeight: "bold",
-    margin: 20,
     textAlign: "center"
   },
 
-  productTop: {
-    backgroundColor: "blue",
-    height: 40
+  productAttributes: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center"
   },
 
-  categoryName: {
+  productBrand: {
+    fontSize: 20,
+    fontWeight: "bold",
     textAlign: "center"
+  },
+
+  productArticle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginLeft: 5
   }
 });
 
@@ -111,7 +123,6 @@ interface IConnectedProductProps {
 interface IProductProps {
   id: string;
   isModal: boolean;
-  subProductId: any;
   navigation: any;
 }
 
@@ -132,21 +143,19 @@ class Product extends React.Component<
   any
 > {
   componentWillReceiveProps(nextProps) {
-    const { data } = nextProps;
+    const { data, selectSubproduct } = nextProps;
     const { loading, product } = data;
-    if (loading === false) {
-      const { subProducts } = product;
+
+    if (!loading) {
+      const { subProducts, images } = product;
+      const colorId = images[0].attributeValue.id;
       const { subProductId } = nextProps.product;
       const subProductIds = subProducts.map(sp => sp.id);
-      const subProductColor = product.images.filter(
-        el => el.colorValue && el.colorName !== ""
-      )[0].id;
+      const subProductColorIds = product.images
+        .filter(attribute => !!attribute.attributeValue)
+        .map(color => color.attributeValue.id);
       if (subProductIds.indexOf(subProductId) === -1) {
-        this.props.dispatch({
-          colorId: subProductColor,
-          subProductId: subProductIds[0],
-          type: ACTION_SELECT_SUBPRODUCT
-        });
+        selectSubproduct(subProductColorIds[0], subProductIds[0]);
       }
     }
   }
@@ -156,39 +165,38 @@ class Product extends React.Component<
     const { loading, product } = data;
     const { subProductId, colorId } = this.props.product;
 
-    if (loading === true || subProductId === null) {
+    if (loading) {
       return <Loading />;
     }
 
     const { brand, images, subProducts } = product;
-    const image = images[0];
     const activeSubProduct = getActiveSubProduct(subProducts, subProductId);
+    const image = images[0];
     const { price, oldPrice } = activeSubProduct;
 
     return (
       <View style={styles.product}>
         <ScrollView>
           <Images navigation={navigation} images={images} />
-          <Flex
-            justify="around"
-            direction="column"
-            style={styles.productMainScreen}
-          >
-            <Text style={styles.infoTitle}>
-              {product.name} {brand.name} {"\n"} {activeSubProduct.article}
-            </Text>
-          </Flex>
+          <View style={styles.productMainScreen}>
+            <Text style={styles.productName}>{product.name}</Text>
+            <View style={styles.productAttributes}>
+              <Text style={styles.productBrand}>{product.brand.name}</Text>
+              <Text style={styles.productArticle}>
+                {activeSubProduct.article}
+              </Text>
+            </View>
+          </View>
           <Hr />
           <ProductInfo
             dataProduct={product}
             activeSubProduct={activeSubProduct}
           />
         </ScrollView>
-        <ProductBuy
+        <ProductToCart
           price={price}
-          oldPrice={oldPrice}
           navigation={navigation}
-          productId={product.id}
+          attributeValueIds={colorId}
           subProductId={subProductId}
           colorId={this.props.product.colorId}
         />
@@ -201,7 +209,20 @@ const mapStateToProps: any = state => ({
   product: state.product
 });
 
+const mapDispatchToProps: any = dispatch => ({
+  selectSubproduct: (colorId, subProductId) => {
+    dispatch({
+      type: ACTION_SELECT_SUBPRODUCT,
+      colorId,
+      subProductId
+    });
+  }
+});
+
 export default compose<any, any, any>(
-  connect<IConnectedProductProps, {}, IProductProps>(mapStateToProps),
-  graphql(gql(PRODUCT_QUERY), options)
+  connect<IConnectedProductProps, {}, IProductProps>(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
+  graphql(PRODUCT_QUERY, options)
 )(Product as any);

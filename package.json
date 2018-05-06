@@ -1,5 +1,5 @@
 {
-  "name": "ReactNativeShop",
+  "name": "react-native-shop",
   "version": "0.0.1",
   "private": false,
   "main": "node_modules/expo/AppEntry.js",

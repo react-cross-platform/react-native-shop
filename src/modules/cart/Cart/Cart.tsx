@@ -1,25 +1,56 @@
 import React from "react";
 import gql from "graphql-tag";
-import { Image, ScrollView, StyleSheet, View } from "react-native";
+import { graphql } from "react-apollo";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  View,
+  Text,
+  WebView
+} from "react-native";
 import { connect } from "react-redux";
+import { formatPrice } from "../utils";
 
+import { Loading } from "../../../modules/layout/index";
 import client from "../../../graphqlClient";
-import { CartBar, CartItem } from "../index";
 import { ICartItem } from "../model";
 import { IProduct } from "../../product/model";
+import CartItem from '../CartItem/CartItem'
+import EmptyCart from '../EmptyCart/EmptyCart'
+import CartBar from '../CartBar/CartBar'
+
+export const isEmpty = cart => {
+  if (!cart || cart.items.length === 0) {
+    return true;
+  } else {
+    return false;
+  }
+};
 
 const styles = StyleSheet.create({
-  emptyCartContainer: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100%",
-    borderTopColor: "lightgray",
-    borderTopWidth: 1
+  cartContainer: {
+    flex: 1
+  },
+
+  totalCost: {
+    marginTop: 30,
+    marginBottom: 30,
+    fontSize: 28,
+    fontWeight: "900",
+    alignSelf: "center"
+  },
+
+  cartItems: {
+    borderBottomWidth: 4.5,
+    borderColor: "#d6d7da"
   }
 });
 
 interface IConnectedCartProps {
   cart: [ICartItem];
+  dataCart: any;
+  loadint: boolean;
 }
 
 interface ICartProps {
@@ -27,79 +58,111 @@ interface ICartProps {
 }
 
 class Cart extends React.Component<IConnectedCartProps & ICartProps, any> {
-  static navigationOptions = {
-    tabBarLabel: "Cart"
-  };
-
   render() {
-    const { navigation, cart } = this.props;
+    const {
+      navigation,
+      dataCart: { loading, cart }
+    } = this.props;
 
-    const products = cart.map(el => {
-      const product = client.readFragment({
-        fragment: gql`
-          fragment someFragment on ProductType {
-            id
-            name
-            brand {
-              name
-            }
-            subProducts {
-              id
-              article
-              price
-            }
-            images {
-              id
-              src
-              colorName
-            }
-          }
-        `,
-        id: `ProductType:${el.productId}`
-      }) as any;
-      return product as IProduct;
-    });
+    if (loading) {
+      return <Loading />;
+    }
+
+    const cartIsEmpty = isEmpty(cart);
+
+    if (cartIsEmpty) {
+      return <EmptyCart />;
+    }
+
+    const totalPrice = cart.items.map(item => item.price);
+    const totalCartPrice = totalPrice.reduce(
+      (sum, currentValue) => sum + currentValue
+    );
 
     return (
-      <View style={{ flex: 1 }}>
-        <ScrollView>
-          {products.map((product, index) => (
-            <CartItem
-              key={index}
-              navigation={navigation}
-              product={product}
-              productId={cart[index].productId}
-              subProductId={cart[index].subProductId}
-              colorId={cart[index].colorId}
-              price={cart[index].price}
-              count={cart[index].count}
-              index={index}
-            />
-          ))}
-        </ScrollView>
-        {cart.length > 0 ? (
-          <CartBar />
-        ) : (
-          <View style={styles.emptyCartContainer}>
-            <Image
-              resizeMode="contain"
-              source={{
-                uri:
-                  "https://thumbs.dreamstime.com/t/smiley-%D0%BF%D0%BE%D0%BA%D1%83%D0%BF%D0%BA%D1%8B-emoticon-%D1%82%D0%B5%D0%BB%D0%B5%D0%B6%D0%BA%D0%B8-2986275.jpg"
-              }}
-              style={{ width: "80%", height: "80%" }}
-            />
-          </View>
+      <View
+        style={[
+          styles.cartContainer,
+          { backgroundColor: cartIsEmpty ? "#ffffff" : "#ebebef" }
+        ]}
+      >
+        {!cartIsEmpty && (
+          <ScrollView>
+            <Text style={styles.totalCost}>{`Итого к оплате: ${formatPrice(
+              totalCartPrice
+            )} грн`}</Text>
+            <View style={styles.cartItems}>
+              {cart.items.map((product, index) => (
+                <CartItem
+                  key={index}
+                  navigation={navigation}
+                  product={product}
+                />
+              ))}
+            </View>
+          </ScrollView>
         )}
       </View>
     );
   }
 }
 
-const mapStateToProps: any = state => ({
-  cart: state.cart
-});
+const options: any = {
+  name: "dataCart",
+  options: {
+    fetchPolicy: "network-only"
+  }
+};
 
-export default connect<IConnectedCartProps, {}, ICartProps>(mapStateToProps)(
-  Cart
-);
+export const CART_QUERY = gql`
+  query cart {
+    cart {
+      id
+      phone
+      email
+      firstName
+      lastName
+      city
+      address
+      comment
+      items {
+        id
+        amount
+        price
+        attributeValues {
+          id
+          name
+          value
+        }
+        subProduct {
+          id
+          article
+          price
+          oldPrice
+          product {
+            id
+            name
+            brand {
+              id
+              name
+            }
+            images(size: SM, withColorOnly: true) {
+              id
+              src
+              width
+              height
+              isTitle
+              attributeValue {
+                id
+                name
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default graphql<any, any>(CART_QUERY, options)(Cart);

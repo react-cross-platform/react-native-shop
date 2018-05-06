@@ -1,9 +1,10 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import Ripple from "react-native-material-ripple";
-import { connect } from "react-redux";
-
+import gql from "graphql-tag";
+import { graphql } from "react-apollo";
 import { ICartItem } from "../model";
+import { isEmpty } from "../Cart/Cart";
 
 const styles = StyleSheet.create({
   commonContainer: {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
   }
 });
 interface IConnectedCartTriggerProps {
-  cart: [ICartItem];
+  data: any;
 }
 
 interface ICartTriggerProps {
@@ -54,8 +55,18 @@ class CartTrigger extends React.Component<
     const { navigation } = this.props;
     navigation.navigate("Cart");
   };
+
   render() {
-    const { cart } = this.props;
+    const {
+      data: { loading, cart }
+    } = this.props;
+
+    if (loading) {
+      return null;
+    }
+
+    const cartIsEmpty = isEmpty(cart);
+
     return (
       <Ripple
         rippleCentered={true}
@@ -63,13 +74,11 @@ class CartTrigger extends React.Component<
         style={styles.commonContainer}
         onPress={this.handleNavigation}
       >
-        {cart.length > 0
-          ? <View style={styles.counterContainer}>
-              <Text style={styles.counter}>
-                {cart.length}
-              </Text>
-            </View>
-          : <Text />}
+        {!cartIsEmpty && (
+          <View style={styles.counterContainer}>
+            <Text style={styles.counter}>{cart.items.length}</Text>
+          </View>
+        )}
 
         <Image
           source={require("./../../../../images/cart.png")}
@@ -80,10 +89,55 @@ class CartTrigger extends React.Component<
   }
 }
 
-const mapStateToProps: any = state => ({
-  cart: state.cart
-});
+const CART_QUERY = gql`
+  query cart {
+    cart {
+      id
+      phone
+      email
+      firstName
+      lastName
+      city
+      address
+      comment
+      items {
+        id
+        amount
+        price
+        attributeValues {
+          id
+          name
+          value
+        }
+        subProduct {
+          id
+          article
+          price
+          oldPrice
+          product {
+            id
+            name
+            brand {
+              id
+              name
+            }
+            images(size: SM, withColorOnly: true) {
+              id
+              src
+              width
+              height
+              isTitle
+              attributeValue {
+                id
+                name
+                value
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 
-export default connect<IConnectedCartTriggerProps, {}, ICartTriggerProps>(
-  mapStateToProps
-)(CartTrigger);
+export default graphql<any, any>(CART_QUERY)(CartTrigger);
