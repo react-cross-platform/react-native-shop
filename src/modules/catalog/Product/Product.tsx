@@ -8,7 +8,7 @@ import { Dispatch } from "redux";
 import { Images } from "../../product/index";
 import { IImageWithColor, IProduct } from "../../product/model";
 import { ICatalog } from "../model";
-import { prettyPrice } from "../../cart/utils";
+import { formatPrice } from "../../cart/utils";
 
 // FIXME: fix via TS config
 declare const Math;
@@ -67,7 +67,7 @@ interface IProductProps extends IProduct {
 }
 
 interface IProductState {
-  titleImage: IImageWithColor;
+  titleImage: any;
 }
 
 const handleNavigation = (navigation, id, name) => {
@@ -150,7 +150,7 @@ class Product extends React.Component<
             onPress={() => handleNavigation(navigation, id, name)}
           >
             {isSinglePrice ? "" : "от "}
-            {prettyPrice(productPrice)} грн.
+            {formatPrice(productPrice)} грн.
           </Text>
         </Ripple>
       </Wrapper>

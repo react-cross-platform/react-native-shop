@@ -1,25 +1,23 @@
-import { IProduct } from "../../product/model";
-import { Stepper, WhiteSpace, WingBlank } from "antd-mobile";
 import React from "react";
+import { WhiteSpace, WingBlank } from "antd-mobile";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-
 import { Hr } from "../../layout/index";
-import { ACTION_SET_COUNT } from "../constants";
+import { formatPrice } from "../utils";
+import RemoveCartItem from '../RemoveCartItem/RemoveCartItem'
+
 import { ICartItem } from "../model";
-import { prettyPrice } from "../utils";
-import { CartItemRemove } from "../index";
 
 const styles = StyleSheet.create({
   mainContainer: {
-    height: 150
+    flex: 1,
+    flexDirection: "column",
+    height: 150,
+    backgroundColor: "white"
   },
 
   cartContent: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between"
+    flexDirection: "row"
   },
 
   imageContainer: {
@@ -33,8 +31,8 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: "80%",
-    height: "80%"
+    width: "100%",
+    height: "100%"
   },
 
   info: {
@@ -44,19 +42,24 @@ const styles = StyleSheet.create({
   },
 
   infoTitle: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    fontSize: 18
   },
 
   infoColor: {
-    color: "black"
+    justifyContent: "center",
+    alignItems: "center",
+    height: 25,
+    width: 25,
+    borderRadius: 15,
+    marginLeft: 5,
+    marginTop: 10,
+    marginBottom: 10
   },
 
-  infoStepper: {
-    height: 35,
-    width: 150,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center"
+  checkedIcon: {
+    width: 20,
+    height: 20 
   },
 
   infoPriceContainer: {
@@ -74,109 +77,75 @@ const styles = StyleSheet.create({
 });
 
 interface IConnectedCartItemProps {
-  dispatch: Dispatch<{}>;
-  cart: ICartItem;
+  // dispatch: Dispatch<{}>;
+  // cart: ICartItem;
 }
 
 interface ICartItemProps {
+  key: number;
   navigation: any;
-  product: IProduct;
-  productId: string;
-  subProductId: string;
-  colorId: number;
-  price: number;
-  count: number;
-  index: number;
+  product: ICartItem;
 }
 
-class CartItem extends React.Component<
-  IConnectedCartItemProps & ICartItemProps,
-  any
-> {
-  handleNavigation = (navigation, id, name) => {
-    navigation.navigate("Product", { id, name });
-  };
+interface Props extends IConnectedCartItemProps, ICartItemProps {}
+interface State {}
 
-  onChange = value => {
-    this.props.dispatch({
-      type: ACTION_SET_COUNT,
-      subProductId: this.props.subProductId,
-      count: value
-    });
-  };
-
-  priceMultiple = (price, count) => {
-    return price * count;
-  };
+class CartItem extends React.Component<Props, State> {
+  // handleNavigation = (navigation, id, name) => {
+  //   navigation.navigate("Product", { id, name });
+  // };
 
   render() {
     const {
-      product,
-      navigation,
-      productId,
-      subProductId,
-      colorId,
-      price,
-      count,
-      index
+      product: {
+        amount,
+        attributeValues,
+        subProduct: {
+          article,
+          price,
+          product: { brand, name, images }
+        }
+      },
+      navigation
     } = this.props;
-    const totalPrice = this.priceMultiple(price, count);
+    const color = attributeValues[0].value;
+
     return (
-      <WingBlank size="lg">
-        <WhiteSpace size="sm" />
-        <View style={styles.mainContainer}>
-          <View style={styles.cartContent}>
-            <View style={styles.imageContainer}>
+      <View style={styles.mainContainer}>
+        <View style={styles.cartContent}>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              resizeMode="contain"
+              source={{ uri: images[0].src }}
+            />
+          </View>
+
+          <View style={styles.info}>
+            <Text style={styles.infoTitle}>{name}</Text>
+
+            <Text style={styles.infoTitle}>
+              {brand.name} {article}
+            </Text>
+
+            <View style={[styles.infoColor, { backgroundColor: color }]}>
               <Image
-                style={styles.image}
-                resizeMode="contain"
-                source={{ uri: product.images[0].src }}
+                style={styles.checkedIcon}
+                source={require("../../../../images/checked.png")}
               />
             </View>
 
-            <View style={styles.info}>
-              <Text style={styles.infoTitle}>
-                {product.name} {product.brand.name}
-              </Text>
-              <Text style={styles.infoArticle}>
-                артикул:{" "}
-                {product.subProducts
-                  .filter(e => e.id === subProductId)
-                  .map(el => el.article)}
-              </Text>
-              <Text style={styles.infoColor}>
-                цвет:{" "}
-                {product.images
-                  .filter(e => e.id === colorId)
-                  .map(el => el.colorName)}
-              </Text>
-              <View style={styles.infoStepper}>
-                <Text>Кол-во: </Text>
-                <Stepper
-                  max={10}
-                  min={1}
-                  defaultValue={count}
-                  onChange={this.onChange}
-                />
-              </View>
-              <Text style={styles.infoPriceContainer}>
-                Цена: {prettyPrice(Math.round(totalPrice))} грн.
-              </Text>
-            </View>
-
-            <CartItemRemove index={index} />
+            <Text style={styles.infoPriceContainer}>
+              Цена: {formatPrice(Math.round(price))} грн.
+            </Text>
           </View>
+
+          <RemoveCartItem product={this.props.product} />
         </View>
         <Hr />
-      </WingBlank>
+      </View>
     );
   }
 }
 
-const mapStateToProps: any = state => ({
-  cart: state.cart
-});
-
-export default connect<IConnectedCartItemProps, {}, ICartItemProps>(
-  mapStateToProps
-)(CartItem);
+export default CartItem;

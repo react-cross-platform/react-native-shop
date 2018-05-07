@@ -11,12 +11,16 @@ import { ICurrentProduct, IProduct, ISubProduct } from "../model";
 import { Hr } from "../../layout/index";
 
 const styles = StyleSheet.create({
+  viewTitle: {
+    width: "20%"
+  },
+
   title: {
     color: "#1296db",
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 15,
-    marginBottom: 15,
+    marginBottom: 15
   },
 
   colorSection: {
@@ -43,7 +47,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-  colorIcon: {},
+
+  color: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    margin: 5
+  },
 
   containerColorName: {
     width: "26%",
@@ -73,7 +85,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const { TabPane } = Tabs;
 const { AgreeItem, CheckboxItem } = Checkbox;
 
 interface IConnectedProductInfoProps {
@@ -82,7 +93,7 @@ interface IConnectedProductInfoProps {
 }
 
 interface IProductInfoProps {
-  dataProduct: IProduct;
+  dataProduct: any;
   activeSubProduct: ISubProduct;
 }
 
@@ -94,96 +105,91 @@ const options = {
   })
 };
 
-class ProductInfo extends React.Component<
-  IConnectedProductInfoProps & IProductInfoProps,
-  any
-> {
+interface Props extends IConnectedProductInfoProps, IProductInfoProps {}
+interface State {}
+
+class ProductInfo extends React.Component<Props, State> {
   changeColor = colorId => {
     this.props.dispatch({ type: ACTION_SELECT_COLOR, colorId });
   };
 
   render() {
-    const { dataProduct, product, activeSubProduct, dispatch } = this.props;
+    const { dataProduct, activeSubProduct, dispatch } = this.props;
+
     const { brand, images, subProducts, attributes } = dataProduct;
     const { subProductId, colorId } = this.props.product;
-    const activeImage =
-      activeSubProduct.id === subProductId
-        ? images.filter(image => image.id === colorId)[0]
-        : images.filter(image => image.isTitle === true)[0];
+    const imagesWithColors = images.filter(
+      image => image.attributeValue !== null
+    );
+    const activeColor = imagesWithColors.map(
+      color => color.attributeValue.id === colorId[0]
+    );
 
     return (
       <View>
         {/* Select SubProduct section */}
-        {subProducts.length > 1
-          ? <SubProducts subProducts={subProducts} />
-          : <Text />}
+        <SubProducts subProducts={subProducts} />
 
         {/* Select Color section */}
         <WingBlank>
           <View style={styles.colorSection}>
-            <View style={{ width: "20%" }}>
+            <View style={styles.viewTitle}>
               <Text style={styles.title}>Цвет</Text>
             </View>
             <View style={styles.colors}>
-              {images.filter(el => el.colorValue !== "").length > 1
-                ? images.filter(el => el.colorValue !== "").map(
-                    (e, i) =>
-                      e.id === this.props.product.colorId
-                        ? <View
-                            key={i}
-                            style={{
-                              justifyContent: "center",
-                              alignItems: "center",
-                              backgroundColor: e.colorValue,
-                              height: 20,
-                              width: 20,
-                              borderRadius: 10,
-                              margin: 5
-                            }}
-                          >
-                            <Image
-                              source={require("../../../../images/checked.png")}
-                              style={styles.checkedCircle}
-                            />
-                          </View>
-                        : <TouchableHighlight
-                            key={i}
-                            onPress={() => this.changeColor(e.id)}
-                          >
-                            <View
-                              style={{
-                                backgroundColor: e.colorValue,
-                                height: 20,
-                                width: 20,
-                                borderRadius: 10,
-                                margin: 5
-                              }}
-                            />
-                          </TouchableHighlight>
+              {images.filter(image => image.attributeValue !== null).length > 1
+                ? images.filter(image => image.attributeValue !== null).map(
+                    (color, i) =>
+                      color.attributeValue.id === colorId[0] ? (
+                        <View
+                          key={i}
+                          style={[
+                            styles.color,
+                            { backgroundColor: color.attributeValue.value }
+                          ]}
+                        >
+                          <Image
+                            source={require("../../../../images/checked.png")}
+                            style={styles.checkedCircle}
+                          />
+                        </View>
+                      ) : (
+                        <TouchableHighlight
+                          key={i}
+                          onPress={() =>
+                            this.changeColor(color.attributeValue.id)
+                          }
+                        >
+                          <View
+                            style={[
+                              styles.color,
+                              { backgroundColor: color.attributeValue.value }
+                            ]}
+                          />
+                        </TouchableHighlight>
+                      )
                   )
-                : images.filter(el => el.colorValue !== "").map((e, i) =>
-                    <View
-                      key={i}
-                      style={{
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: e.colorValue,
-                        height: 20,
-                        width: 20,
-                        borderRadius: 10
-                      }}
-                    >
-                      <Image
-                        source={require("../../../../images/checked.png")}
-                        style={styles.checkedCircle}
-                      />
-                    </View>
-                  )}
+                : images
+                    .filter(image => image.attributeValue !== null)
+                    .map((color, i) => (
+                      <View
+                        key={i}
+                        style={[
+                          styles.color,
+                          { backgroundColor: color.attributeValue.value }
+                        ]}
+                      >
+                        <Image
+                          source={require("../../../../images/checked.png")}
+                          style={styles.checkedCircle}
+                        />
+                      </View>
+                    ))}
             </View>
 
             <View style={styles.containerColorName}>
               <Text style={styles.colorName}>
-                {activeImage.colorName}
+                {/* {activeImage.colorName} */}
               </Text>
             </View>
           </View>
@@ -194,12 +200,10 @@ class ProductInfo extends React.Component<
         {/* Product params section */}
         <WingBlank>
           <Text style={styles.title}>Характеристики</Text>
-          {attributes.map((el, index) =>
+          {attributes.map((el, index) => (
             <Flex key={index} justify="between">
               <Flex>
-                <Text style={styles.paramName}>
-                  {el.name}
-                </Text>
+                <Text style={styles.paramName}>{el.name}</Text>
               </Flex>
               <Flex>
                 <Text style={styles.paramValue}>
@@ -207,30 +211,32 @@ class ProductInfo extends React.Component<
                 </Text>
               </Flex>
             </Flex>
-          )}
+          ))}
 
           {/* Product description section */}
-          {subProducts.length === 1
-            ? subProducts.map((supProduct, i) =>
-                <Flex key={i} justify="between">
-                  <Text style={styles.paramName}>Размер, ШxВxГ</Text>
-                  <View className={styles.paramValue}>
-                    <Text>
-                      {!!supProduct.attributes.length
-                        ? <Text>
-                            {supProduct.attributes
-                              .slice(0, 3)
-                              .map(e => e.values.map(v => v.value))
-                              .join("x")}
-                          </Text>
-                        : <Text>
-                            {supProduct.article}
-                          </Text>}
-                    </Text>
-                  </View>
-                </Flex>
-              )
-            : <Text />}
+          {subProducts.length === 1 ? (
+            subProducts.map((subProduct, i) => (
+              <Flex key={i} justify="between">
+                <Text style={styles.paramName}>Размер, ШxВxГ</Text>
+                <View className={styles.paramValue}>
+                  <Text>
+                    {subProduct.attributes.length > 0 ? (
+                      <Text>
+                        {subProduct.attributes
+                          .slice(0, 3)
+                          .map(e => e.values.map(v => v.value))
+                          .join("x")}
+                      </Text>
+                    ) : (
+                      <Text>{subProduct.article}</Text>
+                    )}
+                  </Text>
+                </View>
+              </Flex>
+            ))
+          ) : (
+            <Text />
+          )}
         </WingBlank>
 
         <Hr />

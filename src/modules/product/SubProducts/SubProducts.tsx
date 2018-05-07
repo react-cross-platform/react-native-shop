@@ -4,7 +4,7 @@ import { Image, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 
-import { prettyPrice } from "../../cart/utils";
+import { formatPrice } from "../../cart/utils";
 import { ACTION_SELECT_SUBPRODUCT } from "../constants";
 import { ICurrentProduct, ISubProduct } from "../model";
 
@@ -20,9 +20,17 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20
   },
+  unCheckIcon: {
+    width: 20,
+    height: 20
+  },
   article: {
     fontSize: 16,
     marginLeft: 10
+  },
+  subProductPrice: {
+    fontSize: 16,
+    fontWeight: "bold"
   }
 });
 
@@ -32,6 +40,7 @@ const Brief = Item.Brief;
 interface IConnectedSubProductsProps {
   dispatch: Dispatch<{}>;
   product: ICurrentProduct;
+  selectSubProduct: any;
 }
 
 interface ISubProductsProps {
@@ -42,12 +51,9 @@ class SubProducts extends React.Component<
   IConnectedSubProductsProps & ISubProductsProps,
   any
 > {
-  onChangePrice = elId => {
-    this.props.dispatch({
-      colorId: this.props.product.colorId,
-      subProductId: elId,
-      type: ACTION_SELECT_SUBPRODUCT
-    });
+  onSelect = subProductId => {
+    const { product: colorId, selectSubProduct } = this.props;
+    selectSubProduct(colorId, subProductId);
   };
 
   isActive = subProductId => {
@@ -64,38 +70,37 @@ class SubProducts extends React.Component<
           <Text style={styles.title}>Модификации</Text>
         </WingBlank>
         <List>
-          {subProducts.map((subProduct, index) =>
+          {subProducts.map((subProduct, index) => (
             <Item
               key={index}
-              onClick={() => this.onChangePrice(subProduct.id)}
+              onClick={() => this.onSelect(subProduct.id)}
               thumb={
-                this.isActive(subProduct.id)
-                  ? <Image
-                      style={styles.checkIcon}
-                      source={require("../../../../images/circle-check.png")}
-                    />
-                  : <Image
-                      style={{ height: 20, width: 20 }}
-                      source={require("../../../../images/circle.png")}
-                    />
+                this.isActive(subProduct.id) ? (
+                  <Image
+                    style={styles.checkIcon}
+                    source={require("../../../../images/circle-check.png")}
+                  />
+                ) : (
+                  <Image
+                    style={styles.unCheckIcon}
+                    source={require("../../../../images/circle.png")}
+                  />
+                )
               }
               extra={
                 <Text
-                  style={{
-                    color: this.isActive(subProduct.id) ? "orange" : "gray",
-                    fontSize: 16,
-                    fontWeight: "bold"
-                  }}
+                  style={[
+                    styles.subProductPrice,
+                    { color: this.isActive(subProduct.id) ? "orange" : "gray" }
+                  ]}
                 >
-                  {prettyPrice(subProduct.price) + " грн."}
+                  {formatPrice(subProduct.price) + " грн."}
                 </Text>
               }
             >
-              <Text style={styles.article}>
-                {subProduct.article}
-              </Text>
+              <Text style={styles.article}>{subProduct.article}</Text>
             </Item>
-          )}
+          ))}
         </List>
       </View>
     );
@@ -106,6 +111,17 @@ const mapStateToProps: any = state => ({
   product: state.product
 });
 
+const mapDispatchToProps: any = dispatch => ({
+  selectSubProduct: (colorId, subProductId) => {
+    dispatch({
+      type: ACTION_SELECT_SUBPRODUCT,
+      colorId,
+      subProductId
+    });
+  }
+});
+
 export default connect<IConnectedSubProductsProps, {}, ISubProductsProps>(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(SubProducts);
